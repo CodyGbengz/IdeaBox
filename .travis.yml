@@ -3,7 +3,7 @@ node_js:
 - "6.9.2"
 branches:
   only:
-    - develop
+    - development
 script:
   - npm run test
 env:

@@ -104,5 +104,43 @@ export default {
         status: 'Fail',
         message: error.message
       }));
-  }
+  },
+  editUserProfile(req, res) {
+    const userInfo = {
+      $set: req.body
+    };
+    User.findOne({
+      email: req.body.email.trim().toLowerCase()
+    }).exec()
+      .then((email) => {
+        if (email) {
+          return res.status(409).json({
+            status: 'Fail',
+            message: 'email already taken'
+          });
+        }
+        User.findOne({
+          username: req.body.username.trim().toLowerCase()
+        }).exec()
+          .then((username) => {
+            if (username) {
+              return res.status(409).send({
+                status: 'Fail',
+                message: 'username already taken'
+              });
+            }
+            const promise = User.findByIdAndUpdate(req.decoded._id, userInfo, { new: true }).exec();
+            promise.then((updatedUser) => {
+              res.status(200).json({
+                status: 'Success',
+                message: 'Details successfully updated',
+                updatedUser
+              });
+            })
+              .catch(error => res.status(400).send({
+                error: error.message
+              }));
+          });
+      });
+  },
 };

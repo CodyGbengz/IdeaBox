@@ -22,7 +22,6 @@ app.use(bodyParser.json());
 
 // http request logger
 app.use(logger('dev'));
-
 /**
  * API routes
  */
@@ -33,3 +32,5 @@ app.get('*', (req, res) => { res.send('here'); });
 
 // entry point
 app.listen(port);
+
+export default app;

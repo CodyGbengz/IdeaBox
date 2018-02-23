@@ -12,7 +12,12 @@ import routes from './routes';
 dotenv.config();
 const database = require('./config/database');
 
-mongoose.connect(database.url);
+if (process.env.NODE_ENV === 'test') {
+  mongoose.connect(database.url_test);
+} else {
+  mongoose.connect(database.url);
+}
+
 const { user, idea } = routes;
 const port = process.env.PORT || 8080;
 const app = express();

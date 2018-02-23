@@ -66,6 +66,43 @@ export default {
             });
         });
     });
+  },
+  loginUser(req, res) {
+    const promise = User.findOne({
+      username: req.body.username.trim().toLowerCase()
+    }).exec();
+    promise.then((user) => {
+      if (!user) {
+        return res.status(404).json({
+          status: 'Fail',
+          message: 'Invalid credentials'
+        });
+      }
+      if (!bcrypt.compareSync(req.body.password, user.password)) {
+        return res.status(401).json({
+          status: 'Invalid credentials'
+        });
+      }
+      if (user) {
+        const token = jwt.sign(
+          {
+            id: user.id,
+            username: user.username,
+            email: user.email
+          },
+          'secret',
+          { expiresIn: 86400 }
+        );
+        return res.status(200).json({
+          status: 'Success',
+          message: 'Login successful',
+          token
+        });
+      }
+    })
+      .catch(error => res.status(500).json({
+        status: 'Fail',
+        message: error.message
+      }));
   }
 };
-

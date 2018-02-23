@@ -1,9 +1,14 @@
 import Validator from 'validatorjs';
 
 const signupRules = {
-  username: 'required|string|min:3',
+  username: 'required|string|min:5',
   email: 'required|email',
   password: 'required|min:6',
+};
+
+const loginRules = {
+  username: 'required|string',
+  password: 'required|string|min:5'
 };
 
 const validate = (request, response, next, rules) => {
@@ -23,4 +28,11 @@ export const signupValidator = (
   response,
   next
 ) => validate(request, response, next, signupRules);
+
+export const loginValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, loginRules);
+
 export default validate;

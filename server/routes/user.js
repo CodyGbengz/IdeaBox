@@ -1,6 +1,6 @@
 import express from 'express';
 import User from '../controllers/user';
-import { signupValidator } from '../utils/validator';
+import { signupValidator, loginValidator } from '../utils/validator';
 
 const router = express.Router();
 
@@ -8,9 +8,7 @@ const router = express.Router();
 router.post('/api/v1/user/signup', signupValidator, User.createUser);
 
 // login user route
-router.post('/api/v1/user/signin', (req, res) => {
-  res.status(200).send('signin user');
-});
+router.post('/api/v1/user/signin', loginValidator, User.loginUser);
 
 // edit user profile route
 router.put('/api/v1/user/', (req, res) => {

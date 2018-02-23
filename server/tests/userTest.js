@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 process.env.NODE_ENV = 'test';
 // Our parent block
 
-describe('Books', () => {
+describe('User', () => {
   beforeEach((done) => {
     // Before each test we empty the database
     User.remove({}, () => {
@@ -74,6 +74,54 @@ describe('Books', () => {
           res.body.should.have.property('status').eql('Success');
           done();
         });
+    });
+  });
+  describe('POST/api/v1/user/signin route', () => {
+    it('should return status 400 when username is invalid', (done) => {
+      const user = {
+        username: '',
+        password: '111111'
+      };
+      chai.request(server)
+        .post('/api/v1/user/signin')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+    it('should return status 400 when password is invalid', (done) => {
+      const user = {
+        username: 'Rings',
+        password: ''
+      };
+      chai.request(server)
+        .post('/api/v1/user/signin')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+    it('should return status 200 for valid user inputs', (done) => {
+      const registeredUser = new User({
+        username: 'Tester',
+        password: 'password',
+        email: 'email@email.com'
+      });
+      const user = {
+        username: 'Tester',
+        password: 'password'
+      };
+      registeredUser.save(() => {
+        chai.request(server)
+          .post('/api/v1/user/signin')
+          .send(user)
+          .end((err, res) => {
+            res.should.have.status(404);
+            done();
+          });
+      });
     });
   });
 });

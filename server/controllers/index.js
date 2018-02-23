@@ -1,4 +1,4 @@
-import User from './user';
+import User from './userController';
 
 const controllers = {
   User

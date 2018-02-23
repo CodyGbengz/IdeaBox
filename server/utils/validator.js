@@ -11,6 +11,11 @@ const loginRules = {
   password: 'required|string|min:5'
 };
 
+const editRules = {
+  username: 'required|string',
+  email: 'required|string'
+};
+
 const validate = (request, response, next, rules) => {
   const validator = new Validator(request.body, rules);
   if (validator.passes()) {
@@ -22,6 +27,12 @@ const validate = (request, response, next, rules) => {
     message: errors
   });
 };
+
+export const editValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, editRules);
 
 export const signupValidator = (
   request,

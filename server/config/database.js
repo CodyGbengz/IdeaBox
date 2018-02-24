@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 module.exports = {
-  url: 'mongodb://127.0.0.1:27017/idea-box-local',
+  url: process.env.DEV_DB,
   url_production: process.env.MONGODB_URI,
   url_test: process.env.TEST_DB
 };

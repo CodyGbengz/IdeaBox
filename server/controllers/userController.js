@@ -1,19 +1,17 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import User from '../models/user';
 
-dotenv.config();
 
 mongoose.Promise = global.Promise;
 
 export default {
   /**
    * creates a new user
-   * @param {object}  req request object
+   * @param {object}  req user request object
    * @param {object}  res server response object
-   * @return {void}
+   * @returns {object} - res
    */
   createUser(req, res) {
     const promise = User.findOne({
@@ -42,13 +40,14 @@ export default {
             email: req.body.email.trim().toLowerCase()
           });
           user.save().then((newUser) => {
+            console.log(process.env.SECRET);
             const token = jwt.sign(
               {
                 id: newUser.id,
                 username: newUser.username,
                 email: newUser.email
               },
-              'secret',
+              process.env.SECRET,
               { expiresIn: 86400 }
             );
             return res.status(201).json({
@@ -67,6 +66,12 @@ export default {
         });
     });
   },
+  /**
+   *
+   * @param {object} req - user request object
+   * @param {object} res - server response object
+   * @returns {object} - res
+   */
   loginUser(req, res) {
     const promise = User.findOne({
       username: req.body.username.trim().toLowerCase()
@@ -90,7 +95,7 @@ export default {
             username: user.username,
             email: user.email
           },
-          'secret',
+          process.env.SECRET,
           { expiresIn: 86400 }
         );
         return res.status(200).json({
@@ -105,6 +110,12 @@ export default {
         message: error.message
       }));
   },
+  /**
+   *
+   * @param {object} req - user request object
+   * @param {object} res - server response object
+   * @returns {object}  res
+   */
   editUserProfile(req, res) {
     const userInfo = {
       $set: req.body
@@ -129,7 +140,7 @@ export default {
                 message: 'username already taken'
               });
             }
-            const promise = User.findByIdAndUpdate(req.decoded._id, userInfo, { new: true }).exec();
+            const promise = User.findByIdAndUpdate(req.decoded.id, userInfo, { new: true }).exec();
             promise.then((updatedUser) => {
               res.status(200).json({
                 status: 'Success',
@@ -143,4 +154,30 @@ export default {
           });
       });
   },
+  /**
+   *
+   * @param {object} req - user request object
+   * @param {object} res - server response object
+   * @returns {object} res
+   */
+  fetchUserProfile(req, res) {
+    User.findById(req.decoded.id)
+      .then((user) => {
+        if (user) {
+          return res.status(200).json({
+            status: 'Success',
+            message: 'Profile fetched successfully',
+            user
+          });
+        }
+        return res.status(404).json({
+          status: 'Fail',
+          message: 'User not found'
+        });
+      })
+      .catch(error => res.status(500).json({
+        status: 'Fail',
+        message: error.message
+      }));
+  }
 };

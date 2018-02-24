@@ -11,7 +11,7 @@ const auth = (req, res, next) => {
       message: 'No token provided.'
     });
   }
-  jwt.verify(token, 'secret', (err, decoded) => {
+  jwt.verify(token, process.env.SECRET, (err, decoded) => {
     if (err) {
       return res.status(500).json({
         status: 'Fail',

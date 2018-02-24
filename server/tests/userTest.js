@@ -12,11 +12,19 @@ chai.use(chaiHttp);
 // Our parent block
 
 describe('User', () => {
-  beforeEach((done) => {
-    // Before each test we empty the database
-    User.remove({}, () => {
-      done();
-    });
+  before((done) => {
+    User.remove({}, () => {});
+    chai.request(server)
+      .post('/api/v1/user/signup')
+      .send({
+        email: 'valid@email.com',
+        username: 'validguy',
+        password: 'validpassword'
+      })
+      .end((err, res) => {
+        token = res.body.token;
+        done();
+      });
   });
   /*
   * Test the /GET route
@@ -71,7 +79,7 @@ describe('User', () => {
         .post('/api/v1/user/signup')
         .send(user)
         .end((err, res) => {
-          token = res.body.token;
+          // token = res.body.token;
           res.should.have.status(201);
           res.body.should.have.property('status').eql('Success');
           done();
@@ -106,29 +114,24 @@ describe('User', () => {
         });
     });
     it('should return status 200 for valid user inputs', (done) => {
-      const registeredUser = new User({
-        username: 'Tester',
-        password: 'password',
-        email: 'email@email.com'
-      });
       const user = {
-        username: 'Tester',
-        password: 'password'
+        username: 'validguy',
+        password: 'validpassword'
       };
-      registeredUser.save(() => {
-        chai.request(server)
-          .post('/api/v1/user/signin')
-          .send(user)
-          .end((err, res) => {
-            // refactor
-            res.should.have.status(404);
-            done();
-          });
-      });
+      chai.request(server)
+        .post('/api/v1/user/signin')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('Login successful');
+          done();
+        });
     });
   });
+
   describe('PUT/api/v1/user route', () => {
-    it('should return status 403 when token is invalid', (done) => {
+    it('should return status 403 when no token is passed', (done) => {
       const user = {
         username: 'username',
         email: 'email@email.com'
@@ -138,6 +141,7 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(403);
+          res.body.should.have.property('message').to.eql('No token provided.');
           done();
         });
     });
@@ -166,6 +170,28 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
+          done();
+        });
+    });
+  });
+  describe('GET-/api/v1/user route', () => {
+    it('should return status 200 when a valid token is passed', (done) => {
+      chai.request(server)
+        .get('/api/v1/user')
+        .set('x-access-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.message.should.eql('Profile fetched successfully');
+          res.body.should.be.an('object');
+          done();
+        });
+    });
+    it('should return status 403 when token is invalid', (done) => {
+      chai.request(server)
+        .get('/api/v1/user')
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.have.property('message').to.eql('No token provided.');
           done();
         });
     });

@@ -4,10 +4,10 @@
   "description": "a web platform for sharing ideas",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon --exec babel-node server/server.js",
+    "start:dev": "nodemon --inspect-brk --watch src --exec babel-node server/server.js",
     "start:client": "webpack-dev-server --config webpack.config.js",
     "build": "webpack --config webpack.prod.js",
-    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha -c --compilers js:babel-register  --timeout 20000 server/tests/**",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha -c --compilers js:babel-register  --timeout 500000 server/tests/**",
     "coverage": "nyc npm test --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {

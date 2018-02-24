@@ -39,6 +39,7 @@ describe('User', () => {
         .post('/api/v1/user/signup')
         .send(user)
         .end((err, res) => {
+          console.log(res, '----->>>>>>');
           res.should.have.status(400);
           done();
         });

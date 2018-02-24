@@ -1,0 +1,9 @@
+logs
+*.log
+coverage/*
+.env
+.nyc_output/*
+.vscode/*
+node_modules
+server/
+server/tests/**

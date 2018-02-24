@@ -15,8 +15,6 @@ router.post('/api/v1/user/signin', loginValidator, User.loginUser);
 router.put('/api/v1/user', auth, editValidator, User.editUserProfile);
 
 // get user profile route
-router.get('/api/v1/user', (req, res) => {
-  res.status(200).send('get users details');
-});
+router.get('/api/v1/user', auth, User.fetchUserProfile);
 
 export default router;

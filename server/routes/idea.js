@@ -1,11 +1,13 @@
 import express from 'express';
+import auth from '../utils/auth';
+import Idea from '../controllers/ideaController';
+import { createIdeaValidator } from '../utils/validator';
+
 
 const router = express.Router();
 
 // create idea route
-router.post('/api/v1/idea', (req, res) => {
-  res.status(201).send('create idea');
-});
+router.post('/api/v1/idea', auth, createIdeaValidator, Idea.createIdea);
 
 // edit idea route, set as public or private
 router.put('/api/v1/idea', (req, res) => {

@@ -12,20 +12,7 @@ chai.use(chaiHttp);
 // Our parent block
 
 describe('User', () => {
-  before((done) => {
-    User.remove({}, () => {});
-    chai.request(server)
-      .post('/api/v1/user/signup')
-      .send({
-        email: 'valid@email.com',
-        username: 'validguy',
-        password: 'validpassword'
-      })
-      .end((err, res) => {
-        token = res.body.token;
-        done();
-      });
-  });
+
   /*
   * Test the /GET route
   */
@@ -39,7 +26,6 @@ describe('User', () => {
         .post('/api/v1/user/signup')
         .send(user)
         .end((err, res) => {
-          console.log(res, '----->>>>>>');
           res.should.have.status(400);
           done();
         });
@@ -80,7 +66,7 @@ describe('User', () => {
         .post('/api/v1/user/signup')
         .send(user)
         .end((err, res) => {
-          // token = res.body.token;
+          token = res.body.token;
           res.should.have.status(201);
           res.body.should.have.property('status').eql('Success');
           done();
@@ -116,8 +102,8 @@ describe('User', () => {
     });
     it('should return status 200 for valid user inputs', (done) => {
       const user = {
-        username: 'validguy',
-        password: 'validpassword'
+        username: 'Rings',
+        password: 'password'
       };
       chai.request(server)
         .post('/api/v1/user/signin')
@@ -171,6 +157,56 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
+          done();
+        });
+    });
+    it('should return status 200 for valid user inputs', (done) => {
+      const user = {
+        email: 'mails@email.com',
+        username: 'ings',
+        password: 'assword'
+      };
+      chai.request(server)
+        .put('/api/v1/user')
+        .set('x-access-token', token)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('Details successfully updated');
+          done();
+        });
+    });
+    it('should return status 409 for duplicate email value', (done) => {
+      const user = {
+        email: 'emails@email.com',
+        username: 'ings',
+        password: 'assword'
+      };
+      chai.request(server)
+        .put('/api/v1/user')
+        .set('x-access-token', token)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(409);
+          res.body.status.should.eql('Fail');
+          done();
+        });
+    });
+    
+    it('should return status 409 for duplicate username value', (done) => {
+      const user = {
+        email: 'dsmails@email.com',
+        username: 'ings',
+        password: 'assword'
+      };
+      chai.request(server)
+        .put('/api/v1/user')
+        .set('x-access-token', token)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(409);
+          res.body.status.should.eql('Fail');
           done();
         });
     });

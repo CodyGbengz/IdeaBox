@@ -115,10 +115,20 @@ describe('Idea', () => {
         });
     });
   });
-  describe('/GET ideas', () => {
+  describe('GET /api/v1/ideas/user ', () => {
+    it('should return status 403 when no token is provided', (done) => {
+      chai.request(server)
+        .get('/api/v1/ideas/user')
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.have.property('message').to.eql('No token provided.');
+          done();
+        });
+    });
     it('should return status 200 ', (done) => {
       chai.request(server)
-        .get('/api/v1/ideas')
+        .get('/api/v1/ideas/user')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.message.should.eql('Ideas fetched successfully')

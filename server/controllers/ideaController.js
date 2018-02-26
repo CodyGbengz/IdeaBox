@@ -1,6 +1,12 @@
 import Idea from '../models/idea';
 
 export default {
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} response object
+   */
   createIdea(req, res) {
     const {
       title, description, dueBy, categories, status
@@ -45,5 +51,33 @@ export default {
           });
         });
     });
+  },
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res -  response object
+   * @returns { object} response object
+   */
+  fetchPublicIdeas(req, res) {
+    const promise = Idea.find({ status: 'public' });
+    promise.then((ideas) => {
+      if (!ideas) {
+        return res.status(404).json({
+          status: 'Fail',
+          message: 'We are out of ideas...'
+        });
+      }
+      return res.status(200).json({
+        status: 'Success',
+        message: 'Ideas fetched successfully',
+        ideas
+      });
+    })
+      .catch((error) => {
+        res.status(500).json({
+          status: 'Fail',
+          message: error.message
+        });
+      });
   }
 };

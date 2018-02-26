@@ -115,4 +115,15 @@ describe('Idea', () => {
         });
     });
   });
+  describe('/GET ideas', () => {
+    it('should return status 200 ', (done) => {
+      chai.request(server)
+        .get('/api/v1/ideas')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.message.should.eql('Ideas fetched successfully')
+          done();
+        });
+    });
+  });
 });

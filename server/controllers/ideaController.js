@@ -15,6 +15,7 @@ export default {
       categories,
       status
     } = req.body;
+
     const { username, id } = req.decoded;
     const author = { id, username };
 
@@ -250,6 +251,58 @@ export default {
           message: error.message
         });
       });
+  },
+  updateIdea(req, res) {
+    const {
+      title,
+      description,
+      categories,
+      status,
+      dueBy,
+      modified
+    } = req.body;
+    const updatedIdea = {
+      title,
+      description,
+      categories,
+      status,
+      dueBy,
+      modified
+    };
+    Idea.findOne({ title }).exec()
+      .then((idea) => {
+        if (idea) {
+          return res.status(409).json({
+            status: 'Fail',
+            message: 'An idea with this title already exist'
+          });
+        }
+        const promise = Idea.findOneAndUpdate(
+          {
+            _id: req.params.id,
+            'author.id': req.decoded.id
+          },
+          { $set: updatedIdea },
+          { new: true }
+        ).exec();
+        promise.then((modifiedIdea) => {
+          if (!modifiedIdea) {
+            return res.status(404).json({
+              status: 'Fail',
+              message: 'Idea not found'
+            });
+          }
+          return res.status(200).json({
+            status: 'Success',
+            message: 'Idea updated successfully',
+            modifiedIdea
+          });
+        });
+      })
+      .catch(error => res.status(500).json({
+        status: 'Fail',
+        message: error.message
+      }));
   }
 };
 

@@ -10,9 +10,7 @@ const router = express.Router();
 router.post('/api/v1/idea', auth, createIdeaValidator, Idea.createIdea);
 
 // edit idea route, set as public or private
-router.put('/api/v1/idea/:id', (req, res) => {
-  res.status(200).send('edit idea');
-});
+router.put('/api/v1/idea/:id', auth, Idea.updateIdea);
 
 // get all public ideas, search idea, get by category
 router.get('/api/v1/ideas', Idea.fetchPublicIdeas, Idea.fetchByCategory, Idea.searchIdeas);

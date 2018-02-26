@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/api/v1/idea', auth, createIdeaValidator, Idea.createIdea);
 
 // edit idea route, set as public or private
-router.put('/api/v1/idea', (req, res) => {
+router.put('/api/v1/idea/:id', (req, res) => {
   res.status(200).send('edit idea');
 });
 
@@ -23,9 +23,7 @@ router.get('/api/v1/idea/:id', (req, res) => {
 });
 
 // fetch user ideas
-router.get('/api/v1/ideas/user', (req, res) => {
-  res.status(200).send('fetch user ideas');
-});
+router.get('/api/v1/ideas/user', auth, Idea.fetchUserIdeas);
 
 // delete idea
 router.delete('/api/v1/idea', (req, res) => {

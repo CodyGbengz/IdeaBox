@@ -79,5 +79,27 @@ export default {
           message: error.message
         });
       });
+  },
+  fetchUserIdeas(req, res) {
+    const promise = Idea.find({ 'author.id': req.decoded.id });
+    promise.then((ideas) => {
+      if (!ideas) {
+        return res.status(404).json({
+          status: 'Fail',
+          message: 'You seem to be out of ideas'
+        });
+      }
+      return res.status(200).json({
+        status: 'Success',
+        message: 'Ideas fetched successfully',
+        ideas
+      });
+    })
+      .catch((error) => {
+        res.status(500).json({
+          status: 'Fail',
+          message: error.message
+        });
+      });
   }
 };

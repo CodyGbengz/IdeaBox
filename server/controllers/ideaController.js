@@ -80,6 +80,12 @@ export default {
         });
       });
   },
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} response object
+   */
   fetchUserIdeas(req, res) {
     const promise = Idea.find({ 'author.id': req.decoded.id });
     promise.then((ideas) => {
@@ -101,5 +107,34 @@ export default {
           message: error.message
         });
       });
+  },
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res -  response object
+   * @returns {object} response
+   */
+  fetchSingleIdea(req, res) {
+    const promise = Idea.find({ _id: req.params.id });
+    promise.then((idea) => {
+      if (!idea) {
+        return res.status(404).json({
+          status: 'Fail',
+          message: 'This Idea does not exist'
+        });
+      }
+      return res.status(200).json({
+        status: 'Success',
+        message: 'Idea fetched successfully',
+        idea
+      });
+    })
+      .catch((error) => {
+        res.status(500).json({
+          status: 'Fail',
+          message: error.message
+        });
+      });
   }
+
 };

@@ -5,7 +5,7 @@ import User from '../models/user';
 import Idea from '../models/idea';
 import server from '../server';
 
-let token;
+let token, id;
 const should = chai.should();
 chai.use(chaiHttp);
 
@@ -132,6 +132,34 @@ describe('Idea', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.message.should.eql('Ideas fetched successfully')
+          done();
+        });
+    });
+  });
+  describe('GET /api/v1/idea/:id ', () => {
+    it('should return status 200 when a valid request is sent', (done) => {
+      const idea = {
+       title: 'single Idea',
+       description: 'validescription',
+       dueBy: '10/12/2019',
+       categories: 'sports'
+      };
+      chai.request(server)
+        .post('/api/v1/idea')
+        .set('x-access-token', token)
+        .send(idea)
+        .end((err, res) => {
+          id = res.body.newidea._id;
+          res.should.have.status(201);
+          done();
+        });
+    });
+    it('should return status 200', (done) => {
+      chai.request(server)
+        .get(`/api/v1/idea/${id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.message.should.eql('Idea fetched successfully')
           done();
         });
     });

@@ -18,9 +18,7 @@ router.put('/api/v1/idea/:id', (req, res) => {
 router.get('/api/v1/ideas', Idea.fetchPublicIdeas);
 
 // fetch single idea
-router.get('/api/v1/idea/:id', (req, res) => {
-  res.status(200).send('fetch single');
-});
+router.get('/api/v1/idea/:id', Idea.fetchSingleIdea);
 
 // fetch user ideas
 router.get('/api/v1/ideas/user', auth, Idea.fetchUserIdeas);

@@ -22,3 +22,4 @@ languages:
   JavaScript: true
 exclude_paths:
   - "node_modules/"
+  - "server/tests"

@@ -1,6 +1,8 @@
 import User from './userController';
+import Idea from './ideaController';
 
 const controllers = {
-  User
+  User,
+  Idea
 };
 export default controllers;

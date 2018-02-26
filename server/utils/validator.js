@@ -11,9 +11,16 @@ const loginRules = {
   password: 'required|string|min:5'
 };
 
-const editRules = {
+const editProfileRules = {
   username: 'required|string',
   email: 'required|string'
+};
+
+const createIdeaRules = {
+  title: 'required|string',
+  description: 'required|string',
+  categories: 'required|string',
+  dueBy: 'required|date'
 };
 
 const validate = (request, response, next, rules) => {
@@ -32,7 +39,7 @@ export const editValidator = (
   request,
   response,
   next
-) => validate(request, response, next, editRules);
+) => validate(request, response, next, editProfileRules);
 
 export const signupValidator = (
   request,
@@ -45,5 +52,11 @@ export const loginValidator = (
   response,
   next
 ) => validate(request, response, next, loginRules);
+
+export const createIdeaValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, createIdeaRules);
 
 export default validate;

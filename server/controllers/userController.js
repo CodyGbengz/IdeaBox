@@ -20,7 +20,7 @@ export default {
     promise.then((email) => {
       if (email) {
         return res.status(409).json({
-          status: 'Failed',
+          status: 'Fail',
           message: 'This user already exist'
         });
       }
@@ -30,7 +30,7 @@ export default {
         .then((username) => {
           if (username) {
             return res.status(409).json({
-              status: 'Failed',
+              status: 'Fail',
               message: 'This username is already taken'
             });
           }
@@ -40,7 +40,6 @@ export default {
             email: req.body.email.trim().toLowerCase()
           });
           user.save().then((newUser) => {
-            console.log(process.env.SECRET);
             const token = jwt.sign(
               {
                 id: newUser.id,

@@ -6,9 +6,18 @@ const ideaSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  description: String,
-  categories: String,
-  dueBy: Date,
+  description: {
+    type: String,
+    required: true
+  },
+  categories: {
+    type: String,
+    required: true
+  },
+  dueBy: {
+    type: Date,
+    required: true
+  },
   status: {
     type: String,
     default: 'public'

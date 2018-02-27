@@ -16,7 +16,9 @@ if (process.env.NODE_ENV === 'test') {
   mongoose.connect(database.url);
 }
 
-const { user, idea, comment } = routes;
+const {
+  user, idea, comment, rating
+} = routes;
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -31,6 +33,7 @@ app.use(logger('dev'));
 app.use(user);
 app.use(idea);
 app.use(comment);
+app.use(rating);
 
 app.get('*', (req, res) => { res.send('here'); });
 

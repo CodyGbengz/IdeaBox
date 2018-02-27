@@ -9,11 +9,11 @@ const ratingSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  authorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   author: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
     username: String
   },
   ideaId: {

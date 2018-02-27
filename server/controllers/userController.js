@@ -37,9 +37,12 @@ export default {
               email
             });
             user.save().then((newUser) => {
-              const { newUserId, newUserUsername, newUserEmail } = newUser;
               const token = jwt.sign(
-                { newUserId, newUserEmail, newUserUsername },
+                {
+                  id: newUser._id, 
+                  email: newUser.email,
+                  username: newUser.username
+                },
                 process.env.SECRET,
                 { expiresIn: 86400 }
               );

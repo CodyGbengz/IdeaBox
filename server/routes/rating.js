@@ -1,0 +1,10 @@
+import express from 'express';
+import auth from '../utils/auth';
+import Rating from '../controllers/ratingController';
+
+const router = express.Router();
+
+// rate idea
+router.put('/api/v1/idea/:id/rate', auth, Rating.rateIdea);
+
+export default router;

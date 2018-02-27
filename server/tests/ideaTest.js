@@ -10,7 +10,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 describe('Idea', () => {
-  beforeEach((done) => {
+  before((done) => {
     User.remove({}, (err) => {});
     Idea.remove({}, (err) => {});
     done();
@@ -98,6 +98,22 @@ describe('Idea', () => {
           done();
         });
     });
+    it('should return 404 when no ideas are found ', (done) => {
+      chai.request(server)
+      .get('/api/v1/ideas')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    })
+    it('should return 404 when no categories are found ', (done) => {
+      chai.request(server)
+      .get('/api/v1/ideas?category=arts')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    })
     it('should return status 201 when a valid request is sent', (done) => {
       const idea = {
        title: 'validtitle',
@@ -114,6 +130,23 @@ describe('Idea', () => {
           done();
         });
     });
+    it('should return 200 when ideas are successfully fetched ', (done) => {
+      chai.request(server)
+      .get('/api/v1/ideas')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    })
+    it('should return 200 when ideas are successfully fetched', (done) => {
+      chai.request(server)
+      .get('/api/v1/ideas?category=sports')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    })
+    
   });
   describe('GET /api/v1/ideas/user ', () => {
     it('should return status 200 when a valid request is sent', (done) => {
@@ -146,7 +179,6 @@ describe('Idea', () => {
         .get('/api/v1/ideas/user')
         .set('x-access-token', token)
         .end((err, res) => {
-          console.log(res.body, token);
           res.should.have.status(200);
           res.body.message.should.eql('Ideas fetched successfully')
           done();

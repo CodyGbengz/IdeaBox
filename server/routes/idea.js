@@ -24,9 +24,7 @@ router.get('/api/v1/idea/:id', Idea.fetchSingleIdea);
 router.get('/api/v1/ideas/user', auth, Idea.fetchUserIdeas);
 
 // delete idea
-router.delete('/api/v1/idea', (req, res) => {
-  res.status(200).send('delete idea');
-});
+router.delete('/api/v1/idea/:id', auth, Idea.deleteSingleIdea);
 
 // post comment
 router.post('/api/v1/idea/:id/comment', (req, res) => {

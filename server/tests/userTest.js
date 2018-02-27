@@ -160,6 +160,17 @@ describe('User', () => {
           done();
         });
     });
+    it('should return status 200 when a valid token is passed', (done) => {
+      chai.request(server)
+        .get('/api/v1/user')
+        .set('x-access-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.message.should.eql('Profile fetched successfully');
+          res.body.should.be.an('object');
+          done();
+        });
+    });
     it('should return status 200 for valid user inputs', (done) => {
       const user = {
         email: 'mails@email.com',
@@ -207,28 +218,6 @@ describe('User', () => {
         .end((err, res) => {
           res.should.have.status(409);
           res.body.status.should.eql('Fail');
-          done();
-        });
-    });
-  });
-  describe('GET-/api/v1/user route', () => {
-    it('should return status 200 when a valid token is passed', (done) => {
-      chai.request(server)
-        .get('/api/v1/user')
-        .set('x-access-token', token)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.message.should.eql('Profile fetched successfully');
-          res.body.should.be.an('object');
-          done();
-        });
-    });
-    it('should return status 403 when token is invalid', (done) => {
-      chai.request(server)
-        .get('/api/v1/user')
-        .end((err, res) => {
-          res.should.have.status(403);
-          res.body.should.have.property('message').to.eql('No token provided.');
           done();
         });
     });

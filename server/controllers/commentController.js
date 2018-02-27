@@ -2,6 +2,12 @@ import Idea from '../models/idea';
 import Comment from '../models/comment';
 
 export default {
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res - request object
+   * @returns {object} response
+   */
   postComment(req, res) {
     Idea.findById(req.params.id)
       .then((idea) => {
@@ -40,6 +46,12 @@ export default {
         });
       });
   },
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res - request object
+   * @returns {object} response
+   */
   fetchComments(req, res) {
     Comment.find({ ideaId: req.params.id })
       .then((comments) => {

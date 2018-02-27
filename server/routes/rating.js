@@ -7,4 +7,7 @@ const router = express.Router();
 // rate idea
 router.put('/api/v1/idea/:id/rate', auth, Rating.rateIdea);
 
+// get idea ratings
+router.get('/api/v1/idea/:id/rate', auth, Rating.getRating);
+
 export default router;

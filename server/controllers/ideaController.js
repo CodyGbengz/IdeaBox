@@ -61,10 +61,11 @@ export default {
    *
    * @param {object} req - request object
    * @param {object} res -  response object
+   * @param {function} next
    * @returns { object} response object
    */
   fetchPublicIdeas(req, res, next) {
-    if (req.query.category) return next();
+    if (req.query.category || req.query.search) return next();
     Idea.find({ status: 'public' })
       .then((ideas) => {
         if (ideas.length <= 0) {
@@ -142,6 +143,12 @@ export default {
         });
       });
   },
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} response
+   */
   deleteSingleIdea(req, res) {
     Idea.findById(req.params.id)
       .then((idea) => {
@@ -176,7 +183,15 @@ export default {
         });
       });
   },
-  fetchByCategory(req, res) {
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @param {function} next - function
+   * @returns {object} response object
+   */
+  fetchByCategory(req, res, next) {
+    if (req.query.search !== undefined) return next();
     Idea.find({ status: 'public', categories: req.query.category })
       .then((ideas) => {
         if (ideas.length <= 0) {
@@ -197,6 +212,44 @@ export default {
           message: error.message
         });
       });
+  },
+  /**
+   *
+   * @param {object} req - request object
+   * @param {object} res - response object
+   * @returns {object} response object
+   */
+  searchIdeas(req, res) {
+    const searchTerm = req.query.search;
+    if (searchTerm === '') {
+      return res.status(400).json({
+        status: 'Fail',
+        message: 'Enter a search keyword'
+      });
+    }
+    Idea.find({
+      status: 'public',
+      title: new RegExp(searchTerm, 'i')
+    })
+      .then((ideas) => {
+        if (ideas.length <= 0) {
+          return res.status(404).json({
+            status: 'Fail',
+            message: 'No ideas found matching your keyword'
+          });
+        }
+        return res.status(200).json({
+          status: 'Success',
+          message: 'Ideas fetched successfully',
+          ideas
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({
+          status: 'Fail',
+          message: error.message
+        });
+      });
   }
-
 };
+

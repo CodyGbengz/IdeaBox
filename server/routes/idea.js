@@ -15,7 +15,7 @@ router.put('/api/v1/idea/:id', (req, res) => {
 });
 
 // get all public ideas, search idea, get by category
-router.get('/api/v1/ideas', Idea.fetchPublicIdeas, Idea.fetchByCategory);
+router.get('/api/v1/ideas', Idea.fetchPublicIdeas, Idea.fetchByCategory, Idea.searchIdeas);
 
 // fetch single idea
 router.get('/api/v1/idea/:id', Idea.fetchSingleIdea);

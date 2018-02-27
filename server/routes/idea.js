@@ -26,14 +26,5 @@ router.get('/api/v1/ideas/user', auth, Idea.fetchUserIdeas);
 // delete idea
 router.delete('/api/v1/idea/:id', auth, Idea.deleteSingleIdea);
 
-// post comment
-router.post('/api/v1/idea/:id/comment', (req, res) => {
-  res.status(201).send('comment posted');
-});
-
-// get comments
-router.get('/api/v1/idea/:id/comments', (req, res) => {
-  res.status(200).send('fetch idea comments');
-});
 
 export default router;

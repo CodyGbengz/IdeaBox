@@ -63,7 +63,8 @@ export default {
    * @param {object} res -  response object
    * @returns { object} response object
    */
-  fetchPublicIdeas(req, res) {
+  fetchPublicIdeas(req, res, next) {
+    if (req.query.category) return next();
     Idea.find({ status: 'public' })
       .then((ideas) => {
         if (ideas.length <= 0) {
@@ -170,6 +171,28 @@ export default {
       })
       .catch((error) => {
         res.status(501).json({
+          status: 'Fail',
+          message: error.message
+        });
+      });
+  },
+  fetchByCategory(req, res) {
+    Idea.find({ status: 'public', categories: req.query.category })
+      .then((ideas) => {
+        if (ideas.length <= 0) {
+          return res.status(404).json({
+            status: 'Fail',
+            message: 'No ideas under this category yet'
+          });
+        }
+        return res.status(200).json({
+          status: 'Success',
+          message: 'Ideas fetched successfully',
+          ideas
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({
           status: 'Fail',
           message: error.message
         });

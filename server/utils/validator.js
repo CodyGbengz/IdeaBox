@@ -23,6 +23,10 @@ const createIdeaRules = {
   dueBy: 'required|date'
 };
 
+const postCommentRules = {
+  content: 'required|string'
+};
+
 const validate = (request, response, next, rules) => {
   const validator = new Validator(request.body, rules);
   if (validator.passes()) {
@@ -34,7 +38,11 @@ const validate = (request, response, next, rules) => {
     message: errors
   });
 };
-
+export const commentValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, postCommentRules);
 export const editValidator = (
   request,
   response,

@@ -12,9 +12,9 @@ chai.use(chaiHttp);
 describe('Idea', () => {
   beforeEach((done) => {
     User.remove({}, (err) => {});
-    Idea.remove({}, (err) => {
-      done()
-    })
+    Idea.remove({}, (err) => {});
+    done();
+    
   });
   describe('/POST /api/user/signup', () => {
     it('should return status 200 for a successful signup', (done) => {
@@ -98,7 +98,7 @@ describe('Idea', () => {
           done();
         });
     });
-    it('should return status 200 when a valid request is sent', (done) => {
+    it('should return status 201 when a valid request is sent', (done) => {
       const idea = {
        title: 'validtitle',
        description: 'validescription',
@@ -116,6 +116,22 @@ describe('Idea', () => {
     });
   });
   describe('GET /api/v1/ideas/user ', () => {
+    it('should return status 200 when a valid request is sent', (done) => {
+      const idea = {
+       title: 'validtitle',
+       description: 'validescription',
+       dueBy: '10/12/2019',
+       categories: 'sports'
+      };
+      chai.request(server)
+        .post('/api/v1/idea')
+        .set('x-access-token', token)
+        .send(idea)
+        .end((err, res) => {
+          res.should.have.status(201);
+          done();
+        });
+    });
     it('should return status 403 when no token is provided', (done) => {
       chai.request(server)
         .get('/api/v1/ideas/user')
@@ -130,6 +146,7 @@ describe('Idea', () => {
         .get('/api/v1/ideas/user')
         .set('x-access-token', token)
         .end((err, res) => {
+          console.log(res.body, token);
           res.should.have.status(200);
           res.body.message.should.eql('Ideas fetched successfully')
           done();

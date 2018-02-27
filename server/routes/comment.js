@@ -9,8 +9,6 @@ const router = express.Router();
 router.post('/api/v1/idea/:id/comment', auth, commentValidator, Comment.postComment);
 
 // get comments
-router.get('/api/v1/idea/:id/comments', (req, res) => {
-  res.status(200).send('fetch idea comments');
-});
+router.get('/api/v1/idea/:id/comments', Comment.fetchComments);
 
 export default router;

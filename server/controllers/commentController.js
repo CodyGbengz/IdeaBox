@@ -39,5 +39,27 @@ export default {
           message: error.message
         });
       });
+  },
+  fetchComments(req, res) {
+    Comment.find({ ideaId: req.params.id })
+      .then((comments) => {
+        if (comments.length <= 0) {
+          return res.status(404).json({
+            status: 'Fail',
+            message: 'No comments posted yet'
+          });
+        }
+        return res.status(200).json({
+          status: 'Success',
+          message: 'Comments fetched successfully',
+          comments
+        });
+      })
+      .catch((error) => {
+        res.status(501).json({
+          status: 'Fail',
+          message: error.message
+        });
+      });
   }
 };

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import Idea from '../models/idea';
 
 export default {
@@ -179,7 +178,7 @@ export default {
           });
       })
       .catch((error) => {
-        res.status(501).json({
+        res.status(500).json({
           status: 'Fail',
           message: error.message
         });

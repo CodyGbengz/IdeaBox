@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Idea from '../models/idea';
 
 export default {
@@ -66,7 +67,7 @@ export default {
    * @returns { object} response object
    */
   fetchPublicIdeas(req, res, next) {
-    if (req.query.category || req.query.search) return next();
+    if (req.query.category !== undefined || req.query.search !== undefined) return next();
     Idea.find({ status: 'public' })
       .then((ideas) => {
         if (ideas.length <= 0) {
@@ -253,52 +254,19 @@ export default {
       });
   },
   updateIdea(req, res) {
-    const {
-      title,
-      description,
-      categories,
-      status,
-      dueBy,
-      modified
-    } = req.body;
-    const updatedIdea = {
-      title,
-      description,
-      categories,
-      status,
-      dueBy,
-      modified
-    };
-    Idea.findOne({ title }).exec()
-      .then((idea) => {
-        if (idea) {
-          return res.status(409).json({
-            status: 'Fail',
-            message: 'An idea with this title already exist'
-          });
-        }
-        const promise = Idea.findOneAndUpdate(
-          {
-            _id: req.params.id,
-            'author.id': req.decoded.id
-          },
-          { $set: updatedIdea },
-          { new: true }
-        ).exec();
-        promise.then((modifiedIdea) => {
-          if (!modifiedIdea) {
-            return res.status(404).json({
-              status: 'Fail',
-              message: 'Idea not found'
-            });
-          }
-          return res.status(200).json({
-            status: 'Success',
-            message: 'Idea updated successfully',
-            modifiedIdea
-          });
-        });
-      })
+    Idea.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        'author.id': req.decoded.id
+      },
+      { $set: req.body },
+      { new: true }
+    )
+      .then(modifiedIdea => res.status(200).json({
+        status: 'Success',
+        message: 'Idea updated successfully',
+        modifiedIdea
+      }))
       .catch(error => res.status(500).json({
         status: 'Fail',
         message: error.message

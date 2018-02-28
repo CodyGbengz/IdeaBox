@@ -151,7 +151,7 @@ describe('Idea', () => {
   describe('GET /api/v1/ideas/user ', () => {
     it('should return status 200 when a valid request is sent', (done) => {
       const idea = {
-       title: 'validtitle',
+       title: 'Another title',
        description: 'validescription',
        dueBy: '10/12/2019',
        categories: 'sports'
@@ -212,5 +212,25 @@ describe('Idea', () => {
           done();
         });
     });
+    it('should return 400 when searchTerm value is empty', (done) => {
+      chai.request(server)
+      .get(`/api/v1/ideas?search=`)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.body.status.should.eql('Fail')
+        res.body.message.should.eql('Enter a search keyword')
+        done();
+      })
+    })
+    it('should return 404 when searchTerm does not find any match', (done) => {
+      chai.request(server)
+      .get(`/api/v1/ideas?search=xxxxxx`)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.status.should.eql('Fail')
+        res.body.message.should.eql('No ideas found matching your keyword')
+        done();
+      })
+    })
   });
 });

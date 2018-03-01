@@ -16,7 +16,7 @@ describe('Idea', () => {
     done();
     
   });
-  describe('/POST /api/user/signup', () => {
+  describe('POST/api/user/signup', () => {
     it('should return status 200 for a successful signup', (done) => {
       chai.request(server)
         .post('/api/v1/user/signup')
@@ -27,12 +27,14 @@ describe('Idea', () => {
         })
         .end((err, res) => {
           res.should.have.status(201);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('User created successfully')
           token = res.body.token;
           done();
         });
     });
   });
-  describe('/POST idea', () => {
+  describe('POST /api/v1/idea', () => {
     it('should return status 403 when no token is provided', (done) => {
       const idea = {
        title: ' '
@@ -42,11 +44,12 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(403);
-          res.body.should.have.property('message').to.eql('No token provided.');
+          res.body.status.should.eql('Fail')
+          res.body.message.should.eql('No token provided.');
           done();
         });
     });
-    it('should return status 400 when title field is invalid', (done) => {
+    it('should return status 400 when title value is invalid', (done) => {
       const idea = {
        title: ''
       };
@@ -56,11 +59,14 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('failed');
+          res.body.message[0].should.eql('The title field is required.');
           done();
         });
     });
-    it('should return status 400 when description is field invalid', (done) => {
+    it('should return status 400 when description value invalid', (done) => {
       const idea = {
+        title:'titless',
        description: ''
       };
       chai.request(server)
@@ -69,12 +75,16 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('failed');
+          res.body.message[0].should.eql('The description field is required.');
           done();
         });
     });
-    it('should return status 400 when dueBy is field invalid', (done) => {
+    it('should return status 400 when dueBy value is invalid', (done) => {
       const idea = {
-       dueBy: ''
+        title: 'titles',
+        description: 'descriptiondd',
+        dueBy: ''
       };
       chai.request(server)
         .post('/api/v1/idea')
@@ -82,12 +92,16 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('failed');
+          res.body.message[0].should.eql('The categories field is required.');
           done();
         });
     });
-    it('should return status 400 when dueBy is field invalid', (done) => {
+    it('should return status 400 when categories value invalid', (done) => {
       const idea = {
-       dueBy: ''
+       title: 'title',
+       description: 'decriptind',
+       categories: 'science'
       };
       chai.request(server)
         .post('/api/v1/idea')
@@ -95,6 +109,8 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('failed');
+          res.body.message[0].should.eql('The dueBy field is required.')
           done();
         });
     });
@@ -103,6 +119,8 @@ describe('Idea', () => {
       .get('/api/v1/ideas')
       .end((err, res) => {
         res.should.have.status(404);
+        res.body.status.should.eql('Fail')
+        res.body.message.should.eql('We are out of ideas...')
         done();
       });
     })
@@ -111,6 +129,8 @@ describe('Idea', () => {
       .get('/api/v1/ideas?category=arts')
       .end((err, res) => {
         res.should.have.status(404);
+        res.body.status.should.eql('Fail');
+        res.body.message.should.eql('No ideas under this category yet')
         done();
       });
     })
@@ -127,6 +147,9 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(201);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('Idea created successfully');
+          res.body.newidea.should.have.property('title').eql('validtitle');
           done();
         });
     });
@@ -135,6 +158,8 @@ describe('Idea', () => {
       .get('/api/v1/ideas')
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.status.should.eql('Success');
+        res.body.message.should.eql('Ideas fetched successfully')
         done();
       });
     })
@@ -143,6 +168,8 @@ describe('Idea', () => {
       .get('/api/v1/ideas?category=sports')
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.status.should.eql('Success');
+        res.body.message.should.eql('Ideas fetched successfully')
         done();
       });
     })
@@ -162,6 +189,7 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(201);
+          res.body.status.should.eql('Success');
           done();
         });
     });
@@ -170,7 +198,8 @@ describe('Idea', () => {
         .get('/api/v1/ideas/user')
         .end((err, res) => {
           res.should.have.status(403);
-          res.body.should.have.property('message').to.eql('No token provided.');
+          res.body.status.should.eql('Fail')
+          res.body.message.should.eql('No token provided.');
           done();
         });
     });
@@ -186,7 +215,7 @@ describe('Idea', () => {
     });
   });
   describe('GET /api/v1/idea/:id ', () => {
-    it('should return status 200 when a valid request is sent', (done) => {
+    it('should return status 201 when idea is created successfully', (done) => {
       const idea = {
        title: 'single Idea',
        description: 'validescription',
@@ -212,6 +241,15 @@ describe('Idea', () => {
           done();
         });
     });
+    it('should return status 200', (done) => {
+      chai.request(server)
+        .get(`/api/v1/ideas?search=single`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.message.should.eql('Ideas fetched successfully')
+          done();
+        });
+    });
     it('should return 400 when searchTerm value is empty', (done) => {
       chai.request(server)
       .get(`/api/v1/ideas?search=`)
@@ -232,5 +270,50 @@ describe('Idea', () => {
         done();
       })
     })
+  });
+  describe('PUT /api/v1/idea/:id ', () => {
+    it('should return status 201 when a new idea is created', (done) => {
+      const idea = {
+       title: 'Editable Idea',
+       description: 'validescription',
+       dueBy: '10/12/2019',
+       categories: 'sports'
+      };
+      chai.request(server)
+        .post('/api/v1/idea')
+        .set('x-access-token', token)
+        .send(idea)
+        .end((err, res) => {
+          id = res.body.newidea._id;
+          res.should.have.status(201);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('Idea created successfully');
+          done();
+        });
+    });
+    it('should return status 200', (done) => {
+      chai.request(server)
+        .put(`/api/v1/idea/${id}`)
+        .set('x-access-token', token)
+        .send({title: 'new title'})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.status.should.eql('Success')
+          res.body.message.should.eql('Idea updated successfully');
+          res.body.modifiedIdea.title.should.eql('new title');
+          done();
+        });
+    });
+    it('should return status 400 when passed an invalid parameter', (done) => {
+      chai.request(server)
+        .put(`/api/v1/idea/111`)
+        .set('x-access-token', token)
+        .send({title: 'new title'})
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.status.should.eql('Fail');
+          done();
+        });
+    });
   });
 });

@@ -12,9 +12,12 @@ const database = require('./config/database');
 
 if (process.env.NODE_ENV === 'test') {
   mongoose.connect(database.url_test);
-} else {
-  mongoose.connect(database.url);
 }
+if (process.env.NODE_ENV === 'production') {
+  mongoose.connect(database.url_production);
+}
+
+mongoose.connect(database.url);
 
 const {
   user, idea, comment, rating

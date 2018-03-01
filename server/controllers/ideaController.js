@@ -2,10 +2,12 @@ import Idea from '../models/idea';
 
 export default {
   /**
+   * @description createIdea controller handle request for creating new ideas
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
-   * @returns {object} response object
+   * @param {Object} req - request Object
+   * @param {Object} res - response Object
+   *
+   * @returns {Object} response Object
    */
   createIdea(req, res) {
     const {
@@ -59,11 +61,13 @@ export default {
       });
   },
   /**
+   * @description fetchPublicIdeas controller handles fetching all ideas that are public
    *
-   * @param {object} req - request object
-   * @param {object} res -  response object
+   * @param {Object} req - request Object
+   * @param {Object} res -  response Object
    * @param {function} next
-   * @returns { object} response object
+   *
+   * @returns { Object} response Object
    */
   fetchPublicIdeas(req, res, next) {
     if (req.query.category !== undefined || req.query.search !== undefined) return next();
@@ -89,10 +93,12 @@ export default {
       });
   },
   /**
+   * @description fetchUserIdeas controller handles requests for fetching a user's ideas
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
-   * @returns {object} response object
+   * @param {Object} req - request Object
+   * @param {Object} res - response Object
+   *
+   * @returns {Object} response Object
    */
   fetchUserIdeas(req, res) {
     Idea.find({ 'author.id': req.decoded.id })
@@ -117,10 +123,12 @@ export default {
       });
   },
   /**
+   * @description fetchSingleIdea controller handles request
    *
-   * @param {object} req - request object
-   * @param {object} res -  response object
-   * @returns {object} response
+   * @param {Object} req - request Object
+   * @param {Object} res -  response Object
+   *
+   * @returns {Object} response
    */
   fetchSingleIdea(req, res) {
     Idea.findById(req.params.id)
@@ -145,10 +153,12 @@ export default {
       });
   },
   /**
+   * @description deleteSingleIdea controller handles requests to delete an idea
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
-   * @returns {object} response
+   * @param {Object} req - request Object
+   * @param {Object} res - response Object
+   *
+   * @returns {Object} response
    */
   deleteSingleIdea(req, res) {
     Idea.findById(req.params.id)
@@ -166,7 +176,7 @@ export default {
           });
         }
         const promise = Idea.findByIdAndRemove(req.params.id);
-        promise.then(() => res.status(202).json({
+        promise.then(() => res.status(200).json({
           status: 'Success',
           message: 'Idea deleted successfully'
         }))
@@ -185,11 +195,13 @@ export default {
       });
   },
   /**
+   * @description fetchByCategory controller handles requests for ideas filtered by category
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
+   * @param {Object} req - request Object
+   * @param {Object} res - response Object
    * @param {function} next - function
-   * @returns {object} response object
+   *
+   * @returns {Object} response Object
    */
   fetchByCategory(req, res, next) {
     if (req.query.search !== undefined) return next();
@@ -215,10 +227,12 @@ export default {
       });
   },
   /**
+   * @description searchIdeas controller handles search requests
    *
-   * @param {object} req - request object
-   * @param {object} res - response object
-   * @returns {object} response object
+   * @param {Object} req - request Object
+   * @param {Object} res - response Object
+   *
+   * @returns {Object} response Object
    */
   searchIdeas(req, res) {
     const searchTerm = req.query.search;
@@ -252,20 +266,60 @@ export default {
         });
       });
   },
+  /**
+   * @description updateIdea controller handles requests to edit an idea
+   *
+   * @param {Object} req - request Object
+   * @param {Object} res - response Object
+   *
+   * @returns {Object} response
+   */
   updateIdea(req, res) {
+    const {
+      title,
+      description,
+      category,
+      dueBy,
+      status
+    } = req.body;
+
+    if (!title && !description && !category && !dueBy && !status) {
+      return res.status(400).json({
+        status: 'Fail',
+        message: 'You have to include the field you wish to edit'
+      });
+    }
     Idea.findOneAndUpdate(
       {
         _id: req.params.id,
         'author.id': req.decoded.id
       },
-      { $set: req.body },
+      {
+        $set: req.body,
+        modified: true
+      },
       { new: true }
     )
-      .then(modifiedIdea => res.status(200).json({
-        status: 'Success',
-        message: 'Idea updated successfully',
-        modifiedIdea
-      }))
+      .then((modifiedIdea) => {
+        if (modifiedIdea) {
+          res.status(200).json({
+            status: 'Success',
+            message: 'Idea updated successfully',
+            modifiedIdea: {
+              title: modifiedIdea.title,
+              description: modifiedIdea.description,
+              categories: modifiedIdea.categories,
+              dueBy: modifiedIdea.dueBy,
+              modified: true,
+              status: modifiedIdea.status
+            }
+          });
+        }
+        return res.status(404).json({
+          status: 'Fail',
+          message: 'Idea not found'
+        });
+      })
       .catch(error => res.status(500).json({
         status: 'Fail',
         message: error.message

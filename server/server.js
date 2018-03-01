@@ -4,9 +4,8 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import routes from './routes';
 
-
 /**
- * express app instance
+ * MongoDb connection
 */
 const database = require('./config/database');
 
@@ -16,7 +15,6 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV === 'production') {
   mongoose.connect(database.url_production);
 }
-
 mongoose.connect(database.url);
 
 const {
@@ -27,9 +25,8 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// http request logger
 app.use(logger('dev'));
+
 /**
  * API routes
  */
@@ -37,10 +34,8 @@ app.use(user);
 app.use(idea);
 app.use(comment);
 app.use(rating);
+app.use('*', (req, res) => { res.send('Welcome to the IdeaBox API'); });
 
-app.get('*', (req, res) => { res.send('here'); });
-
-// entry point
 app.listen(port);
 
 export default app;

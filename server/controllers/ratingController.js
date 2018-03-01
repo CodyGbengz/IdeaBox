@@ -2,10 +2,12 @@ import Rating from '../models/rating';
 
 export default {
   /**
+   * @description rateIdea controller handles request for rating ideas
    *
-   * @param {object} req - request object
-   * @param {object} res - request object
-   * @returns {object} response
+   * @param {Object} req - request Object
+   * @param {Object} res - request Object
+   *
+   * @returns {Object} response
    */
   rateIdea(req, res) {
     const query = {
@@ -40,10 +42,10 @@ export default {
       });
   },
   /**
-   *
-   * @param {object} req - request object
-   * @param {object} res - request object
-   * @returns {object} response
+   * @description getRating controller handles request for comments on and idea
+   * @param {Object} req - request Object
+   * @param {Object} res - request Object
+   * @returns {Object} response
    */
   getRating(req, res) {
     Rating.find({ ideaId: req.params.id })

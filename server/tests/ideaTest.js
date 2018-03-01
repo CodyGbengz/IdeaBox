@@ -6,7 +6,7 @@ import Idea from '../models/idea';
 import server from '../server';
 
 let token, id;
-const should = chai.should();
+const should = chai.should;
 chai.use(chaiHttp);
 
 describe('Idea', () => {
@@ -59,7 +59,7 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
-          res.body.status.should.eql('failed');
+          res.body.status.should.eql('Fail');
           res.body.message[0].should.eql('The title field is required.');
           done();
         });
@@ -75,7 +75,7 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
-          res.body.status.should.eql('failed');
+          res.body.status.should.eql('Fail');
           res.body.message[0].should.eql('The description field is required.');
           done();
         });
@@ -92,7 +92,7 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
-          res.body.status.should.eql('failed');
+          res.body.status.should.eql('Fail');
           res.body.message[0].should.eql('The categories field is required.');
           done();
         });
@@ -109,7 +109,7 @@ describe('Idea', () => {
         .send(idea)
         .end((err, res) => {
           res.should.have.status(400);
-          res.body.status.should.eql('failed');
+          res.body.status.should.eql('Fail');
           res.body.message[0].should.eql('The dueBy field is required.')
           done();
         });
@@ -145,7 +145,7 @@ describe('Idea', () => {
         .post('/api/v1/idea')
         .set('x-access-token', token)
         .send(idea)
-        .end((err, res) => {
+        .end((err, res) => { 
           res.should.have.status(201);
           res.body.status.should.eql('Success');
           res.body.message.should.eql('Idea created successfully');

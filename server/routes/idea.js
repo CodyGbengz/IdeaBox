@@ -1,7 +1,7 @@
 import express from 'express';
 import auth from '../utils/auth';
 import Idea from '../controllers/ideaController';
-import { createIdeaValidator } from '../utils/validator';
+import { createIdeaValidator, editValidator } from '../utils/validator';
 
 
 const router = express.Router();
@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/api/v1/idea', auth, createIdeaValidator, Idea.createIdea);
 
 // edit idea route, set as public or private
-router.put('/api/v1/idea/:id', auth, Idea.updateIdea);
+router.put('/api/v1/idea/:id', auth, editValidator, Idea.updateIdea);
 
 // get all public ideas, search idea, get by category
 router.get('/api/v1/ideas', Idea.fetchPublicIdeas, Idea.fetchByCategory, Idea.searchIdeas);

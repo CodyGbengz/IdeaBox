@@ -8,10 +8,12 @@ mongoose.Promise = global.Promise;
 
 export default {
   /**
-   * creates a new user
-   * @param {object}  req user request object
-   * @param {object}  res server response object
-   * @returns {object} - res
+   * @description createUser controller handles request for creating new users
+   *
+   * @param {Object}  req user request Object
+   * @param {Object}  res server response Object
+   *
+   * @returns {Object} - res
    */
   createUser(req, res) {
     const { username, password, email } = req.body;
@@ -39,8 +41,7 @@ export default {
             user.save().then((newUser) => {
               const token = jwt.sign(
                 {
-                  id: newUser._id, 
-                  email: newUser.email,
+                  id: newUser._id,
                   username: newUser.username
                 },
                 process.env.SECRET,
@@ -49,7 +50,10 @@ export default {
               return res.status(201).json({
                 status: 'Success',
                 message: 'User created successfully',
-                user: newUser,
+                user: {
+                  id: newUser._id,
+                  username: newUser.username
+                },
                 token
               });
             })
@@ -63,10 +67,12 @@ export default {
       });
   },
   /**
+   * @description loginUser controller logs in a registered user
    *
-   * @param {object} req - user request object
-   * @param {object} res - server response object
-   * @returns {object} - res
+   * @param {Object} req - user request Object
+   * @param {Object} res - server response Object
+   *
+   * @returns {Object} - response
    */
   loginUser(req, res) {
     const { username, password } = req.body;
@@ -75,12 +81,13 @@ export default {
         if (!user) {
           return res.status(404).json({
             status: 'Fail',
-            message: 'Invalid credentials'
+            message: 'Invalid Username'
           });
         }
         if (!bcrypt.compareSync(password, user.password)) {
           return res.status(401).json({
-            status: 'Invalid credentials'
+            status: 'Fail',
+            message: 'Wrong Password'
           });
         }
         if (user) {
@@ -88,7 +95,6 @@ export default {
             {
               id: user.id,
               username: user.username,
-              email: user.email
             },
             process.env.SECRET,
             { expiresIn: 86400 }
@@ -106,51 +112,37 @@ export default {
       }));
   },
   /**
+   * @description editUserProfile modifies a users profile
    *
-   * @param {object} req - user request object
-   * @param {object} res - server response object
-   * @returns {object}  res
+   * @param {Object} req - user request Object
+   * @param {Object} res - server response Object
+   *
+   * @returns {Object}  response
    */
   editUserProfile(req, res) {
-    const { username, email } = req.body;
     const userInfo = {
       $set: req.body
     };
-    User.findOne({ email })
-      .then((emailTaken) => {
-        if (emailTaken) {
-          return res.status(409).json({
-            status: 'Fail',
-            message: 'email already taken'
-          });
-        }
-        User.findOne({ username })
-          .then((usernameTaken) => {
-            if (usernameTaken) {
-              return res.status(409).send({
-                status: 'Fail',
-                message: 'username already taken'
-              });
-            }
-            User.findByIdAndUpdate(req.decoded.id, userInfo, { new: true })
-              .then((updatedUser) => {
-                res.status(200).json({
-                  status: 'Success',
-                  message: 'Details successfully updated',
-                  updatedUser
-                });
-              })
-              .catch(error => res.status(400).send({
-                error: error.message
-              }));
-          });
-      });
+    User.findByIdAndUpdate(req.decoded.id, userInfo, { new: true })
+      .then((updatedUser) => {
+        res.status(200).json({
+          status: 'Success',
+          message: 'Details successfully updated',
+          updatedUser
+        });
+      })
+      .catch(error => res.status(500).send({
+        status: 'Fail',
+        error: error.message
+      }));
   },
   /**
+   * @description fetchUserProfile gets a user's profile
    *
-   * @param {object} req - user request object
-   * @param {object} res - server response object
-   * @returns {object} res
+   * @param {Object} req - user request Object
+   * @param {Object} res - server response Object
+   *
+   * @returns {Object} res
    */
   fetchUserProfile(req, res) {
     User.findById(req.decoded.id)

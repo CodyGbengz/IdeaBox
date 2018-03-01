@@ -12,11 +12,11 @@ chai.use(chaiHttp);
 // Our parent block
 
 describe('User', () => {
-
   /*
   * Test the /GET route
   */
   describe('/POST user', () => {
+
     it('should return status 400 when email field is invalid', (done) => {
       const user = {
         username: 'Rings',
@@ -27,9 +27,12 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('Fail');
+          res.body.message[0].should.eql('The email field is required.')
           done();
         });
     });
+
     it('should return status 400 when username field is invalid', (done) => {
       const user = {
         email: 'email@email.com',
@@ -40,9 +43,12 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('Fail');
+          res.body.message[0].should.eql('The username field is required.')
           done();
         });
     });
+
     it('should return status 400 when password field is invalid', (done) => {
       const user = {
         email: 'emails@email.com',
@@ -53,9 +59,12 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('Fail');
+          res.body.message[0].should.eql('The password field is required.')
           done();
         });
     });
+
     it('should return status 201 when request contains all required field', (done) => {
       const user = {
         email: 'emails@email.com',
@@ -74,6 +83,7 @@ describe('User', () => {
     });
   });
   describe('POST/api/v1/user/signin route', () => {
+
     it('should return status 400 when username is invalid', (done) => {
       const user = {
         username: '',
@@ -84,9 +94,12 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('Fail');
+          res.body.message[0].should.eql('The username field is required.')
           done();
         });
     });
+
     it('should return status 400 when password is invalid', (done) => {
       const user = {
         username: 'Rings',
@@ -97,9 +110,12 @@ describe('User', () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.status.should.eql('Fail');
+          res.body.message[0].should.eql('The password field is required.')
           done();
         });
     });
+
     it('should return status 200 for valid user inputs', (done) => {
       const user = {
         username: 'Rings',
@@ -132,7 +148,8 @@ describe('User', () => {
           done();
         });
     });
-    it('should return status 400 when username is invalid', (done) => {
+
+    it('should return ', (done) => {
       const user = {
         username: '',
         email: 'email@email.com'
@@ -142,10 +159,14 @@ describe('User', () => {
         .set('x-access-token', token)
         .send(user)
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(200);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('Details successfully updated');
+          // res.body.updatedUser.
           done();
         });
     });
+
     it('should return status 400 when email is invalid', (done) => {
       const user = {
         username: 'Rings',
@@ -156,10 +177,14 @@ describe('User', () => {
         .set('x-access-token', token)
         .send(user)
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(200);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('Details successfully updated');
+          res.body.updatedUser.username.should.eql('Rings');
           done();
         });
     });
+
     it('should return status 200 when a valid token is passed', (done) => {
       chai.request(server)
         .get('/api/v1/user')
@@ -171,10 +196,11 @@ describe('User', () => {
           done();
         });
     });
+
     it('should return status 200 for valid user inputs', (done) => {
       const user = {
         email: 'mails@email.com',
-        username: 'ings',
+        username: 'stings',
         password: 'assword'
       };
       chai.request(server)
@@ -185,39 +211,6 @@ describe('User', () => {
           res.should.have.status(200);
           res.body.status.should.eql('Success');
           res.body.message.should.eql('Details successfully updated');
-          done();
-        });
-    });
-    it('should return status 409 for duplicate email value', (done) => {
-      const user = {
-        email: 'emails@email.com',
-        username: 'ings',
-        password: 'assword'
-      };
-      chai.request(server)
-        .put('/api/v1/user')
-        .set('x-access-token', token)
-        .send(user)
-        .end((err, res) => {
-          res.should.have.status(409);
-          res.body.status.should.eql('Fail');
-          done();
-        });
-    });
-    
-    it('should return status 409 for duplicate username value', (done) => {
-      const user = {
-        email: 'dsmails@email.com',
-        username: 'ings',
-        password: 'assword'
-      };
-      chai.request(server)
-        .put('/api/v1/user')
-        .set('x-access-token', token)
-        .send(user)
-        .end((err, res) => {
-          res.should.have.status(409);
-          res.body.status.should.eql('Fail');
           done();
         });
     });

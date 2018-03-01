@@ -12,8 +12,9 @@ const loginRules = {
 };
 
 const editProfileRules = {
-  username: 'required|string',
-  email: 'required|string'
+  status: [{'in': ['private', 'public'] }],
+  username: 'string|min:5',
+  email: 'email'
 };
 
 const createIdeaRules = {
@@ -27,6 +28,10 @@ const postCommentRules = {
   content: 'required|string'
 };
 
+const ratingsRules = {
+  stars: 'required|numeric|min:1|max:5'
+};
+
 const validate = (request, response, next, rules) => {
   const validator = new Validator(request.body, rules);
   if (validator.passes()) {
@@ -34,7 +39,7 @@ const validate = (request, response, next, rules) => {
   }
   const errors = Object.values(validator.errors.errors).map(val => val[0]);
   return response.status(400).json({
-    status: 'failed',
+    status: 'Fail',
     message: errors
   });
 };
@@ -67,4 +72,9 @@ export const createIdeaValidator = (
   next
 ) => validate(request, response, next, createIdeaRules);
 
+export const ratingValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, ratingsRules);
 export default validate;

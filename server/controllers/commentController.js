@@ -3,10 +3,12 @@ import Comment from '../models/comment';
 
 export default {
   /**
+   * @description post comments controller handles creating comments
    *
-   * @param {object} req - request object
-   * @param {object} res - request object
-   * @returns {object} response
+   * @param {Object} req - request Object
+   * @param {Object} res - request Object
+   *
+   * @returns {Object} response
    */
   postComment(req, res) {
     Idea.findById(req.params.id)
@@ -17,6 +19,19 @@ export default {
             message: 'This idea doesn"t exist'
           });
         }
+        if (idea.status === 'private' && (String(idea.author.id) !== req.decoded.id)) {
+          return res.status(403).json({
+            status: 'Fail',
+            message: 'You are not permitted top comment on this idea'
+          });
+        }
+        if (Date.now() > idea.dueBy) {
+          return res.status(403).json({
+            status: 'Fail',
+            message: 'You cannot comment on an idea after it"s due Date'
+          });
+        }
+
         const comment = new Comment({
           content: req.body.content,
           author: {
@@ -29,7 +44,9 @@ export default {
           res.status(201).json({
             status: 'Success',
             message: 'Comment posted successfully',
-            newcomment
+            newcomment: {
+              content: newcomment.content
+            }
           });
         })
           .catch((error) => {
@@ -47,10 +64,12 @@ export default {
       });
   },
   /**
+   * @description fetchComments controller handles request for fetching comments for an idea
    *
-   * @param {object} req - request object
-   * @param {object} res - request object
-   * @returns {object} response
+   * @param {Object} req - request Object
+   * @param {Object} res - request Object
+   *
+   * @returns {Object} response
    */
   fetchComments(req, res) {
     Comment.find({ ideaId: req.params.id })

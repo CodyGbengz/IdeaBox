@@ -1,0 +1,702 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>IdeaBox API</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="docs-assets/stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="docs-assets/stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="docs-assets/javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;javascript&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="docs-assets/images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="docs-assets/images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="javascript">javascript</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#making-request" class="toc-h1 toc-link" data-title="Making Request">Making Request</a>
+          </li>
+          <li>
+            <a href="#user" class="toc-h1 toc-link" data-title="User">User</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#user-signup" class="toc-h2 toc-link" data-title="User">User Signup</a>
+                  </li>
+                  <li>
+                    <a href="#user-signin" class="toc-h2 toc-link" data-title="User">User Signin</a>
+                  </li>
+                  <li>
+                    <a href="#get-profile" class="toc-h2 toc-link" data-title="User">Get Profile</a>
+                  </li>
+                  <li>
+                    <a href="#edit-user-profile" class="toc-h2 toc-link" data-title="User">Edit user profile</a>
+                  </li>
+                  <li>
+                    <a href="#create-idea" class="toc-h2 toc-link" data-title="User">Create idea</a>
+                  </li>
+                  <li>
+                    <a href="#fetch-all-public-ideas" class="toc-h2 toc-link" data-title="User">Fetch all Public ideas</a>
+                  </li>
+                  <li>
+                    <a href="#fetch-single-idea" class="toc-h2 toc-link" data-title="User">Fetch Single idea</a>
+                  </li>
+                  <li>
+                    <a href="#edit-an-idea" class="toc-h2 toc-link" data-title="User">Edit an idea</a>
+                  </li>
+                  <li>
+                    <a href="#delete-an-idea" class="toc-h2 toc-link" data-title="User">Delete an idea</a>
+                  </li>
+                  <li>
+                    <a href="#post-idea-comment" class="toc-h2 toc-link" data-title="User">Post idea comment</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the IdeaBox API documentation! This API powers the IdeaBox web app, all .You can use our API to access IdeaBox API endpoints, which can get information on various ideas and users in our database.</p>
+<h1 id='making-request'>Making Request</h1>
+<p>Upon signing up or logging in with the IdeaBox API an authorization token is generated and it can be used to access other resources from the IdeaBox API.</p>
+
+<p>The generated token expires within 24 hours after it was generated.</p>
+
+<p>This token can be placed in <code>req.headers</code>,<code>req.body</code> or <code>req.query.</code></p>
+
+<p><code>token: averylongrandom.jsonwebtokenstring.requiredforauthentication</code>
+<aside class="notice">
+Replace <code>eyJ1c2VyIjp7ImlkIjozLCJ1c2VybmFtZSI6IkNoZWZjaGVmIiwiZW1haWwiOiJjaGVmZnlAcm9sby5jb20iLCJwYXNzd29yZCI6ImJiYjhhYWU1N2MxMDRjZGE0MGM5Mzg0M2FkNWU2idXBkYXRlZEF0IjoiMjAxNy0xMS0wOVQxNTowNzo0Ni40MjBaIiwiY3JlYXRlZEF0IjoiMjAxNy0xMS0wOVQxNTowNzo0Ni40MjBaIn0sImlhdCI6MTUxMDI0MDA2NiwiZXhNTEwMzI2NDY2fQ.MZOqHSrXzDMeG7m8JMC8qYEb3</code> with your authorization token.
+</aside></p>
+<h1 id='user'>User</h1><h2 id='user-signup'>User Signup</h2>
+<blockquote>
+<p>Request body:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w"> 
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wunderdog"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbenga.ode@gmail.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01234567"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response Body:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Signup successful"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wunderdog"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"_dkdihaoifjf"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"token"</span><span class="p">:</span><span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJ1c2VybmFtZSI6IkNoZWZjaGVmIiwiZW1haWwiOiJjaGVmZnlAcm9sby5jb20iLCJwYXNzd29yZCI6ImJiYjhhYWU1N2MxMDRjZGE0MGM5Mzg0M2FkNWU2ZGI4IiwidXBkYXRlZEF0IjoiMjAxNy0xMS0wOVQxNTowNzo0Ni40MjBaIiwiY3JlYXRlZEF0IjoiMjAxNy0xMS0wOVQxNTowNzo0Ni40MjBaIn0sImlhdCI6MTUxMDI0MDA2NiwiZXhwIjoxNTEwMzI2NDY2fQ.MZOqHSrXzDMeG7m8JMC8qYEb3cXWWo1m8VswM7mlwo8"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a new user</p>
+<h3 id='request'>Request</h3>
+<ul>
+<li>Endpoint: <code>/user/signup</code></li>
+<li>Verb: <code>POST</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h3 id='response'>Response</h3>
+<ul>
+<li>StatusCode: <code>201: Created</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='user-signin'>User Signin</h2>
+<blockquote>
+<p>Request Body:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wunderdog"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01234567"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response Body:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Signin successful"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"token"</span><span class="p">:</span><span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJ1c2VybmFtZSI6IkNoZWZjaGVmIiwiZW1haWwiOiJjaGVmZnlAcm9sby5jb20iLCJwYXNzd29yZCI6ImJiYjhhYWU1N2MxMDRjZGE0MGM5Mzg0M2FkNWU2ZGI4IiwidXBkYXRlZEF0IjoiMjAxNy0xMS0wOVQxNTowNzo0Ni40MjBaIiwiY3JlYXRlZEF0IjoiMjAxNy0xMS0wOVQxNTowNzo0Ni40MjBaIn0sImlhdCI6MTUxMDI0MDA2NiwiZXhwIjoxNTEwMzI2NDY2fQ.MZOqHSrXzDMeG7m8JMC8qYEb3cXWWo1m8VswM7mlwo8"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint logs in a registered user </p>
+<h3 id='request-2'>Request</h3>
+<ul>
+<li>Endpoint: <code>/user/signin</code></li>
+<li>Verb: <code>POST</code></li>
+<li>body: <code>(application/json)</code></li>
+</ul>
+<h3 id='response-2'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: Ok</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='get-profile'>Get Profile</h2>
+<blockquote>
+<p>Response Body:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Profile fetched successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-03-02T08:35:20.210Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a990cc86b0f4343bfa9a833"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lpasdsem"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lmdess@email.com"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint gets a registered user&#39;s profile</p>
+<h3 id='request-3'>Request</h3>
+<ul>
+<li>Endpoint: <code>/user</code></li>
+<li>Verb: <code>GET</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h3 id='response-3'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: OK</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='edit-user-profile'>Edit user profile</h2>
+<blockquote>
+<p>Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"update"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editeduser"</span><span class="w"> 
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Details successfully updated"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updatedUser"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-03-02T08:35:20.210Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a990cc86b0f4343bfa9a833"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editeduser"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lmdess@email.com"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint modifies user profile</p>
+<h3 id='request-4'>Request</h3>
+<ul>
+<li>Endpoint:<code>/idea/:ideaId</code></li>
+<li>Verb: <code>PUT</code></li>
+<li>Requires: Token</li>
+<li>Accessible only to the idea owner</li>
+</ul>
+<h3 id='response-4'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: Ok</code></li>
+<li>Body: <code>(application/json)</code>
+# ideas</li>
+</ul>
+<h2 id='create-idea'>Create idea</h2>
+<blockquote>
+<p>Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"idea"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idea title"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A short description of the idea"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"science"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dueBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20/02/2020"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Idea created successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"newidea"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a980ac5b2b176f17a8e8622"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lpasse"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ideda to be deleted"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fiesldldld"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dueBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-09T23:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fun"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="s2">"ratings"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a980adfb2b176f17a8e8623"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a new idea.</p>
+<h3 id='request-5'>Request</h3>
+<ul>
+<li>Endpoint:<code>/idea</code></li>
+<li>Verb: <code>POST</code></li>
+<li>Requires: Token</li>
+</ul>
+<h3 id='response-5'>Response</h3>
+<ul>
+<li>StatusCode: <code>201: Created</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='fetch-all-public-ideas'>Fetch all Public ideas</h2>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ideas fetched successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ideas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a98fdae665e8438f9113e19"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ideaguy"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"ratings"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a98fdae665e8438f9113e1a"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"validtitle"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"validescription"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"dueBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-11T23:00:00.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sports"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint gets all public ideas.</p>
+<h3 id='request-6'>Request</h3>
+<ul>
+<li>Endpoint:<code>/ideas</code></li>
+<li>Verb: <code>GET</code></li>
+<li>Requires: Token</li>
+</ul>
+<h3 id='response-6'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: Ok</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='fetch-single-idea'>Fetch Single idea</h2>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Idea fetched successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"idea"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a98fdae665e8438f9113e19"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ideaguy"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="s2">"ratings"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5a98fdae665e8438f9113e1c"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"single Idea"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"validescription"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dueBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-11T23:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sports"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint gets a single idea.</p>
+<h3 id='request-7'>Request</h3>
+<ul>
+<li>Endpoint:<code>/idea/:ideaId</code></li>
+<li>Verb: <code>GET</code></li>
+<li>Requires: Token</li>
+</ul>
+<h3 id='response-7'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: Ok</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='edit-an-idea'>Edit an idea</h2>
+<blockquote>
+<p>Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"update"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A brief description of the idea"</span><span class="w"> 
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Idea updated successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedIdea"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"edited"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fiesldldld"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"categories"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fun"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dueBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-10-09T23:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint modifies a single idea.</p>
+<h3 id='request-8'>Request</h3>
+<ul>
+<li>Endpoint:<code>/idea/:ideaId</code></li>
+<li>Verb: <code>PUT</code></li>
+<li>Requires: Token</li>
+<li>Accessible only to the idea owner</li>
+</ul>
+<h3 id='response-8'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: Ok</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='delete-an-idea'>Delete an idea</h2>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idea deleted successfully"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint deletes a single idea.</p>
+<h3 id='request-9'>Request</h3>
+<ul>
+<li>Endpoint:<code>/idea/:ideaId</code></li>
+<li>Verb: <code>DELETE</code></li>
+<li>Requires: Token</li>
+<li>Accessible only to the idea owner</li>
+</ul>
+<h3 id='response-9'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: Ok</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h2 id='post-idea-comment'>Post idea comment</h2>
+<blockquote>
+<p>Request Body
+<code>json
+{
+  &quot;content&quot;: &quot;Really good stuff!&quot;
+}
+</code></p>
+
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Comment posted successfully"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"newcomment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Really good stuff"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint downvot</p>
+<h3 id='request-10'>Request</h3>
+<ul>
+<li>Endpoint:<code>/idea/:ideaId/comment</code></li>
+<li>Verb: <code>POST</code></li>
+<li>Requires: Token</li>
+</ul>
+<h3 id='response-10'>Response</h3>
+<ul>
+<li>StatusCode: <code>200: Ok</code></li>
+<li>Body: <code>(application/json)</code></li>
+</ul>
+<h1 id='errors'>Errors</h1>
+<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
+
+<p>The Kittn API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- Your request sucks.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- Your API key is wrong.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The specified kitten could not be found.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone -- The kitten requested has been removed from our servers.</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&#39;m a teapot.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -41,7 +41,7 @@ export default {
             user.save().then((newUser) => {
               const token = jwt.sign(
                 {
-                  id: newUser._id,
+                  id: newUser.id,
                   username: newUser.username
                 },
                 process.env.SECRET,
@@ -51,7 +51,7 @@ export default {
                 status: 'Success',
                 message: 'User created successfully',
                 user: {
-                  id: newUser._id,
+                  id: newUser.id,
                   username: newUser.username
                 },
                 token
@@ -128,7 +128,11 @@ export default {
         res.status(200).json({
           status: 'Success',
           message: 'Details successfully updated',
-          updatedUser
+          updatedUser: {
+            username: updatedUser.username,
+            createdAt: updatedUser.createdAt,
+            email: updatedUser.email
+          }
         });
       })
       .catch(error => res.status(500).send({
@@ -151,7 +155,11 @@ export default {
           return res.status(200).json({
             status: 'Success',
             message: 'Profile fetched successfully',
-            user
+            user: {
+              username: user.username,
+              createdAt: user.createdAt,
+              email: user.email
+            }
           });
         }
         return res.status(404).json({

@@ -64,7 +64,7 @@ export default {
       });
   },
   /**
-   * @description fetchComments controller handles request for fetching comments for an idea
+   * @description handles request for fetching comments for an idea
    *
    * @param {Object} req - request Object
    * @param {Object} res - request Object
@@ -72,6 +72,14 @@ export default {
    * @returns {Object} response
    */
   fetchComments(req, res) {
+    if (req.params.id) {
+      if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).json({
+          status: 'Fail',
+          message: 'Invalid parameter'
+        });
+      }
+    }
     Comment.find({ ideaId: req.params.id })
       .then((comments) => {
         if (comments.length <= 0) {
@@ -87,7 +95,7 @@ export default {
         });
       })
       .catch((error) => {
-        res.status(501).json({
+        res.status(500).json({
           status: 'Fail',
           message: error.message
         });

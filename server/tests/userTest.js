@@ -22,7 +22,7 @@ describe('User Controller', () => {
         password: '11111111'
       };
       chai.request(server)
-        .post('/api/v1/user/signup')
+        .post('/api/v1/users/signup')
         .send(user)
         .end((err, res) => {
           token = res.body.token;
@@ -44,7 +44,7 @@ describe('User Controller', () => {
         password: '11111111'
       };
       chai.request(server)
-        .post('/api/v1/user/signup')
+        .post('/api/v1/users/signup')
         .send(user)
         .end((err, res) => {
           res.should.have.status(409);
@@ -63,7 +63,7 @@ describe('User Controller', () => {
         password: '11111111'
       };
       chai.request(server)
-        .post('/api/v1/user/signup')
+        .post('/api/v1/users/signup')
         .send(user)
         .end((err, res) => {
           res.should.have.status(409);
@@ -82,7 +82,7 @@ describe('User Controller', () => {
         username: 'Rings'
       };
       chai.request(server)
-        .post('/api/v1/user/signup')
+        .post('/api/v1/users/signup')
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
@@ -101,7 +101,7 @@ describe('User Controller', () => {
         password: '11111111'
       };
       chai.request(server)
-        .post('/api/v1/user/signup')
+        .post('/api/v1/users/signup')
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
@@ -119,7 +119,7 @@ describe('User Controller', () => {
         password: '111111'
       };
       chai.request(server)
-        .post('/api/v1/user/signin')
+        .post('/api/v1/users/signin')
         .send(user)
         .end((err, res) => {
           res.should.have.status(400);
@@ -137,7 +137,7 @@ describe('User Controller', () => {
         password: '222222'
       };
       chai.request(server)
-        .post('/api/v1/user/signin')
+        .post('/api/v1/users/signin')
         .send(user)
         .end((err, res) => {
           res.should.have.status(401);
@@ -156,7 +156,7 @@ describe('User Controller', () => {
         password: '11111111'
       };
       chai.request(server)
-        .post('/api/v1/user/signin')
+        .post('/api/v1/users/signin')
         .send(user)
         .end((err, res) => {
           res.should.have.status(200);
@@ -168,7 +168,7 @@ describe('User Controller', () => {
     });
   });
 
-  describe('when a user attemmpt to edit profile without passing a token', () => {
+  describe('when a user tries to edit profile without passing a token', () => {
     it('should return  no token is pfovided', (done) => {
       const user = {
         username: 'username',
@@ -178,7 +178,7 @@ describe('User Controller', () => {
         .put('/api/v1/user')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(403);
+          res.should.have.status(401);
           res.body.should.have.property('message').to.eql('No token provided.');
           done();
         });

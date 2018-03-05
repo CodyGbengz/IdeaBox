@@ -6,7 +6,7 @@ dotenv.load();
 const auth = (req, res, next) => {
   const token = req.headers['x-access-token'] || req.body.token || req.query.token;
   if (!token) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'Fail',
       message: 'No token provided.'
     });

@@ -12,7 +12,7 @@ const loginRules = {
 };
 
 const editProfileRules = {
-  status: [{'in': ['private', 'public'] }],
+  status: [{ in: ['private', 'public'] }],
   username: 'string|min:5',
   email: 'email'
 };
@@ -20,8 +20,17 @@ const editProfileRules = {
 const createIdeaRules = {
   title: 'required|string',
   description: 'required|string',
-  categories: 'required|string',
-  dueBy: 'required|date'
+  category: 'required|string',
+  dueBy: 'required|date',
+  status: [{ in: ['private', 'public'] }],
+};
+
+const editIdeaRules = {
+  title: 'string',
+  description: 'string',
+  category: [{ in: ['science', 'arts', 'tech', 'agriculture'] }],
+  dueBy: 'date',
+  status: [{ in: ['private', 'public'] }]
 };
 
 const postCommentRules = {
@@ -33,6 +42,14 @@ const ratingsRules = {
 };
 
 const validate = (request, response, next, rules) => {
+  if (request.params.id) {
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return response.status(400).json({
+        status: 'Fail',
+        message: 'Invalid parameter'
+      });
+    }
+  }
   const validator = new Validator(request.body, rules);
   if (validator.passes()) {
     return next();
@@ -43,11 +60,19 @@ const validate = (request, response, next, rules) => {
     message: errors
   });
 };
+
+export const editIdeaValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, editIdeaRules);
+
 export const commentValidator = (
   request,
   response,
   next
 ) => validate(request, response, next, postCommentRules);
+
 export const editValidator = (
   request,
   response,

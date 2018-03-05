@@ -1,57 +1,51 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import mongoose from 'mongoose';
-import User from '../models/user';
 import Idea from '../models/idea';
+import User from '../models/user';
 import server from '../server';
 
-let token, id;
-const should = chai.should;
+let token, ideaId;
+const should = chai.should();
 chai.use(chaiHttp);
 
-describe('Idea', () => {
+describe('Idea Controller', () => {
   before((done) => {
-    User.remove({}, (err) => {});
-    Idea.remove({}, (err) => {});
-    done();
-    
+    User.remove({}).then(() => {});
+    Idea.remove({}).then(() => done());
   });
-  describe('POST/api/user/signup', () => {
-    it('should return status 200 for a successful signup', (done) => {
-      chai.request(server)
-        .post('/api/v1/user/signup')
-        .send({
-          email: 'ideaguy@email.com',
-          username: 'ideaguy', 
-          password: 'ideaguypassword'
-        })
-        .end((err, res) => {
-          res.should.have.status(201);
-          res.body.status.should.eql('Success');
-          res.body.message.should.eql('User created successfully')
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/users/signup')
+      .send({
+        email: 'ideaguy@email.com',
+        username: 'ideaguy',
+        password: 'ideaguypassword'
+      })
+      .end((err, res) => {
+        if (res) {
           token = res.body.token;
-          done();
-        });
-    });
+        }
+        done();
+      });
   });
-  describe('POST /api/v1/idea', () => {
-    it('should return status 403 when no token is provided', (done) => {
-      const idea = {
-       title: ' '
-      };
+
+  describe('when a user creates an idea without passing a token', () => {
+    it('should return status no token provided', (done) => {
       chai.request(server)
         .post('/api/v1/idea')
-        .send(idea)
+        .send({})
         .end((err, res) => {
-          res.should.have.status(403);
-          res.body.status.should.eql('Fail')
+          res.should.have.status(401);
+          res.body.status.should.eql('Fail');
           res.body.message.should.eql('No token provided.');
           done();
         });
     });
+  });
+  describe('when a user tries to post an idea without a title', () => {
     it('should return status 400 when title value is invalid', (done) => {
       const idea = {
-       title: ''
+        title: ''
       };
       chai.request(server)
         .post('/api/v1/idea')
@@ -64,10 +58,13 @@ describe('Idea', () => {
           done();
         });
     });
-    it('should return status 400 when description value invalid', (done) => {
+  });
+
+  describe('when a user tries to post an idea without a description', () => {
+    it('should return message description field is required', (done) => {
       const idea = {
-        title:'titless',
-       description: ''
+        title: 'titless',
+        description: ''
       };
       chai.request(server)
         .post('/api/v1/idea')
@@ -80,10 +77,14 @@ describe('Idea', () => {
           done();
         });
     });
-    it('should return status 400 when dueBy value is invalid', (done) => {
+  });
+
+  describe('when a user tries to post an idea without a due date', () => {
+    it('should return message dueBy value is required', (done) => {
       const idea = {
         title: 'titles',
         description: 'descriptiondd',
+        category: 'science',
         dueBy: ''
       };
       chai.request(server)
@@ -93,15 +94,18 @@ describe('Idea', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.status.should.eql('Fail');
-          res.body.message[0].should.eql('The categories field is required.');
+          res.body.message[0].should.eql('The dueBy field is required.');
           done();
         });
     });
-    it('should return status 400 when categories value invalid', (done) => {
+  });
+
+  describe('when a user tries to post an idea with an invalid category', () => {
+    it('should return category field is required.', (done) => {
       const idea = {
-       title: 'title',
-       description: 'decriptind',
-       categories: 'science'
+        title: 'title',
+        description: 'decriptind',
+        category: ''
       };
       chai.request(server)
         .post('/api/v1/idea')
@@ -110,42 +114,53 @@ describe('Idea', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.status.should.eql('Fail');
-          res.body.message[0].should.eql('The dueBy field is required.')
+          res.body.message[0].should.eql('The category field is required.');
           done();
         });
     });
-    it('should return 404 when no ideas are found ', (done) => {
+  });
+
+  describe('when list of public ideas is empty', () => {
+    it('should return we are out of ideas.. ', (done) => {
       chai.request(server)
-      .get('/api/v1/ideas')
-      .end((err, res) => {
-        res.should.have.status(404);
-        res.body.status.should.eql('Fail')
-        res.body.message.should.eql('We are out of ideas...')
-        done();
-      });
-    })
-    it('should return 404 when no categories are found ', (done) => {
+        .get('/api/v1/ideas')
+        .set('x-access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.status.should.eql('Fail');
+          res.body.message.should.eql('We are out of ideas...');
+          done();
+        });
+    });
+  });
+  describe('when no ideas exits umder a category', () => {
+    it('should return no ideas under this category yet ', (done) => {
       chai.request(server)
-      .get('/api/v1/ideas?category=arts')
-      .end((err, res) => {
-        res.should.have.status(404);
-        res.body.status.should.eql('Fail');
-        res.body.message.should.eql('No ideas under this category yet')
-        done();
-      });
-    })
-    it('should return status 201 when a valid request is sent', (done) => {
+        .get('/api/v1/ideas?category=arts')
+        .set('x-access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.status.should.eql('Fail');
+          res.body.message.should.eql('No ideas under this category yet');
+          done();
+        });
+    });
+  });
+
+  describe('when an idea is successfully created', () => {
+    it('should return new idea', (done) => {
       const idea = {
-       title: 'validtitle',
-       description: 'validescription',
-       dueBy: '10/12/2019',
-       categories: 'sports'
+        title: 'validtitle',
+        description: 'validescription',
+        dueBy: '10/12/2019',
+        category: 'arts'
       };
       chai.request(server)
         .post('/api/v1/idea')
         .set('x-access-token', token)
         .send(idea)
-        .end((err, res) => { 
+        .end((err, res) => {
+          ideaId = res.body.newidea._id;
           res.should.have.status(201);
           res.body.status.should.eql('Success');
           res.body.message.should.eql('Idea created successfully');
@@ -153,152 +168,110 @@ describe('Idea', () => {
           done();
         });
     });
-    it('should return 200 when ideas are successfully fetched ', (done) => {
-      chai.request(server)
-      .get('/api/v1/ideas')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.status.should.eql('Success');
-        res.body.message.should.eql('Ideas fetched successfully')
-        done();
-      });
-    })
-    it('should return 200 when ideas are successfully fetched', (done) => {
-      chai.request(server)
-      .get('/api/v1/ideas?category=sports')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.status.should.eql('Success');
-        res.body.message.should.eql('Ideas fetched successfully')
-        done();
-      });
-    })
-    
   });
-  describe('GET /api/v1/ideas/user ', () => {
-    it('should return status 200 when a valid request is sent', (done) => {
-      const idea = {
-       title: 'Another title',
-       description: 'validescription',
-       dueBy: '10/12/2019',
-       categories: 'sports'
-      };
+
+  describe('when all public ideas are successfully fetched', () => {
+    it('should return a list of ideas', (done) => {
       chai.request(server)
-        .post('/api/v1/idea')
+        .get('/api/v1/ideas')
         .set('x-access-token', token)
-        .send(idea)
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(200);
           res.body.status.should.eql('Success');
+          res.body.message.should.eql('Ideas fetched successfully');
           done();
         });
     });
-    it('should return status 403 when no token is provided', (done) => {
+  });
+
+  describe('when ideas are filtered by category', () => {
+    it('should return a list of ideas under a category', (done) => {
       chai.request(server)
-        .get('/api/v1/ideas/user')
+        .get('/api/v1/ideas?category=arts')
         .end((err, res) => {
-          res.should.have.status(403);
-          res.body.status.should.eql('Fail')
+          res.should.have.status(200);
+          res.body.status.should.eql('Success');
+          res.body.message.should.eql('Ideas fetched successfully');
+          done();
+        });
+    });
+  });
+  describe('when a user requests for his ideas', () => {
+    it('should return message status 401 if no token is provided', (done) => {
+      chai.request(server)
+        .get('/api/v1/user/ideas')
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.status.should.eql('Fail');
           res.body.message.should.eql('No token provided.');
           done();
         });
     });
-    it('should return status 200 ', (done) => {
+    it('should return a list ideas if a valid token is passed', (done) => {
       chai.request(server)
-        .get('/api/v1/ideas/user')
+        .get('/api/v1/user/ideas')
         .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.message.should.eql('Ideas fetched successfully')
+          res.body.message.should.eql('Ideas fetched successfully');
+          res.body.ideas.should.be.an('array');
           done();
         });
     });
   });
-  describe('GET /api/v1/idea/:id ', () => {
-    it('should return status 201 when idea is created successfully', (done) => {
-      const idea = {
-       title: 'single Idea',
-       description: 'validescription',
-       dueBy: '10/12/2019',
-       categories: 'sports'
-      };
+  describe('when a user request a single idea"s details', () => {
+    it('should return a single idea', (done) => {
       chai.request(server)
-        .post('/api/v1/idea')
+        .get(`/api/v1/idea/${ideaId}`)
         .set('x-access-token', token)
-        .send(idea)
-        .end((err, res) => {
-          id = res.body.newidea._id;
-          res.should.have.status(201);
-          done();
-        });
-    });
-    it('should return status 200', (done) => {
-      chai.request(server)
-        .get(`/api/v1/idea/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.message.should.eql('Idea fetched successfully')
+          res.body.message.should.eql('Idea fetched successfully');
           done();
         });
     });
-    it('should return status 200', (done) => {
+  });
+  describe('when user tries to search for an idea', () => {
+    it('should return a list of matching ideas', (done) => {
       chai.request(server)
-        .get(`/api/v1/ideas?search=single`)
+        .get('/api/v1/ideas?search=valid')
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.message.should.eql('Ideas fetched successfully')
+          res.body.message.should.eql('Ideas fetched successfully');
           done();
         });
     });
-    it('should return 400 when searchTerm value is empty', (done) => {
+    it('should return 400 when searchTerm value is undefined', (done) => {
       chai.request(server)
-      .get(`/api/v1/ideas?search=`)
-      .end((err, res) => {
-        res.should.have.status(400);
-        res.body.status.should.eql('Fail')
-        res.body.message.should.eql('Enter a search keyword')
-        done();
-      })
-    })
+        .get('/api/v1/ideas?search=')
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.status.should.eql('Fail');
+          res.body.message.should.eql('Enter a search keyword');
+          done();
+        });
+    });
     it('should return 404 when searchTerm does not find any match', (done) => {
       chai.request(server)
-      .get(`/api/v1/ideas?search=xxxxxx`)
-      .end((err, res) => {
-        res.should.have.status(404);
-        res.body.status.should.eql('Fail')
-        res.body.message.should.eql('No ideas found matching your keyword')
-        done();
-      })
-    })
-  });
-  describe('PUT /api/v1/idea/:id ', () => {
-    it('should return status 201 when a new idea is created', (done) => {
-      const idea = {
-       title: 'Editable Idea',
-       description: 'validescription',
-       dueBy: '10/12/2019',
-       categories: 'sports'
-      };
-      chai.request(server)
-        .post('/api/v1/idea')
-        .set('x-access-token', token)
-        .send(idea)
+        .get('/api/v1/ideas?search=xxxxxx')
         .end((err, res) => {
-          id = res.body.newidea._id;
-          res.should.have.status(201);
-          res.body.status.should.eql('Success');
-          res.body.message.should.eql('Idea created successfully');
+          res.should.have.status(404);
+          res.body.status.should.eql('Fail');
+          res.body.message.should.eql('No ideas found matching your keyword');
           done();
         });
     });
-    it('should return status 200', (done) => {
+  });
+
+  describe('when a user updates an idea successfully', () => {
+    it('should return an updated idea', (done) => {
       chai.request(server)
-        .put(`/api/v1/idea/${id}`)
+        .put(`/api/v1/idea/${ideaId}`)
         .set('x-access-token', token)
-        .send({title: 'new title'})
+        .send({ title: 'new title' })
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.status.should.eql('Success')
+          res.body.status.should.eql('Success');
           res.body.message.should.eql('Idea updated successfully');
           res.body.modifiedIdea.title.should.eql('new title');
           done();
@@ -306,12 +279,13 @@ describe('Idea', () => {
     });
     it('should return status 400 when passed an invalid parameter', (done) => {
       chai.request(server)
-        .put(`/api/v1/idea/111`)
+        .put('/api/v1/idea/111')
         .set('x-access-token', token)
-        .send({title: 'new title'})
+        .send({ title: 'new title' })
         .end((err, res) => {
-          res.should.have.status(500);
+          res.should.have.status(400);
           res.body.status.should.eql('Fail');
+          res.body.message.should.eql('Invalid parameter');
           done();
         });
     });

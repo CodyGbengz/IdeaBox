@@ -10,8 +10,9 @@ const ideaSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  categories: {
+  category: {
     type: String,
+    enum: ['science', 'arts', 'agriculture', 'tech', 'others'],
     required: true
   },
   dueBy: {

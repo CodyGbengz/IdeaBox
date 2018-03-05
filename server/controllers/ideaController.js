@@ -14,7 +14,7 @@ export default {
       title,
       description,
       dueBy,
-      categories,
+      category,
       status
     } = req.body;
 
@@ -35,7 +35,7 @@ export default {
           title,
           description,
           dueBy,
-          categories,
+          category,
           status,
           author,
         });
@@ -61,7 +61,7 @@ export default {
       });
   },
   /**
-   * @description fetchPublicIdeas controller handles fetching all ideas that are public
+   * @description handles fetching all ideas that are public
    *
    * @param {Object} req - request Object
    * @param {Object} res -  response Object
@@ -70,7 +70,9 @@ export default {
    * @returns { Object} response Object
    */
   fetchPublicIdeas(req, res, next) {
-    if (req.query.category !== undefined || req.query.search !== undefined) return next();
+    if (req.query.category !== undefined || req.query.search !== undefined) {
+      return next();
+    }
     Idea.find({ status: 'public' })
       .then((ideas) => {
         if (ideas.length <= 0) {
@@ -93,7 +95,7 @@ export default {
       });
   },
   /**
-   * @description fetchUserIdeas controller handles requests for fetching a user's ideas
+   * @description handles requests for fetching a user's ideas
    *
    * @param {Object} req - request Object
    * @param {Object} res - response Object
@@ -195,7 +197,7 @@ export default {
       });
   },
   /**
-   * @description fetchByCategory controller handles requests for ideas filtered by category
+   * @description handles requests for ideas filtered by category
    *
    * @param {Object} req - request Object
    * @param {Object} res - response Object
@@ -205,7 +207,7 @@ export default {
    */
   fetchByCategory(req, res, next) {
     if (req.query.search !== undefined) return next();
-    Idea.find({ status: 'public', categories: req.query.category })
+    Idea.find({ status: 'public', category: req.query.category })
       .then((ideas) => {
         if (ideas.length <= 0) {
           return res.status(404).json({
@@ -302,13 +304,13 @@ export default {
     )
       .then((modifiedIdea) => {
         if (modifiedIdea) {
-          res.status(200).json({
+          return res.status(200).json({
             status: 'Success',
             message: 'Idea updated successfully',
             modifiedIdea: {
               title: modifiedIdea.title,
               description: modifiedIdea.description,
-              categories: modifiedIdea.categories,
+              category: modifiedIdea.category,
               dueBy: modifiedIdea.dueBy,
               modified: true,
               status: modifiedIdea.status

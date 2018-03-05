@@ -3,13 +3,15 @@ import logger from 'morgan';
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from '../webpack.config';
 import routes from './routes';
 
 /**
  * MongoDb connection
 */
-
-
 const database = require('./config/database');
 
 if (process.env.NODE_ENV === 'test') {
@@ -25,6 +27,8 @@ const {
 } = routes;
 const port = process.env.PORT || 8080;
 const app = express();
+const DIST_DIR = path.join(__dirname, './dist');
+const FILE_PATH = path.join(DIST_DIR, 'index.html');
 /**
  * API DOCS
  */
@@ -46,6 +50,25 @@ app.use(idea);
 app.use(comment);
 app.use(rating);
 app.use('*', (req, res) => { res.send('Welcome to the IdeaBox API'); });
+
+if (process.env.NODE_ENV === 'development') {
+  const compiler = webpack(webpackConfig);
+  app.use(webpackMiddleware(compiler, {
+    hot: true,
+    publicPath: webpackConfig.output.publicPath,
+    noInfo: true,
+  }));
+  app.use(webpackHotMiddleware(compiler));
+  //  A default catch-all route for serving index.html.
+  app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../client/index.html')));
+}
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(DIST_DIR));
+  app.get('*', (req, res) => {
+    res.sendFile(FILE_PATH);
+  });
+}
 
 app.listen(port);
 

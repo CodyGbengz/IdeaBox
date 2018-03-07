@@ -6,12 +6,14 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from './src/reducers/rootReducer';
 import routes from './src/routes';
+import './src/scss/index.scss';
 
 const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk),
-    window.devToolsExtension && process.env.NODE_ENV === 'development' ? window.devToolsExtension() : f => f
+    window.devToolsExtension && process.env.NODE_ENV
+     === 'development' ? window.devToolsExtension() : f => f
   )
 );
 

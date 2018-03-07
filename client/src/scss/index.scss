@@ -1,0 +1,26 @@
+
+h1,h2,h3,h4,h5,h6,.brand-logo{
+	font-family: 'Acme', sans-serif;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	font-family: 'Quattrocento Sans', sans-serif;
+  background-size: 100%
+}
+
+.home-buttons {
+  margin: 4px;
+  width: 215px
+}
+
+.home, .signup{
+  // margin-top: 300px;
+  background-color: black;
+  min-height: 1000px;
+};
+.home-banner{
+  margin-top: 200px
+}

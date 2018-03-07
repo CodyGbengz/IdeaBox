@@ -1,12 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.jsx',
+  entry: [path.join(__dirname, './client/index.jsx')],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   resolve: {
     // you can now require("file") instead of require("file.coffee")
@@ -40,7 +41,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './client/index.html'
-    }),
-    new CleanWebpackPlugin(['dist']),
+    })
   ]
 };
+

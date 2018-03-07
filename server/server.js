@@ -23,11 +23,14 @@ if (process.env.NODE_ENV === 'production') {
 mongoose.connect(database.url);
 
 const {
-  user, idea, comment, rating
+  user,
+  idea,
+  comment,
+  rating
 } = routes;
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 const app = express();
-const DIST_DIR = path.join(__dirname, './dist');
+const DIST_DIR = path.join(__dirname, '../dist');
 const FILE_PATH = path.join(DIST_DIR, 'index.html');
 /**
  * API DOCS
@@ -36,11 +39,19 @@ app.get('/api/docs', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'docs/index.html'));
 });
 
-app.use('/api/docs-assets', express.static(path.resolve(__dirname, '..', 'docs')));
+app.use(
+  '/api/docs-assets',
+  express.static(path.resolve(__dirname, '..', 'docs'))
+);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// app.use(express.static(path.join(__dirname, '/client/index.html')));
+// app.use('/', express.static(path.resolve(__dirname, '../client/index.html')));
+
 
 /**
  * API routes
@@ -49,7 +60,7 @@ app.use(user);
 app.use(idea);
 app.use(comment);
 app.use(rating);
-app.use('*', (req, res) => { res.send('Welcome to the IdeaBox API'); });
+// app.use('*', (req, res) => { res.send('Welcome to the IdeaBox API'); });
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
@@ -60,7 +71,8 @@ if (process.env.NODE_ENV === 'development') {
   }));
   app.use(webpackHotMiddleware(compiler));
   //  A default catch-all route for serving index.html.
-  app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../client/index.html')));
+  app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, '../client/index.html')));
 }
 
 if (process.env.NODE_ENV === 'production') {

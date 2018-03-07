@@ -32,6 +32,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 const DIST_DIR = path.join(__dirname, '../dist');
 const FILE_PATH = path.join(DIST_DIR, 'index.html');
+
 /**
  * API DOCS
  */
@@ -48,10 +49,6 @@ app.use(
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// app.use(express.static(path.join(__dirname, '/client/index.html')));
-// app.use('/', express.static(path.resolve(__dirname, '../client/index.html')));
-
 
 /**
  * API routes

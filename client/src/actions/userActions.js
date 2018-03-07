@@ -1,4 +1,3 @@
-import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { browserHistory } from 'react-router';
 import { SET_CURRENT_USER } from './actionTypes';
@@ -11,19 +10,52 @@ export const setCurrentUser = user => ({
   user
 });
 
-export const signupRequest = userData =>
-  dispatch => axios.post('/api/v1/users/signup', userData)
-    .then((res) => {
-      const { token } = res.data;
-      setAuthToken(jwtDecode(token));
-      dispatch(setCurrentUser(token));
-      localStorage.setItem('jwtToken', token);
-      browserHistory.push('/dashboard');
-    }).catch((error) => {
-      const errorMessages = error.response.data.message;
 
+export const signupRequest = userData =>
+  async (dispatch) => {
+    const response = await fetch('/api/v1/users/signup', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+    const jsonResponse = await response.json().then(jsonRes => jsonRes);
+
+    if (response.status >= 400) {
+      const errorMessages = jsonResponse.message;
       (typeof errorMessages === 'object') ? errorMessages.map((message) => { // eslint-disable-line
         Alert(message, 3000, 'red');
       }) : Alert(errorMessages, 3000, 'red');
-    });
+    }
+    const { token } = jsonResponse;
+    setAuthToken(jwtDecode(token));
+    dispatch(setCurrentUser(token));
+    localStorage.setItem('jwtToken', token);
+    browserHistory.push('/dashboard');
+  };
 
+export const signinRequest = userData =>
+  async (dispatch) => {
+    const response = await fetch('/api/v1/users/signin', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+    const jsonResponse = await response.json().then(jsonRes => jsonRes);
+    if (response.status >= 400) {
+      const errorMessages = jsonResponse.message;
+    (typeof errorMessages === 'object') ? errorMessages.map((message) => { // eslint-disable-line
+        Alert(message, 3000, 'red');
+      }) : Alert(errorMessages, 3000, 'red');
+    }
+    const { token } = jsonResponse;
+    setAuthToken(jwtDecode(token));
+    dispatch(setCurrentUser(token));
+    localStorage.setItem('jwtToken', token);
+    browserHistory.push('/dashboard');
+  };

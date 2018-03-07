@@ -3,7 +3,7 @@ import expect from 'expect';
 import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import SignUp from '../../src/components/Signup/SignUp';
+import Signin from '../../src/components/Signin';
 import mockItems from '../__mocks__/mockItems';
 
 const middlewares = [thunk];
@@ -11,28 +11,26 @@ const mockStore = configureStore(middlewares);
 
 const state = {
   username: '',
-  email: '',
   password: '',
   disable: true,
   error: {
-    email: '',
     username: '',
     password: ''
   }
 };
 const props = {
-  signupRequest: jest.fn()
+  SigninRequest: jest.fn()
 };
-describe('<Signup/>', () => {
+describe('<Signin />', () => {
   let wrapper;
   let store;
 
   beforeEach(() => {
     store = mockStore();
   });
-  describe('Signup component', () => {
+  describe('Signin component', () => {
     it('should render correctly', () => {
-      wrapper = mount(<SignUp store={store} {...state} {...props} />);
+      wrapper = mount(<Signin store={store} {...state} {...props} />);
       expect(wrapper).toBeDefined();
     });
   });

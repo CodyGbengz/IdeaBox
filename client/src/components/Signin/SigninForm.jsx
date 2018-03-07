@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 const SignupForm = ({
   handleChange,
   handleSubmit,
-  email,
   username,
   password,
   disable,
@@ -24,20 +23,6 @@ const SignupForm = ({
         <label htmlFor="username">Username</label>
         { error.username ?
           <span className="red-text">{error.username}</span>
-    : <span />
-    }
-      </div>
-      <div className="input-field col s12">
-        <input
-          id="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-          type="email"
-        />
-        <label htmlFor="email">Email Address</label>
-        { error.email ?
-          <span className="red-text">{error.email}</span>
     : <span />
     }
       </div>
@@ -65,17 +50,17 @@ const SignupForm = ({
           green"
           type="submit"
           disabled={disable}
-        >Sign Up
+        >Login
         </button>
         <div className="input-field col s12 l12">
           <Link
-            to="/signin"
+            to="/signup"
             className="waves-effect
               home-buttons
               waves-light
               btn
               green"
-          >Signin
+          >Signup
           </Link>
         </div>
       </div>
@@ -86,7 +71,6 @@ const SignupForm = ({
 SignupForm.propTypes = {
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   disable: PropTypes.bool.isRequired,

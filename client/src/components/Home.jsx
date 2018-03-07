@@ -28,7 +28,7 @@ const Home = () => (
           </div>
           <div className="col s12 m12 l12">
             <Link
-              to="login"
+              to="/signin"
               className="waves-effect
               waves-light
               home-buttons

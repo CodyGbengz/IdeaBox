@@ -6,6 +6,11 @@ const signupRules = {
   username: 'required|min:5',
 };
 
+const signinRules = {
+  username: 'required|string',
+  password: 'required'
+};
+
 const validator = rules => (data) => {
   const validate = new Validator(data, rules);
   const errors = {};
@@ -24,3 +29,4 @@ const validator = rules => (data) => {
 };
 
 export const signUpValidator = validator(signupRules); // eslint-disable-line
+export const signInValidator = validator(signinRules);

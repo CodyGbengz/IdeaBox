@@ -1,9 +1,14 @@
-import axios from 'axios';
 
-export default function setAuthToken(token) { // eslint-disable-line
+
+const setAuthToken = () => {
+  // return authorization header with jwt token
+  const token = localStorage.getItem('jwtToken');
+
   if (token) {
-    axios.defaults.headers.common['x-access-token'] = `${token}`;
-  } else {
-    delete axios.defaults.headers.common['x-access-token'];
+    return { 'x-access-token': `${token}` };
   }
-}
+  return {};
+};
+
+export default setAuthToken;
+

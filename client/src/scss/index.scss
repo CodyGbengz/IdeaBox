@@ -17,7 +17,6 @@ body {
 }
 
 .home, .signin, .signup{
-  // margin-top: 300px;
   background-color: black;
   min-height: 1000px;
 };
@@ -27,4 +26,13 @@ body {
 
 #slide-out{
   padding: 20px;
+}
+
+.container-mde {
+  border: 1px solid rgba(0, 0, 0, .125);
+  padding: 8px;
+  margin: 20px;
+}
+.create-page {
+  margin-top : 55px;
 }

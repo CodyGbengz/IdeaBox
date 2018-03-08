@@ -36,7 +36,7 @@ class SideNav extends Component {
             <li className="no-padding white-text">
               <ul className="collapsible collapsible-accordion">
                 <li>
-                  <Link className="collapsible-header white-text">Username<i className="material-icons right white-text">arrow_drop_down</i></Link>
+                  <Link className="collapsible-header green-text">Username<i className="material-icons right green-text">arrow_drop_down</i></Link>
                   <div className="collapsible-body">
                     <ul>
                       <li><Link href="#!">My Profile</Link></li>
@@ -47,9 +47,9 @@ class SideNav extends Component {
                 <li>
                   <Link
                     to="/myideas"
-                    className="white-text"
+                    className="green-text"
                   >My Ideas
-                    <i className="material-icons right white-text">folder</i>
+                    <i className="material-icons right green-text">folder</i>
                   </Link>
                 </li>
                 <li>
@@ -65,6 +65,7 @@ class SideNav extends Component {
                 </li>
                 <li>
                   <Link
+                    to="/create-idea"
                     className="white-text"
                   >Share an Idea
                     <i className="material-icons right white-text">add_box</i>
@@ -75,7 +76,6 @@ class SideNav extends Component {
                   <div className="filterIdeas">
                     <p>
                       <b>Filter
-                        <i className="material-icons right">filter_list</i>
                       </b>
                     </p>
                     <ul>
@@ -151,7 +151,7 @@ class SideNav extends Component {
           <Link
             href="#"
             data-activates="slide-out"
-            aclassName="button-collapse show-on-large"
+            className="button-collapse show-on-large"
           >
             <i className="material-icons">menu</i>
           </Link>

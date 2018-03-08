@@ -46,7 +46,7 @@ class SideNav extends Component {
                 </li>
                 <li>
                   <Link
-                    href="#!"
+                    to="/myideas"
                     className="white-text"
                   >My Ideas
                     <i className="material-icons right white-text">folder</i>
@@ -54,6 +54,7 @@ class SideNav extends Component {
                 </li>
                 <li>
                   <Link
+                    to="/dashboard"
                     className="white-text"
                   >Public Ideas
                     <i

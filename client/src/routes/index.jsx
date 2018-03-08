@@ -5,6 +5,7 @@ import Home from '../components/Home';
 import SignUp from '../components/Signup/SignUp';
 import Signin from '../components/Signin';
 import Dashboard from '../components/Dashboard';
+import UserIdeas from '../components/UserIdeas';
 
 export default (
   <Route path="/" component={App}>
@@ -12,5 +13,6 @@ export default (
     <Route path="/signup" component={SignUp} />
     <Route path="/signin" component={Signin} />
     <Route path="/dashboard" component={Dashboard} />
+    <Route path="/myideas" component={UserIdeas} />
   </Route>
 );

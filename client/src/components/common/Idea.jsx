@@ -11,7 +11,9 @@ const Idea = ({
   title,
   modified,
   description,
-  author
+  author,
+  editIdea,
+  deleteIdea,
 }) => (
   <div className="col s12 m12 l6" key={id}>
     <div className="card ">
@@ -41,6 +43,20 @@ const Idea = ({
         <span className="author">
           {author.username}
         </span>
+        { editIdea &&
+        <span>
+          <Link to="/">
+            <i className="material-icons">edit</i>
+          </Link>
+        </span>
+      }
+        { deleteIdea &&
+        <span>
+          <Link to="/">
+            <i className="material-icons">delete</i>
+          </Link>
+        </span>
+      }
         <span
           className="new badge green ideaCategory"
           data-badge-caption={category}
@@ -58,7 +74,9 @@ Idea.propTypes = {
   status: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   dueby: PropTypes.number.isRequired,
-  author: PropTypes.objectOf(PropTypes.any).isRequired
+  author: PropTypes.objectOf(PropTypes.any).isRequired,
+  editIdea: PropTypes.bool.isRequired,
+  deleteIdea: PropTypes.bool.isRequired
 };
 
 export default Idea;

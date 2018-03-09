@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { searchIdeas } from '../../actions/searchActions';
 
 /**
  * @className SideNav
@@ -11,10 +12,17 @@ class SideNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
+      searchTerm: '',
     };
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
+  handleSearch(event) {
+    const searchTerm = event.target.value;
+    if (searchTerm.length > 1) {
+      this.props.searchIdeas(searchTerm);
+    }
+  }
   render() {
     return (
       <div>
@@ -25,10 +33,11 @@ class SideNav extends Component {
               <div className="nav-wrapper">
                 <form id="searchForm">
                   <input
+                    onChange={this.handleSearch}
                     type="text"
-                    name="searchParams"
-                    placeholder="Search for Ideas"
-                    id="searchBar"
+                    name="search"
+                    placeholder="Enter search keyword"
+                    id="search"
                   />
                 </form>
               </div>

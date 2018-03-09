@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import {
   FETCH_PUBLIC_IDEAS_FAILURE,
   FETCH_PUBLIC_IDEAS_SUCCESS,
@@ -57,7 +58,10 @@ export const createIdeas = newIdea =>
       dispatch(createIdeaFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
     }
-    dispatch(createIdeaSuccess(jsonResponse.newIdea));
+    dispatch(createIdeaSuccess(jsonResponse.newidea));
+    const successMessage = jsonResponse.message;
+    Alert(successMessage, 3000, 'green');
+    browserHistory.push('/dashboard');
   };
 
 export const fetchUserIdeas = () =>

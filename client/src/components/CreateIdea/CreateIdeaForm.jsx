@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import ReactMde from 'react-mde';
+import ReactMde, { ReactMdeCommands } from 'react-mde';
 
 const CreateIdeaForm = ({
   handleChange,
   handleSubmit,
   handleValueChange,
-  handleToggleStatus,
   title,
   reactMdeValue,
   status,
-  dueby,
+  dueBy,
   category,
   error,
 }) => (
@@ -25,22 +24,22 @@ const CreateIdeaForm = ({
           name="title"
           type="text"
         />
-        <label htmlFor="username">title</label>
-        { error.username ?
-          <span className="red-text">{error.username}</span>
+        <label htmlFor="title">title</label>
+        { error.title ?
+          <span className="red-text">{error.title}</span>
     : <span />
     }
       </div>
-      <div className="input-field col s12">
+      <div className="input-field black-text col s12">
         <div className="container-mde col s12">
           <ReactMde
             textAreaProps={{
                   id: 'description',
                   name: 'description',
                 }}
-            name="description"
             value={reactMdeValue}
             onChange={handleValueChange}
+            commands={ReactMdeCommands.getDefaultCommands()}
           />
         </div>
         <label htmlFor="description">description</label>
@@ -49,15 +48,14 @@ const CreateIdeaForm = ({
     : <span />
     }
       </div>
-      <div className="input-field col s12">
-        <select name={category}>
-          <option
-            value={category}
-            name="category"
-            onChange={handleChange}
-            disabled
-            selected
-          >select a category
+      <div className="col s12 l6">
+        <select
+          className="browser-default"
+          value={category}
+          name="category"
+          onChange={handleChange}
+        >
+          <option value="" disabled>select a category
           </option>
           <option value="arts">arts</option>
           <option value="science">science</option>
@@ -66,19 +64,23 @@ const CreateIdeaForm = ({
           <option value="economics">economics</option>
           <option value="others">others</option>
         </select>
-        <label>Select a category</label>
       </div>
-      <div className="input-field col s12">
-        <input type="date" name="dueby" value={dueby} className="datepicker" />
+      <div className="col s12 m6 l6">
+        <select
+          className="browser-default"
+          value={status}
+          name="status"
+          onChange={handleChange}
+        >
+          <option value="" disabled>Choose your idea type
+          </option>
+          <option value="public">Public</option>
+          <option value="private">Private</option>
+        </select>
+      </div>
+      <div className=" col s12">
         <label>Execution Date</label>
-      </div>
-      <div className="switch">
-        <label>
-          Public
-          <input type="checkbox" name="status" onClick={handleToggleStatus} />
-          <span className="lever" />
-          Private
-        </label>
+        <input type="date" name="dueBy" onChange={handleChange} value={dueBy} />
       </div>
       <div className="input-field col s12 l12">
         <Link
@@ -98,13 +100,12 @@ const CreateIdeaForm = ({
 
 CreateIdeaForm.propTypes = {
   title: PropTypes.string.isRequired,
-  dueby: PropTypes.number.isRequired,
+  dueBy: PropTypes.number.isRequired,
   reactMdeValue: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleValueChange: PropTypes.func.isRequired,
-  handleToggleStatus: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
   error: PropTypes.objectOf(PropTypes.any).isRequired
 };

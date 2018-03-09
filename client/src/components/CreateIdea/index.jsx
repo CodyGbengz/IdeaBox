@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import CreateIdeaForm from './CreateIdeaForm';
 import SideNav from '../common/SideNav';
 import { createIdeas } from '../../actions/ideaActions';
-import { signUpValidator } from '../../utils/validations';
+import { createIdeaValidator } from '../../utils/validations';
 
 
 /**
@@ -14,13 +14,12 @@ class CreateIdea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkboxState: false,
       title: '',
       description: '',
       reactMdeValue: { text: '' },
       category: '',
       disable: true,
-      dueby: '',
+      dueBy: '',
       status: '',
       error: {
         title: '',
@@ -34,11 +33,10 @@ class CreateIdea extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
-    this.handleToggleStatus = this.handleToggleStatus.bind(this);
   }
 
   isValid(target) {
-    const { errors, isValid } = signUpValidator(this.state);
+    const { errors, isValid } = createIdeaValidator(this.state);
     if (!isValid) {
       this.setState({
         disable: true,
@@ -56,16 +54,11 @@ class CreateIdea extends Component {
     }
     return isValid;
   }
-  handleToggleStatus() {
-    this.setState({
-      checkboxState: !this.state.checkboxState
-    });
-  }
 
-  handleValueChange(event) {
-    this.setState({ reactMdeValue: event.text });
-    this.setState({ description: event.text });
-    this.isValid(event.text);
+  handleValueChange(value) {
+    this.setState({ reactMdeValue: value });
+    this.setState({ description: this.state.reactMdeValue.text });
+    this.isValid(value);
   }
 
   handleChange(event) {
@@ -74,7 +67,6 @@ class CreateIdea extends Component {
   }
 
   handleSubmit(event) {
-    (this.state.checkboxState) ? this.setState({ status: 'private' }) : this.setState({ status: 'public' });
     event.preventDefault();
     this.setState({
       disable: true
@@ -102,7 +94,6 @@ class CreateIdea extends Component {
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}
                 handleValueChange={this.handleValueChange}
-                handleToggleStatus={this.handleToggleStatus}
                 error={this.state.error}
               />
             </div>

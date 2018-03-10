@@ -2,9 +2,11 @@ import { combineReducers } from 'redux';
 import auth from './auth';
 import ideaReducer from './ideaReducer';
 import userIdeasReducer from './userIdeasReducer';
+import filterIdeas from './filterIdeasReducer';
 
 export default combineReducers({
   auth,
   ideaReducer,
-  userIdeasReducer
+  userIdeasReducer,
+  filterIdeas
 });

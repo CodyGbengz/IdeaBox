@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { searchIdeas } from '../../actions/searchActions';
+import Alert from '../../utils/Alert';
 
 /**
  * @className SideNav
@@ -14,12 +15,20 @@ class SideNav extends Component {
     this.state = {
       searchTerm: '',
     };
+    this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  handleChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
   handleSearch(event) {
-    const searchTerm = event.target.value;
-    if (searchTerm.length > 1) {
+    event.preventDefault();
+    const { searchTerm } = this.state;
+    if (!searchTerm || searchTerm.length < 3) {
+      Alert('Enter atleast 3 characters', 3000, 'red');
+    }
+    if (searchTerm.length > 2) {
       this.props.searchIdeas(searchTerm);
     }
   }
@@ -31,11 +40,12 @@ class SideNav extends Component {
             <li><h3 className="head">IdeaBox</h3></li>
             <li>
               <div className="nav-wrapper">
-                <form id="searchForm">
+                <form onSubmit={this.handleSearch}>
                   <input
-                    onChange={this.handleSearch}
+                    onChange={this.handleChange}
                     type="text"
-                    name="search"
+                    name="searchTerm"
+                    value={this.state.searchTerm}
                     placeholder="Enter search keyword"
                     id="search"
                   />
@@ -45,7 +55,11 @@ class SideNav extends Component {
             <li className="no-padding white-text">
               <ul className="collapsible collapsible-accordion">
                 <li>
-                  <Link className="collapsible-header white-text">Username<i className="material-icons right white-text">arrow_drop_down</i></Link>
+                  <Link className="collapsible-header white-text">Username
+                    <i className="material-icons right white-text">
+                    arrow_drop_down
+                    </i>
+                  </Link>
                   <div className="collapsible-body">
                     <ul>
                       <li><Link href="#!">My Profile</Link></li>
@@ -174,4 +188,4 @@ class SideNav extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { })(SideNav);
+export default connect(mapStateToProps, { searchIdeas })(SideNav);

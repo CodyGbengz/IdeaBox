@@ -31,7 +31,6 @@ export const searchIdeas = searchTerm =>
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
       dispatch(searchIdeasFailure(errorMessage));
-      browserHistory.push('/searchresults');
       Alert(errorMessage, 3000, 'red');
     }
     dispatch(searchIdeasSuccess(jsonResponse.ideas));

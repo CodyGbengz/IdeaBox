@@ -4,12 +4,12 @@ import {
 } from '../actions/actionTypes';
 
 const searchResult = (state = [], action) => {
-  const { type, ideas } = action;
+  const { type, ideas, message } = action;
   switch (type) {
     case SEARCH_IDEAS_SUCCESS:
       return ideas;
     case SEARCH_IDEAS_FAILURE:
-      return state;
+      return message;
     default:
       return state;
   }

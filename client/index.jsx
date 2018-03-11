@@ -12,8 +12,7 @@ const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk),
-    window.devToolsExtension && process.env.NODE_ENV
-     === 'development' ? window.devToolsExtension() : f => f
+    window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
 

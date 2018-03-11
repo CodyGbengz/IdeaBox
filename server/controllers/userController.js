@@ -102,6 +102,10 @@ export default {
           return res.status(200).json({
             status: 'Success',
             message: 'Login successful',
+            user: {
+              username: user.username,
+              id: user.id
+            },
             token
           });
         }

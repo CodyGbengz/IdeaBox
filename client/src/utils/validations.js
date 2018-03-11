@@ -11,6 +11,12 @@ const signinRules = {
   password: 'required'
 };
 
+const updateProfileRules = {
+  status: [{ in: ['private', 'public'] }],
+  username: 'string|min:5',
+  email: 'email'
+};
+
 const validator = rules => (data) => {
   const validate = new Validator(data, rules);
   const errors = {};
@@ -30,3 +36,4 @@ const validator = rules => (data) => {
 
 export const signUpValidator = validator(signupRules); // eslint-disable-line
 export const signInValidator = validator(signinRules);
+export const updateUserProfileValidator = validator(updateProfileRules);

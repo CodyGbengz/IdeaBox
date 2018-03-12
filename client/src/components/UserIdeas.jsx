@@ -40,7 +40,7 @@ class UserIdeas extends Component {
               {ideas &&
                 ideas.map(idea => (
                   <Idea
-                    key={idea.id}
+                    key={idea._id}
                     id={idea._id}
                     title={idea.title}
                     category={idea.category}

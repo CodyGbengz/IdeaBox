@@ -180,7 +180,8 @@ export default {
         const promise = Idea.findByIdAndRemove(req.params.id);
         promise.then(() => res.status(200).json({
           status: 'Success',
-          message: 'Idea deleted successfully'
+          message: 'Idea deleted successfully',
+          id: req.params.id
         }))
           .catch((error) => {
             res.status(500).json({

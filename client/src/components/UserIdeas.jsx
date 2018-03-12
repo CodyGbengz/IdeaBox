@@ -41,7 +41,7 @@ class UserIdeas extends Component {
                 ideas.map(idea => (
                   <Idea
                     key={idea.id}
-                    id={idea.id}
+                    id={idea._id}
                     title={idea.title}
                     category={idea.category}
                     description={idea.description}

@@ -10,6 +10,8 @@ import UserProfile from '../components/UserProfile';
 import FilteredIdeas from '../components/FilteredIdeas';
 import SearchResults from '../components/SearchResults';
 import CreateIdea from '../components/CreateIdea';
+import EditIdea from '../components/EditIdea';
+import requireAuth from '../utils/requireAuth';
 
 export default (
   <Route path="/" component={App}>

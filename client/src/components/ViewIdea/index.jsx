@@ -4,7 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SideNav from '../common/SideNav';
-import { fetchIdeaComments } from '../../actions/commentActions';
+import { fetchIdeaComments, postComment } from '../../actions/commentActions';
 import { fetchSingleIdea } from '../../actions/ideaActions';
 
 class ViewIdea extends Component {
@@ -12,8 +12,11 @@ class ViewIdea extends Component {
     super(props);
     this.state = {
       idea: this.props.idea,
-      comments: this.props.comments
+      comments: this.props.comments,
+      content: '',
     };
+    this.postComment = this.postComment.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +31,13 @@ class ViewIdea extends Component {
         comments: nextProps.comments
       });
     }
+  }
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+  postComment() {
+    this.props.postComment(this.props.params.id, this.state);
+    this.setState({ content: '' });
   }
 
   renderComments(comments) {
@@ -126,15 +136,14 @@ class ViewIdea extends Component {
                     <input
                       id="comment"
                       type="text"
-                      name="comment"
-                      value={this.state.comment}
+                      name="content"
+                      value={this.state.content}
                       onChange={this.handleChange}
-                      className="validate"
                     />
                     <button
                       type="button"
                       className="btn center-align"
-                      onClick={this.handleSubmit}
+                      onClick={this.postComment}
                     >
                         Comment
                     </button>
@@ -149,6 +158,7 @@ class ViewIdea extends Component {
   }
 }
 ViewIdea.propTypes = {
+  postComment: PropTypes.func.isRequired,
   fetchSingleIdea: PropTypes.func.isRequired,
   fetchIdeaComments: PropTypes.func.isRequired,
   idea: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -162,4 +172,8 @@ const mapStateToProps = state => ({
 });
 
 export default
-connect(mapStateToProps, { fetchSingleIdea, fetchIdeaComments })(ViewIdea);
+connect(mapStateToProps, {
+  fetchSingleIdea,
+  fetchIdeaComments,
+  postComment
+})(ViewIdea);

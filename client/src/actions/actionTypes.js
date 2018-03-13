@@ -57,6 +57,7 @@ export const EDIT_IDEA_FAILURE = 'EDIT_IDEA_FAILURE';
  */
 export const DELETE_SINGLE_IDEA_SUCCESS = 'DELETE_SINGLE_IDEA_SUCCESS';
 export const DELETE_SINGLE_IDEA_FAILURE = 'DELETE_SINGLE_IDEA_FAILURE';
+
 /** 
  * fetch single idea
 */

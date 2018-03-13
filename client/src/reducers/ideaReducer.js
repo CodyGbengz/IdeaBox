@@ -42,5 +42,20 @@ const singleIdeaReducer = (initialState = {}, action = {}) => {
   }
 };
 
+const singleIdeaReducer = (initialState = {}, action = {}) => {
+  const { type, idea } = action;
+  switch (type) {
+    case FETCH_SINGLE_IDEA_FAILURE:
+      return initialState;
+    case FETCH_SINGLE_IDEA_SUCCESS:
+      return {
+        ...initialState,
+        ...idea
+      };
+    default:
+      return initialState;
+  }
+};
+
 export { ideaReducer, singleIdeaReducer };
 

@@ -9,7 +9,9 @@ import {
   EDIT_IDEA_FAILURE,
   EDIT_IDEA_SUCCESS,
   DELETE_SINGLE_IDEA_FAILURE,
-  DELETE_SINGLE_IDEA_SUCCESS
+  DELETE_SINGLE_IDEA_SUCCESS,
+  FETCH_SINGLE_IDEA_FAILURE,
+  FETCH_SINGLE_IDEA_SUCCESS
 } from '../actions/actionTypes';
 import Alert from '../utils/Alert';
 import setAuthToken from '../utils/setAuthToken';
@@ -52,6 +54,26 @@ export const editIdeaSuccess = newIdea => ({
 
 export const editIdeaFailure = message => ({
   type: EDIT_IDEA_FAILURE,
+  message
+});
+
+export const deleteIdeaSuccess = id => ({
+  type: DELETE_SINGLE_IDEA_SUCCESS,
+  id
+});
+
+export const deleteIdeaFailure = message => ({
+  type: DELETE_SINGLE_IDEA_FAILURE,
+  message
+});
+
+export const fetchSingleIdeaSuccess = idea => ({
+  type: FETCH_SINGLE_IDEA_SUCCESS,
+  idea
+});
+
+export const fetchSingleIdeaFailure = message => ({
+  type: FETCH_SINGLE_IDEA_FAILURE,
   message
 });
 
@@ -106,16 +128,6 @@ export const editIdeas = (newIdea, id) =>
     Alert(successMessage, 3000, 'green');
   };
 
-export const deleteIdeaSuccess = id => ({
-  type: DELETE_SINGLE_IDEA_SUCCESS,
-  id
-});
-
-export const deleteIdeaFailure = message => ({
-  type: DELETE_SINGLE_IDEA_FAILURE,
-  message
-});
-
 export const deleteIdea = id =>
   async (dispatch) => {
     const response = await fetch(`/api/v1/idea/${id}`, {
@@ -126,8 +138,8 @@ export const deleteIdea = id =>
         'Content-Type': 'application/json'
       }
     });
-    const jsonResponse = await response.json().then(jsonRes => jsonRes);
 
+    const jsonResponse = await response.json().then(jsonRes => jsonRes);
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
       dispatch(deleteIdeaFailure(errorMessage));
@@ -137,6 +149,26 @@ export const deleteIdea = id =>
     dispatch(deleteIdeaSuccess(jsonResponse.id));
     browserHistory.push('/myideas');
     Alert(jsonResponse.message, 3000, 'green');
+  };
+
+
+export const fetchSingleIdea = id =>
+  async (dispatch) => {
+    const response = await fetch(`/api/v1/idea/${id}`, {
+      method: 'GET',
+      headers: {
+        ...setAuthToken(),
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    });
+    const jsonResponse = await response.json().then(jsonRes => jsonRes);
+    if (response.status >= 400) {
+      const errorMessage = jsonResponse.message;
+      dispatch(fetchSingleIdeaFailure(errorMessage));
+      Alert(errorMessage, 3000, 'red');
+    }
+    dispatch(fetchSingleIdeaSuccess(jsonResponse.idea));
   };
 
 export const fetchUserIdeas = () =>

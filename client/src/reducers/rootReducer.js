@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import userReducer from './userReducer';
-import ideaReducer from './ideaReducer';
+import { ideaReducer, singleIdeaReducer } from './ideaReducer';
 import userIdeasReducer from './userIdeasReducer';
 import filterIdeasReducer from './filterIdeasReducer';
 import searchResult from './searchIdeasReducer';
@@ -10,5 +10,6 @@ export default combineReducers({
   ideaReducer,
   userIdeasReducer,
   filterIdeasReducer,
-  searchResult
+  searchResult,
+  singleIdeaReducer
 });

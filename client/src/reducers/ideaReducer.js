@@ -1,8 +1,13 @@
 import {
   FETCH_PUBLIC_IDEAS_SUCCESS,
   FETCH_PUBLIC_IDEAS_FAILURE,
+<<<<<<< HEAD
   CREATE_IDEA_FAILURE,
   CREATE_IDEA_SUCCESS
+=======
+  FETCH_SINGLE_IDEA_FAILURE,
+  FETCH_SINGLE_IDEA_SUCCESS
+>>>>>>> feat(view-idea): implement view single idea feature
 }
   from '../actions/actionTypes';
 
@@ -25,5 +30,20 @@ const ideaReducer = (initialState = [], action = {}) => {
   }
 };
 
-export default ideaReducer;
+const singleIdeaReducer = (initialState = {}, action = {}) => {
+  const { type, idea } = action;
+  switch (type) {
+    case FETCH_SINGLE_IDEA_FAILURE:
+      return initialState;
+    case FETCH_SINGLE_IDEA_SUCCESS:
+      return {
+        ...initialState,
+        ...idea
+      };
+    default:
+      return initialState;
+  }
+};
+
+export { ideaReducer, singleIdeaReducer };
 

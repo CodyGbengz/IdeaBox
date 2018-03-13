@@ -4,24 +4,28 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SideNav from '../common/SideNav';
+import { fetchIdeaComments } from '../../actions/commentActions';
 import { fetchSingleIdea } from '../../actions/ideaActions';
 
 class ViewIdea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      idea: this.props.idea
+      idea: this.props.idea,
+      comments: this.props.comments
     };
   }
 
   componentDidMount() {
     this.props.fetchSingleIdea(this.props.params.id);
+    this.props.fetchIdeaComments(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.idea !== this.props.idea) {
+    if (nextProps !== this.props) {
       this.setState({
         idea: nextProps.idea,
+        comments: nextProps.comments
       });
     }
   }
@@ -37,13 +41,24 @@ class ViewIdea extends Component {
       );
     }
     return comments.map(comment => (
-      <div key={comment.id} className="col s12 m4 12">
+      <div key={comment.id} className="col s12 m4 l12">
         <div className="card darken-1">
           <div className="card-content comments-box wrapper">
             <p>{comment.content}</p>
           </div>
           <div className="card-action">
-            <div className="col s6 m6 l6 right" />
+            <span className="right">
+              <p style={{ fontSize: '14px' }}>
+                {moment(comment.createdAt).fromNow()}
+              </p>
+            </span>
+            <span>
+              <p style={{ fontSize: '14px' }}>
+                <em>
+                  {comment.author.username}
+                </em>
+              </p>
+            </span>
           </div>
         </div>
       </div>
@@ -51,7 +66,7 @@ class ViewIdea extends Component {
   }
 
   render() {
-    const { idea } = this.state;
+    const { idea, comments } = this.state;
     return (
       <div >
         <div className="row">
@@ -102,7 +117,7 @@ class ViewIdea extends Component {
                   <div className="card-content grey lighten-4">
                     <div id="test4">
                       <div className="row">
-                        {this.renderComments(idea.comments)}
+                        {this.renderComments(comments)}
                       </div>
                     </div>
                     <div id="test5">Ratings go here</div>
@@ -135,12 +150,16 @@ class ViewIdea extends Component {
 }
 ViewIdea.propTypes = {
   fetchSingleIdea: PropTypes.func.isRequired,
+  fetchIdeaComments: PropTypes.func.isRequired,
   idea: PropTypes.objectOf(PropTypes.any).isRequired,
   params: PropTypes.objectOf(PropTypes.any).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.any).isRequired
 };
 
 const mapStateToProps = state => ({
-  idea: state.singleIdeaReducer
+  idea: state.singleIdeaReducer,
+  comments: state.commentsReducer
 });
 
-export default connect(mapStateToProps, { fetchSingleIdea })(ViewIdea);
+export default
+connect(mapStateToProps, { fetchSingleIdea, fetchIdeaComments })(ViewIdea);

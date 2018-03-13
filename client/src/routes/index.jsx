@@ -7,6 +7,7 @@ import Signin from '../components/Signin';
 import Dashboard from '../components/Dashboard';
 import UserIdeas from '../components/UserIdeas';
 import SearchResults from '../components/SearchResults';
+import CreateIdea from '../components/CreateIdea';
 
 export default (
   <Route path="/" component={App}>
@@ -16,5 +17,6 @@ export default (
     <Route path="/dashboard" component={Dashboard} />
     <Route path="/myideas" component={UserIdeas} />
     <Route path="/searchresults" component={SearchResults} />
+    <Route path="/create-idea" component={CreateIdea} />
   </Route>
 );

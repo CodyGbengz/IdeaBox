@@ -25,6 +25,12 @@ const Idea = ({
             </i>
           </Link>
           }
+          {status === 'private' &&
+          <Link className="black-text">
+            <i className="material-icons right"> lock
+            </i>
+          </Link>
+          }
           <div className="card-profile-name">
             <span className="dateCreated">
               {moment(dueby).format('DD/MM/YY')}
@@ -40,9 +46,11 @@ const Idea = ({
         </p>
       </div>
       <div className="card-action">
+        { !editIdea &&
         <span className="author">
           {author.username}
         </span>
+      }
         { editIdea &&
         <span>
           <Link to="/">

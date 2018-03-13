@@ -31,7 +31,11 @@ const Idea = ({
             </span>
           </div>
         </div>
-        <span className="card-title">{title}</span>
+        <Link
+          to={`/idea/${id}`}
+        >
+          <span className="card-title">{title}</span>
+        </Link>
         <p>
           {description.substr(0, 30)}
           <span className="edited-card-text">

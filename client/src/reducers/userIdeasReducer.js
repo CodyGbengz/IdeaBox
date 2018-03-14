@@ -9,7 +9,12 @@ import {
   from '../actions/actionTypes';
 
 const userIdeasReducer = (initialState = [], action = {}) => {
-  const { type, ideas, newIdea, id } = action;
+  const {
+    type,
+    ideas,
+    newIdea,
+    id
+  } = action;
 
   switch (type) {
     case FETCH_USER_IDEAS_SUCCESS:

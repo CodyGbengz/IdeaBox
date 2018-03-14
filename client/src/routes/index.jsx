@@ -13,6 +13,7 @@ import CreateIdea from '../components/CreateIdea';
 import EditIdea from '../components/EditIdea';
 import requireAuth from '../utils/requireAuth';
 import DeleteIdea from '../components/DeleteIdea';
+import ViewIdea from '../components/ViewIdea';
 
 export default (
   <Route path="/" component={App}>
@@ -25,7 +26,8 @@ export default (
     <Route path="/filtered" component={requireAuth(FilteredIdeas)} />
     <Route path="/searchresults" component={requireAuth(SearchResults)} />
     <Route path="/create-idea" component={requireAuth(CreateIdea)} />
-    <Route path="/idea/:id" component={requireAuth(EditIdea)} />
+    <Route path="/idea/:id/edit" component={requireAuth(EditIdea)} />
     <Route path="/idea/:id/delete" component={requireAuth(DeleteIdea)} />
+    <Route path="/idea/:id" component={requireAuth(ViewIdea)} />
   </Route>
 );

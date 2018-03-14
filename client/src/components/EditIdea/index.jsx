@@ -38,28 +38,6 @@ class EditIdea extends Component {
     this.handleValueChange = this.handleValueChange.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps);
-  //   if (nextProps.ideas !== this.props.ideas) {
-  //     const {
-  //       title,
-  //       description,
-  //       category,
-  //       dueBy,
-  //       status
-  //     } = nextProps.idea;
-
-  //     this.setState({
-  //       title,
-  //       description,
-  //       category,
-  //       dueBy,
-  //       status
-  //     });
-  //   }
-  // }
-
-
   isValid(target) {
     const { errors, isValid } = editIdeaValidator(this.state);
     if (!isValid) {

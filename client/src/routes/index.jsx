@@ -26,7 +26,7 @@ export default (
     <Route path="/filtered" component={requireAuth(FilteredIdeas)} />
     <Route path="/searchresults" component={requireAuth(SearchResults)} />
     <Route path="/create-idea" component={requireAuth(CreateIdea)} />
-    <Route path="/idea/:id" component={requireAuth(EditIdea)} />
+    <Route path="/idea/:id/edit" component={requireAuth(EditIdea)} />
     <Route path="/idea/:id/delete" component={requireAuth(DeleteIdea)} />
     <Route path="/idea/:id" component={requireAuth(ViewIdea)} />
   </Route>

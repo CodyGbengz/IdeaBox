@@ -57,7 +57,7 @@ const Idea = ({
       }
         { editIdea &&
         <span>
-          <Link to={`/idea/${id}`}>
+          <Link to={`/idea/${id}/edit`}>
             <i className="material-icons">edit</i>
           </Link>
         </span>

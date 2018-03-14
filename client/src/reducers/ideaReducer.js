@@ -1,13 +1,10 @@
 import {
   FETCH_PUBLIC_IDEAS_SUCCESS,
   FETCH_PUBLIC_IDEAS_FAILURE,
-<<<<<<< HEAD
   CREATE_IDEA_FAILURE,
-  CREATE_IDEA_SUCCESS
-=======
+  CREATE_IDEA_SUCCESS,
   FETCH_SINGLE_IDEA_FAILURE,
   FETCH_SINGLE_IDEA_SUCCESS
->>>>>>> feat(view-idea): implement view single idea feature
 }
   from '../actions/actionTypes';
 

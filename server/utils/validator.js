@@ -12,9 +12,8 @@ const loginRules = {
 };
 
 const editProfileRules = {
-  status: [{ in: ['private', 'public'] }],
-  username: 'string|min:5',
-  email: 'email'
+  username: 'string|min:5|required',
+  email: 'email|required'
 };
 
 const createIdeaRules = {

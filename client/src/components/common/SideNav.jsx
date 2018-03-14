@@ -70,7 +70,7 @@ class SideNav extends Component {
                   </Link>
                   <div className="collapsible-body">
                     <ul>
-                      <li><Link href="#!">My Profile</Link></li>
+                      <li><Link to="/profile">My Profile</Link></li>
                       <li><Link href="#!">Signout</Link></li>
                     </ul>
                   </div>

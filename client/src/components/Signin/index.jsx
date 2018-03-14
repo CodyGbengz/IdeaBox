@@ -24,6 +24,7 @@ class Signin extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   isValid(target) {
     const { errors, isValid } = signInValidator(this.state);
     if (!isValid) {
@@ -43,6 +44,7 @@ class Signin extends Component {
     }
     return isValid;
   }
+
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
     this.isValid(event.target.name);

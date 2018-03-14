@@ -35,7 +35,7 @@ router.put(
 router.get(
   '/api/v1/user',
   auth,
-  editValidator,
+  // editValidator,
   User.fetchUserProfile
 );
 

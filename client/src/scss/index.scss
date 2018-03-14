@@ -20,6 +20,7 @@ body {
   background-color: black;
   min-height: 1000px;
 };
+
 .home-banner{
   margin-top: 200px
 }
@@ -28,11 +29,18 @@ body {
   padding: 20px;
 }
 
+.update-profile{
+  margin-top: 50px;
+  padding: 5px;
+  // background-color: gainsboro;
+}
+
 .container-mde {
   border: 1px solid rgba(0, 0, 0, .125);
   padding: 8px;
   margin: 20px;
 }
+
 .create-page {
   margin-top : 55px;
 }

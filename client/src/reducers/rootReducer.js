@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import auth from './auth';
+import userReducer from './userReducer';
 import ideaReducer from './ideaReducer';
 import userIdeasReducer from './userIdeasReducer';
 import filterIdeasReducer from './filterIdeasReducer';
 import searchResult from './searchIdeasReducer';
 
 export default combineReducers({
-  auth,
+  userReducer,
   ideaReducer,
   userIdeasReducer,
   filterIdeasReducer,

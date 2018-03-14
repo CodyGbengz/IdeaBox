@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { filterIdeas } from '../../actions/filterActions';
+import { searchIdeas } from '../../actions/searchActions';
+import Alert from '../../utils/Alert';
 
 /**
  * @className SideNav
@@ -11,11 +13,31 @@ import { filterIdeas } from '../../actions/filterActions';
 class SideNav extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchTerm: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
   }
 
   handleFilter(event) {
     this.props.filterIdeas(event.target.id);
+  }
+
+  handleChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
+  handleSearch(event) {
+    event.preventDefault();
+    const { searchTerm } = this.state;
+    if (!searchTerm || searchTerm.length < 3) {
+      Alert('Enter atleast 3 characters', 3000, 'red');
+    }
+    if (searchTerm.length > 2) {
+      this.props.searchIdeas(searchTerm);
+    }
   }
 
   render() {
@@ -26,12 +48,14 @@ class SideNav extends Component {
             <li><h3 className="head">IdeaBox</h3></li>
             <li>
               <div className="nav-wrapper">
-                <form id="searchForm">
+                <form onSubmit={this.handleSearch}>
                   <input
+                    onChange={this.handleChange}
                     type="text"
-                    name="searchParams"
-                    placeholder="Search for Ideas"
-                    id="searchBar"
+                    name="searchTerm"
+                    value={this.state.searchTerm}
+                    placeholder="Enter search keyword"
+                    id="search"
                   />
                 </form>
               </div>
@@ -40,7 +64,7 @@ class SideNav extends Component {
               <ul className="collapsible collapsible-accordion">
                 <li>
                   <Link className="collapsible-header white-text">Username
-                    <i className="material-icons  white-text">
+                    <i className="material-icons right white-text">
                     arrow_drop_down
                     </i>
                   </Link>
@@ -54,9 +78,9 @@ class SideNav extends Component {
                 <li>
                   <Link
                     to="/myideas"
-                    className="white-text"
+                    className="green-text"
                   >My Ideas
-                    <i className="material-icons  white-text">folder</i>
+                    <i className="material-icons right green-text">folder</i>
                   </Link>
                 </li>
                 <li>
@@ -72,6 +96,7 @@ class SideNav extends Component {
                 </li>
                 <li>
                   <Link
+                    to="/create-idea"
                     className="white-text"
                   >Share an Idea
                     <i className="material-icons  white-text">add_box</i>
@@ -161,7 +186,7 @@ class SideNav extends Component {
           <Link
             href="#"
             data-activates="slide-out"
-            aclassName="button-collapse show-on-large"
+            className="button-collapse show-on-large"
           >
             <i className="material-icons">menu</i>
           </Link>
@@ -172,10 +197,11 @@ class SideNav extends Component {
 }
 
 SideNav.propTypes = {
-  filterIdeas: PropTypes.func.isRequired
+  filterIdeas: PropTypes.func.isRequired,
+  searchIdeas: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { filterIdeas })(SideNav);
+export default connect(mapStateToProps, { filterIdeas, searchIdeas })(SideNav);

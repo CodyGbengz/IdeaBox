@@ -58,7 +58,7 @@ FilteredIdeas.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  ideas: state.filterIdeas
+  ideas: state.filterIdeasReducer
 });
 
 export default connect(mapStateToProps, {})(FilteredIdeas);

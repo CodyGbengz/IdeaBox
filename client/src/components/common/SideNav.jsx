@@ -171,6 +171,9 @@ class SideNav extends Component {
   }
 }
 
+SideNav.propTypes = {
+  filterIdeas: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   auth: state.auth,

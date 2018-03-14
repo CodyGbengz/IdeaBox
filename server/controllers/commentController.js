@@ -46,7 +46,9 @@ export default {
             status: 'Success',
             message: 'Comment posted successfully',
             newcomment: {
-              content: newcomment.content
+              content: newcomment.content,
+              author: newcomment.author,
+              createdAt: newcomment.createdAt
             }
           });
         })

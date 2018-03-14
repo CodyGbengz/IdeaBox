@@ -4,6 +4,7 @@ import { ideaReducer, singleIdeaReducer } from './ideaReducer';
 import userIdeasReducer from './userIdeasReducer';
 import filterIdeasReducer from './filterIdeasReducer';
 import searchResult from './searchIdeasReducer';
+import commentsReducer from './commentsReducer';
 
 export default combineReducers({
   userReducer,
@@ -11,5 +12,6 @@ export default combineReducers({
   userIdeasReducer,
   filterIdeasReducer,
   searchResult,
-  singleIdeaReducer
+  singleIdeaReducer,
+  commentsReducer
 });

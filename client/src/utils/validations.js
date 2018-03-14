@@ -11,6 +11,14 @@ const signinRules = {
   password: 'required'
 };
 
+const createIdeaRules = {
+  title: 'required|string',
+  description: 'required|string',
+  category: 'required|string',
+  dueBy: 'required|date',
+  status: [{ in: ['private', 'public'] }],
+};
+
 const validator = rules => (data) => {
   const validate = new Validator(data, rules);
   const errors = {};
@@ -30,3 +38,4 @@ const validator = rules => (data) => {
 
 export const signUpValidator = validator(signupRules); // eslint-disable-line
 export const signInValidator = validator(signinRules);
+export const createIdeaValidator = validator(createIdeaRules);

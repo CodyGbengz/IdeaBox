@@ -3,7 +3,7 @@ import {
   FILTER_CATEGORY_FAILURE
 } from '../actions/actionTypes';
 
-const filterIdeas = (state = [], action) => {
+const filterIdeasReducer = (state = [], action) => {
   const { type, ideas, message } = action;
   switch (type) {
     case FILTER_CATEGORY_SUCCESS:
@@ -15,4 +15,4 @@ const filterIdeas = (state = [], action) => {
   }
 };
 
-export default filterIdeas;
+export default filterIdeasReducer;

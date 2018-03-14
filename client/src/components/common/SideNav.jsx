@@ -13,21 +13,22 @@ import Alert from '../../utils/Alert';
 class SideNav extends Component {
   constructor(props) {
     super(props);
-    this.handleFilter = this.handleFilter.bind(this);
-  }
-
-  handleFilter(event) {
-    this.props.filterIdeas(event.target.id);
     this.state = {
       searchTerm: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
+  }
+
+  handleFilter(event) {
+    this.props.filterIdeas(event.target.id);
   }
 
   handleChange(event) {
     this.setState({ searchTerm: event.target.value });
   }
+
   handleSearch(event) {
     event.preventDefault();
     const { searchTerm } = this.state;
@@ -38,6 +39,7 @@ class SideNav extends Component {
       this.props.searchIdeas(searchTerm);
     }
   }
+
   render() {
     return (
       <div>
@@ -102,11 +104,12 @@ class SideNav extends Component {
                 </li>
                 <div className="border" />
                 <li>
-                  <div className="filterIdeas">
-                    <p>
-                      <b>Filter
-                      </b>
-                    </p>
+                  <Link className="collapsible-header white-text">Categories
+                    <i className="material-icons white-text">
+                    arrow_drop_down
+                    </i>
+                  </Link>
+                  <div className="collapsible-body">
                     <ul>
                       <li>
                         <a
@@ -193,8 +196,12 @@ class SideNav extends Component {
   }
 }
 
+SideNav.propTypes = {
+  filterIdeas: PropTypes.func.isRequired,
+  searchIdeas: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { filterIdeas, searchIdeas })(SideNav)
+export default connect(mapStateToProps, { filterIdeas, searchIdeas })(SideNav);

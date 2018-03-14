@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { filterIdeas } from '../../actions/filterActions';
+import { searchIdeas } from '../../actions/searchActions';
+import Alert from '../../utils/Alert';
 
 /**
  * @className SideNav
@@ -11,8 +14,30 @@ class SideNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
+      searchTerm: '',
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
+  }
+
+  handleFilter(event) {
+    this.props.filterIdeas(event.target.id);
+  }
+
+  handleChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
+  handleSearch(event) {
+    event.preventDefault();
+    const { searchTerm } = this.state;
+    if (!searchTerm || searchTerm.length < 3) {
+      Alert('Enter atleast 3 characters', 3000, 'red');
+    }
+    if (searchTerm.length > 2) {
+      this.props.searchIdeas(searchTerm);
+    }
   }
 
   render() {
@@ -23,12 +48,14 @@ class SideNav extends Component {
             <li><h3 className="head">IdeaBox</h3></li>
             <li>
               <div className="nav-wrapper">
-                <form id="searchForm">
+                <form onSubmit={this.handleSearch}>
                   <input
+                    onChange={this.handleChange}
                     type="text"
-                    name="searchParams"
-                    placeholder="Search for Ideas"
-                    id="searchBar"
+                    name="searchTerm"
+                    value={this.state.searchTerm}
+                    placeholder="Enter search keyword"
+                    id="search"
                   />
                 </form>
               </div>
@@ -36,9 +63,7 @@ class SideNav extends Component {
             <li className="no-padding white-text">
               <ul className="collapsible collapsible-accordion">
                 <li>
-                  <Link
-                    className="collapsible-header white-text"
-                  >Username
+                  <Link className="collapsible-header white-text">Username
                     <i className="material-icons right white-text">
                     arrow_drop_down
                     </i>
@@ -53,9 +78,9 @@ class SideNav extends Component {
                 <li>
                   <Link
                     to="/myideas"
-                    className="white-text"
+                    className="green-text"
                   >My Ideas
-                    <i className="material-icons right white-text">folder</i>
+                    <i className="material-icons right green-text">folder</i>
                   </Link>
                 </li>
                 <li>
@@ -64,89 +89,93 @@ class SideNav extends Component {
                     className="white-text"
                   >Public Ideas
                     <i
-                      className="material-icons right white-text"
+                      className="material-icons  white-text"
                     >folder_shared
                     </i>
                   </Link>
                 </li>
                 <li>
                   <Link
+                    to="/create-idea"
                     className="white-text"
                   >Share an Idea
-                    <i className="material-icons right white-text">add_box</i>
+                    <i className="material-icons  white-text">add_box</i>
                   </Link>
                 </li>
                 <div className="border" />
                 <li>
-                  <div className="filterIdeas">
-                    <p>
-                      <b>Filter
-                        <i className="material-icons right">filter_list</i>
-                      </b>
-                    </p>
+                  <Link className="collapsible-header white-text">Categories
+                    <i className="material-icons white-text">
+                    arrow_drop_down
+                    </i>
+                  </Link>
+                  <div className="collapsible-body">
                     <ul>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="arts"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="button"
+                          role="button"
                           id="arts"
-                          value="arts"
-
-                        />
-                        <label htmlFor="arts">Arts</label>
+                          onClick={this.handleFilter}
+                        >
+                        Arts
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="technology"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
+                          role="button"
                           id="Technology"
-                          value="technology"
-
-                        />
-                        <label htmlFor="Technology">Technology</label>
+                          onClick={this.handleFilter}
+                        >
+                        Technology
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="engineering"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
+                          role="button"
                           id="Engineering"
-                          value="engineering"
-                        />
-                        <label htmlFor="Engineering">Engineering</label>
+                          onClick={this.handleFilter}
+                        >
+                        Engineering
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="economics"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
+                          role="button"
                           id="Economics"
-                          value="Econonmics"
-
-                        />
-                        <label htmlFor="Economics">Economics</label>
+                          onClick={this.handleFilter}
+                        >
+                        Economics
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="science"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
                           id="Science"
-                          value="science"
-                        />
-                        <label htmlFor="Science">Science</label>
+                          role="button"
+                          onClick={this.handleFilter}
+                        >
+                        Science
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="others"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
                           id="Others"
-                          value="others"
-                        />
-                        <label htmlFor="others">Others</label>
+                          role="button"
+                          onClick={this.handleFilter}
+                        >
+                        Others
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -167,8 +196,12 @@ class SideNav extends Component {
   }
 }
 
+SideNav.propTypes = {
+  filterIdeas: PropTypes.func.isRequired,
+  searchIdeas: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { })(SideNav);
+export default connect(mapStateToProps, { filterIdeas, searchIdeas })(SideNav);

@@ -15,6 +15,14 @@ const updateProfileRules = {
   status: [{ in: ['private', 'public'] }],
   username: 'string|min:5',
   email: 'email'
+}
+
+const createIdeaRules = {
+  title: 'required|string',
+  description: 'required|string',
+  category: 'required|string',
+  dueBy: 'required|date',
+  status: [{ in: ['private', 'public'] }]
 };
 
 const validator = rules => (data) => {
@@ -37,3 +45,4 @@ const validator = rules => (data) => {
 export const signUpValidator = validator(signupRules); // eslint-disable-line
 export const signInValidator = validator(signinRules);
 export const updateUserProfileValidator = validator(updateProfileRules);
+export const createIdeaValidator = validator(createIdeaRules);

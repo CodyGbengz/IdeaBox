@@ -10,17 +10,20 @@ import UserProfile from '../components/UserProfile';
 import FilteredIdeas from '../components/FilteredIdeas';
 import SearchResults from '../components/SearchResults';
 import CreateIdea from '../components/CreateIdea';
+import EditIdea from '../components/EditIdea';
+import requireAuth from '../utils/requireAuth';
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home} />
     <Route path="/signup" component={SignUp} />
     <Route path="/signin" component={Signin} />
-    <Route path="/dashboard" component={Dashboard} />
-    <Route path="/myideas" component={UserIdeas} />
-    <Route path="/profile" component={UserProfile} />
-    <Route path="/filtered" component={FilteredIdeas} />
-    <Route path="/searchresults" component={SearchResults} />
-    <Route path="/create-idea" component={CreateIdea} />
+    <Route path="/dashboard" component={requireAuth(Dashboard)} />
+    <Route path="/myideas" component={requireAuth(UserIdeas)} />
+    <Route path="/profile" component={requireAuth(UserProfile)} />
+    <Route path="/filtered" component={requireAuth(FilteredIdeas)} />
+    <Route path="/searchresults" component={requireAuth(SearchResults)} />
+    <Route path="/create-idea" component={requireAuth(CreateIdea)} />
+    <Route path="/idea/:id" component={requireAuth(EditIdea)} />
   </Route>
 );

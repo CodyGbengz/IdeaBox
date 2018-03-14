@@ -5,10 +5,13 @@ import {
   FETCH_USER_IDEAS_FAILURE,
   FETCH_USER_IDEAS_SUCCESS,
   CREATE_IDEA_FAILURE,
-  CREATE_IDEA_SUCCESS
+  CREATE_IDEA_SUCCESS,
+  EDIT_IDEA_FAILURE,
+  EDIT_IDEA_SUCCESS
 } from '../actions/actionTypes';
 import Alert from '../utils/Alert';
 import setAuthToken from '../utils/setAuthToken';
+
 
 export const fetchAllPublicIdeasSuccess = ideas => ({
   type: FETCH_PUBLIC_IDEAS_SUCCESS,
@@ -40,6 +43,16 @@ export const createIdeaFailure = message => ({
   message
 });
 
+export const editIdeaSuccess = newIdea => ({
+  type: EDIT_IDEA_SUCCESS,
+  newIdea
+});
+
+export const editIdeaFailure = message => ({
+  type: EDIT_IDEA_FAILURE,
+  message
+});
+
 export const createIdeas = newIdea =>
   async (dispatch) => {
     const response = await fetch('/api/v1/idea', {
@@ -62,6 +75,33 @@ export const createIdeas = newIdea =>
     const successMessage = jsonResponse.message;
     Alert(successMessage, 3000, 'green');
     browserHistory.push('/dashboard');
+  };
+
+
+export const editIdeas = (newIdea, id) =>
+  async (dispatch) => {
+    const response = await fetch(`/api/v1/idea/${id}`, {
+      method: 'PUT',
+      headers: {
+        ...setAuthToken(),
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newIdea)
+    });
+    const jsonResponse = await response.json().then(jsonRes => jsonRes);
+
+    if (response.status >= 400) {
+      const errorMessages = jsonResponse.message;
+      dispatch(editIdeaFailure(errorMessages));
+      (typeof errorMessages === 'object') ? errorMessages.map((message) => { // eslint-disable-line
+        Alert(message, 3000, 'red');
+      }) : Alert(errorMessages, 3000, 'red');
+    }
+    const successMessage = jsonResponse.message;
+    dispatch(editIdeaSuccess(jsonResponse.modifiedIdea));
+    browserHistory.push('/myideas');
+    Alert(successMessage, 3000, 'green');
   };
 
 export const fetchUserIdeas = () =>

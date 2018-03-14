@@ -1,7 +1,11 @@
-// Action types
+/**
+ * Action types
+ */
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
-// Fetch public ideas
+/**
+ * Fetch public ideas
+ */
 export const FETCH_PUBLIC_IDEAS_SUCCESS = 'FETCH_PUBLIC_IDEAS_SUCCESS';
 export const FETCH_PUBLIC_IDEAS_FAILURE = 'FETCH_PUBLIC_IDEAS_FAILURE';
 
@@ -10,6 +14,13 @@ export const FETCH_PUBLIC_IDEAS_FAILURE = 'FETCH_PUBLIC_IDEAS_FAILURE';
  */
 export const FETCH_USER_IDEAS_SUCCESS = 'FETCH_USER_IDEAS_SUCCESS';
 export const FETCH_USER_IDEAS_FAILURE = 'FETCH_USER_IDEAS_FAILURE';
+
+/**
+ * filter by category
+ */
+
+export const FILTER_CATEGORY_SUCCESS = 'FILTER_CATEGORY_SUCCESS';
+export const FILTER_CATEGORY_FAILURE = 'FILTER_CATEGORY_FAILURE';
 
 /**
  * search for ideas

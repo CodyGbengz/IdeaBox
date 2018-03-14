@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { filterIdeas } from '../../actions/filterActions';
 import { searchIdeas } from '../../actions/searchActions';
 import Alert from '../../utils/Alert';
 
@@ -12,6 +13,11 @@ import Alert from '../../utils/Alert';
 class SideNav extends Component {
   constructor(props) {
     super(props);
+    this.handleFilter = this.handleFilter.bind(this);
+  }
+
+  handleFilter(event) {
+    this.props.filterIdeas(event.target.id);
     this.state = {
       searchTerm: '',
     };
@@ -81,7 +87,7 @@ class SideNav extends Component {
                     className="white-text"
                   >Public Ideas
                     <i
-                      className="material-icons right white-text"
+                      className="material-icons  white-text"
                     >folder_shared
                     </i>
                   </Link>
@@ -91,7 +97,7 @@ class SideNav extends Component {
                     to="/create-idea"
                     className="white-text"
                   >Share an Idea
-                    <i className="material-icons right white-text">add_box</i>
+                    <i className="material-icons  white-text">add_box</i>
                   </Link>
                 </li>
                 <div className="border" />
@@ -103,67 +109,70 @@ class SideNav extends Component {
                     </p>
                     <ul>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="arts"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="button"
+                          role="button"
                           id="arts"
-                          value="arts"
-
-                        />
-                        <label htmlFor="arts">Arts</label>
+                          onClick={this.handleFilter}
+                        >
+                        Arts
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="technology"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
+                          role="button"
                           id="Technology"
-                          value="technology"
-
-                        />
-                        <label htmlFor="Technology">Technology</label>
+                          onClick={this.handleFilter}
+                        >
+                        Technology
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="engineering"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
+                          role="button"
                           id="Engineering"
-                          value="engineering"
-                        />
-                        <label htmlFor="Engineering">Engineering</label>
+                          onClick={this.handleFilter}
+                        >
+                        Engineering
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="economics"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
+                          role="button"
                           id="Economics"
-                          value="Econonmics"
-
-                        />
-                        <label htmlFor="Economics">Economics</label>
+                          onClick={this.handleFilter}
+                        >
+                        Economics
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="science"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
                           id="Science"
-                          value="science"
-                        />
-                        <label htmlFor="Science">Science</label>
+                          role="button"
+                          onClick={this.handleFilter}
+                        >
+                        Science
+                        </a>
                       </li>
                       <li>
-                        <input
-                          type="checkbox"
-                          name="others"
-                          className="filled-in"
+                        <a
+                          className="collapsible-header"
+                          type="btn"
                           id="Others"
-                          value="others"
-                        />
-                        <label htmlFor="others">Others</label>
+                          role="button"
+                          onClick={this.handleFilter}
+                        >
+                        Others
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -188,4 +197,4 @@ class SideNav extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { searchIdeas })(SideNav);
+export default connect(mapStateToProps, { filterIdeas, searchIdeas })(SideNav)

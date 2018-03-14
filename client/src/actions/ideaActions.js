@@ -7,7 +7,9 @@ import {
   CREATE_IDEA_FAILURE,
   CREATE_IDEA_SUCCESS,
   EDIT_IDEA_FAILURE,
-  EDIT_IDEA_SUCCESS
+  EDIT_IDEA_SUCCESS,
+  DELETE_SINGLE_IDEA_FAILURE,
+  DELETE_SINGLE_IDEA_SUCCESS
 } from '../actions/actionTypes';
 import Alert from '../utils/Alert';
 import setAuthToken from '../utils/setAuthToken';
@@ -102,6 +104,39 @@ export const editIdeas = (newIdea, id) =>
     dispatch(editIdeaSuccess(jsonResponse.modifiedIdea));
     browserHistory.push('/myideas');
     Alert(successMessage, 3000, 'green');
+  };
+
+export const deleteIdeaSuccess = id => ({
+  type: DELETE_SINGLE_IDEA_SUCCESS,
+  id
+});
+
+export const deleteIdeaFailure = message => ({
+  type: DELETE_SINGLE_IDEA_FAILURE,
+  message
+});
+
+export const deleteIdea = id =>
+  async (dispatch) => {
+    const response = await fetch(`/api/v1/idea/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...setAuthToken(),
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    });
+    const jsonResponse = await response.json().then(jsonRes => jsonRes);
+
+    if (response.status >= 400) {
+      const errorMessage = jsonResponse.message;
+      dispatch(deleteIdeaFailure(errorMessage));
+      Alert(errorMessage, 3000, 'red');
+      browserHistory.push('/myideas');
+    }
+    dispatch(deleteIdeaSuccess(jsonResponse.id));
+    browserHistory.push('/myideas');
+    Alert(jsonResponse.message, 3000, 'green');
   };
 
 export const fetchUserIdeas = () =>

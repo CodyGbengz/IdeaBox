@@ -60,7 +60,7 @@ const Idea = ({
       }
         { deleteIdea &&
         <span>
-          <Link to="/">
+          <Link to={`/idea/${id}/delete`}>
             <i className="material-icons">delete</i>
           </Link>
         </span>

@@ -12,7 +12,7 @@ const commentsReducer = (initialState = [], action = {}) => {
     case FETCH_IDEA_COMMENTS_SUCCESS:
       return comments;
     case FETCH_IDEA_COMMENTS_FAILURE:
-      return initialState;
+      return [];
     case POST_COMMENT_FAILURE:
       return initialState;
     case POST_COMMENT_SUCCESS:

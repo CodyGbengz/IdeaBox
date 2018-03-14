@@ -53,7 +53,7 @@ const Idea = ({
       }
         { editIdea &&
         <span>
-          <Link to={`/edit-idea/${id}`}>
+          <Link to={`/idea/${id}`}>
             <i className="material-icons">edit</i>
           </Link>
         </span>

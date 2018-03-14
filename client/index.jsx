@@ -5,7 +5,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import 'react-mde/lib/styles/css/react-mde-all.css';
 import rootReducer from './src/reducers/rootReducer';
 import routes from './src/routes';
 import './src/scss/index.scss';

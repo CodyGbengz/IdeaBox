@@ -13,7 +13,7 @@ const loginRules = {
 
 const editProfileRules = {
   username: 'string|min:5|required',
-  email: 'email|required'
+  email: 'email'
 };
 
 const createIdeaRules = {

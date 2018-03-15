@@ -3,8 +3,11 @@ import { Link } from 'react-router';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
 import SideNav from '../common/SideNav';
 import { fetchIdeaComments, postComment } from '../../actions/commentActions';
+import { fetchIdeaRatings } from '../../actions/ratingActions';
 import { fetchSingleIdea } from '../../actions/ideaActions';
 
 class ViewIdea extends Component {
@@ -14,27 +17,45 @@ class ViewIdea extends Component {
       idea: this.props.idea,
       comments: this.props.comments,
       content: '',
+      ratings: this.props.ratings,
+      averageRating: 0
     };
     this.postComment = this.postComment.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
+    $('ul.tabs').tabs();
     this.props.fetchSingleIdea(this.props.params.id);
     this.props.fetchIdeaComments(this.props.params.id);
+    this.props.fetchIdeaRatings(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps !== this.props) {
+      const { ratings } = nextProps;
+      let ratingTotal = 0;
+      let averageRating = 0;
+      if (ratings.length !== 0) {
+        ratings.forEach((rating) => {
+          ratingTotal += rating.stars;
+        });
+        averageRating = ratingTotal / (ratings.length);
+      }
+
       this.setState({
         idea: nextProps.idea,
-        comments: nextProps.comments
+        comments: nextProps.comments,
+        ratings: nextProps.ratings,
+        averageRating
       });
     }
   }
+
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
+
   postComment() {
     this.props.postComment(this.props.params.id, this.state);
     this.setState({ content: '' });
@@ -76,7 +97,9 @@ class ViewIdea extends Component {
   }
 
   render() {
-    const { idea, comments } = this.state;
+    const {
+      idea, comments, ratings, averageRating
+    } = this.state;
     return (
       <div >
         <div className="row">
@@ -130,7 +153,28 @@ class ViewIdea extends Component {
                         {this.renderComments(comments)}
                       </div>
                     </div>
-                    <div id="test5">Ratings go here</div>
+                    <div id="test5">
+                      <div className="rating-container">
+                        <h6>Average Rating</h6>
+                        <div className="fa-stack rating-star-wrapper">
+                          <span className="fa fa-star fa-5x fa-stack-4x star" />
+                          <strong className="fa-stack-1x ratings">
+                            {averageRating}
+                          </strong>
+                        </div>
+                        <h6>{
+                          `Total number of ratings: ${ratings.length} `}
+                        </h6>
+                        <div>
+                          <div>
+                            <Rater
+                              total={5}
+                              rating={3}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="card-action">
                     <input
@@ -161,6 +205,8 @@ ViewIdea.propTypes = {
   postComment: PropTypes.func.isRequired,
   fetchSingleIdea: PropTypes.func.isRequired,
   fetchIdeaComments: PropTypes.func.isRequired,
+  fetchIdeaRatings: PropTypes.func.isRequired,
+  ratings: PropTypes.arrayOf(PropTypes.any).isRequired,
   idea: PropTypes.objectOf(PropTypes.any).isRequired,
   params: PropTypes.objectOf(PropTypes.any).isRequired,
   comments: PropTypes.arrayOf(PropTypes.any).isRequired
@@ -168,12 +214,14 @@ ViewIdea.propTypes = {
 
 const mapStateToProps = state => ({
   idea: state.singleIdeaReducer,
-  comments: state.commentsReducer
+  comments: state.commentsReducer,
+  ratings: state.ratingsReducer
 });
 
 export default
 connect(mapStateToProps, {
   fetchSingleIdea,
   fetchIdeaComments,
-  postComment
+  postComment,
+  fetchIdeaRatings
 })(ViewIdea);

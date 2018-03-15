@@ -3,7 +3,7 @@ import Validator from 'validatorjs';
 const signupRules = {
   email: 'required|email',
   password: 'required|min:6',
-  username: 'required|min:5',
+  username: 'required|min:6',
 };
 
 const signinRules = {
@@ -15,7 +15,7 @@ const updateProfileRules = {
   status: [{ in: ['private', 'public'] }],
   username: 'string|min:5',
   email: 'email'
-}
+};
 
 const createIdeaRules = {
   title: 'required|string',

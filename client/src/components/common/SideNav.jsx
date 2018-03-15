@@ -21,6 +21,10 @@ class SideNav extends Component {
     this.handleFilter = this.handleFilter.bind(this);
   }
 
+  componentDidMount() {
+    $('.collapsible').collapsible();
+  }
+
   handleFilter(event) {
     this.props.filterIdeas(event.target.id);
   }
@@ -61,13 +65,12 @@ class SideNav extends Component {
               </div>
             </li>
             <li className="no-padding white-text">
-              <ul className="collapsible collapsible-accordion">
+              <ul className="collapsible popout" data-collapsible="accordion">
                 <li>
-                  <Link className="collapsible-header white-text">Username
-                    <i className="material-icons right white-text">
+                  Username
+                  <i className="material-icons right white-text collapsible-header white-text">
                     arrow_drop_down
-                    </i>
-                  </Link>
+                  </i>
                   <div className="collapsible-body">
                     <ul>
                       <li><Link to="/profile">My Profile</Link></li>

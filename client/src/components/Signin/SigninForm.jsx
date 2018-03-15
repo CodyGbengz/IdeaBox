@@ -12,21 +12,24 @@ const SignupForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <div className="row ">
-      <div className="input-field col s12">
-        <input
-          id="username"
-          value={username}
-          onChange={handleChange}
-          name="username"
-          type="text"
-        />
-        <label htmlFor="username">Username</label>
-        { error.username ?
-          <span className="red-text">{error.username}</span>
-    : <span />
-    }
+      <div className="col s12 m12">
+        <div className="input-field col s12 m12">
+          <input
+            id="username"
+            value={username}
+            onChange={handleChange}
+            name="username"
+            type="text"
+          />
+          <label htmlFor="username">Username</label>
+          { error.username ?
+            <span className="red-text">{error.username}</span>
+          : <span />
+          }
+        </div>
       </div>
-      <div className="input-field col s12 ">
+
+      <div className="input-field col s12 m12">
         <input
           id="password"
           name="password"
@@ -40,7 +43,7 @@ const SignupForm = ({
     : <span />
     }
       </div>
-      <div className="input-field col s12 l12">
+      <div className="input-field col s12 m12 l12">
         <button
           className="
           btn
@@ -52,7 +55,7 @@ const SignupForm = ({
           disabled={disable}
         >Login
         </button>
-        <div className="input-field col s12 l12">
+        <div className="input-field col m12 s12 l12">
           <Link
             to="/signup"
             className="waves-effect

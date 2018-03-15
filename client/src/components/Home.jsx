@@ -15,7 +15,7 @@ const Home = () => (
             </div>
           </div>
           <div className="row">
-            <div className="col m3 offset-m3">
+            <div className="col s6 m3 offset-m3">
               <Link
                 to="/signup"
                 className="waves-effect
@@ -28,7 +28,7 @@ const Home = () => (
               >Get Started
               </Link>
             </div>
-            <div className="col m3">
+            <div className="col s6 m3">
               <Link
                 to="/signin"
                 className="waves-effect

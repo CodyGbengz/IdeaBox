@@ -9,7 +9,8 @@
   },
   "globals": {
     "Materialize": true,
-    "jest": true
+    "jest": true,
+    "$": false
   },
   "rules": {
     "one-var": 0,

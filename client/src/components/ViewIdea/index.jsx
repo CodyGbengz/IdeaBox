@@ -7,7 +7,7 @@ import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import SideNav from '../common/SideNav';
 import { fetchIdeaComments, postComment } from '../../actions/commentActions';
-import { fetchIdeaRatings } from '../../actions/ratingActions';
+import { fetchIdeaRatings, postRating } from '../../actions/ratingActions';
 import { fetchSingleIdea } from '../../actions/ideaActions';
 
 class ViewIdea extends Component {
@@ -18,10 +18,12 @@ class ViewIdea extends Component {
       comments: this.props.comments,
       content: '',
       ratings: this.props.ratings,
-      averageRating: 0
+      averageRating: 0,
+      userRating: 0
     };
     this.postComment = this.postComment.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.postRating = this.postRating.bind(this);
   }
 
   componentDidMount() {
@@ -59,6 +61,13 @@ class ViewIdea extends Component {
   postComment() {
     this.props.postComment(this.props.params.id, this.state);
     this.setState({ content: '' });
+  }
+
+  postRating(event) {
+    if (event.type === 'click') {
+      this.setState({ userRating: event.rating });
+      this.props.postRating(this.props.params.id, event.rating);
+    }
   }
 
   renderComments(comments) {
@@ -169,7 +178,8 @@ class ViewIdea extends Component {
                           <div>
                             <Rater
                               total={5}
-                              rating={3}
+                              rating={this.state.userRating}
+                              onRate={this.postRating}
                             />
                           </div>
                         </div>
@@ -202,6 +212,7 @@ class ViewIdea extends Component {
   }
 }
 ViewIdea.propTypes = {
+  postRating: PropTypes.func.isRequired,
   postComment: PropTypes.func.isRequired,
   fetchSingleIdea: PropTypes.func.isRequired,
   fetchIdeaComments: PropTypes.func.isRequired,
@@ -223,5 +234,6 @@ connect(mapStateToProps, {
   fetchSingleIdea,
   fetchIdeaComments,
   postComment,
-  fetchIdeaRatings
+  fetchIdeaRatings,
+  postRating
 })(ViewIdea);

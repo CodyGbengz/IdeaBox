@@ -44,7 +44,7 @@ body {
   margin-top : 55px;
 }
 a { 
-  color: green 
+  color: green !important
 }
 
 .rating-container{
@@ -109,4 +109,8 @@ a {
   .rating-container{
     margin-bottom: 25px;
   }
+}
+
+a.active{
+  color: green !important
 }

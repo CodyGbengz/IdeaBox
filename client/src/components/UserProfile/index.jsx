@@ -78,22 +78,19 @@ class UserProfile extends Component {
           <div className="col m3 s12 l3">
             <SideNav className="black white-text" />
           </div>
-          <div className="col m7 s12 l7">
-            <div className="row">
-              <div className="col s12 l6 update-profile">
-                <div className="col s12 l8 offset-l2">
-                  <h5>My Profile</h5>
-                  <UpdateProfileForm
-                    username={this.state.username}
-                    email={this.state.email}
-                    handleSubmit={this.handleSubmit}
-                    handleChange={this.handleChange}
-                    error={this.state.error}
-                  />
-                </div>
-              </div>
+          <div className="col m3 offset-m3">
+            <div className="row update-profile">
+              <h5>Edit Profile</h5>
+              <UpdateProfileForm
+                username={this.state.username}
+                email={this.state.email}
+                handleSubmit={this.handleSubmit}
+                handleChange={this.handleChange}
+                error={this.state.error}
+              />
             </div>
           </div>
+
         </div>
       </div>
     );

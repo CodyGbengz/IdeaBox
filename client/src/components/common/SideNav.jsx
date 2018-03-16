@@ -67,13 +67,16 @@ class SideNav extends Component {
             <li className="no-padding white-text">
               <ul className="collapsible popout" data-collapsible="accordion">
                 <li>
-                  Username
-                  <i className="material-icons right white-text collapsible-header white-text">
-                    arrow_drop_down
-                  </i>
+                  <h6 className="white-text collapsible-header no-padding">
+                    <i className="material-icons center">
+                  person_outline
+                    </i>
+                    Username
+                  </h6>
+
                   <div className="collapsible-body">
                     <ul>
-                      <li><Link to="/profile">My Profile</Link></li>
+                      <li><Link to="/profile">Edit Profile</Link></li>
                       <li><Link href="#!">Signout</Link></li>
                     </ul>
                   </div>
@@ -81,15 +84,15 @@ class SideNav extends Component {
                 <li>
                   <Link
                     to="/myideas"
-                    className="green-text"
+                    className="no-padding white-text"
                   >My Ideas
-                    <i className="material-icons right green-text">folder</i>
+                    <i className="material-icons white-text">folder</i>
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/dashboard"
-                    className="white-text"
+                    className="no-padding white-text"
                   >Public Ideas
                     <i
                       className="material-icons  white-text"
@@ -100,17 +103,26 @@ class SideNav extends Component {
                 <li>
                   <Link
                     to="/create-idea"
-                    className="white-text"
+                    className="no-padding white-text"
                   >Share an Idea
                     <i className="material-icons  white-text">add_box</i>
                   </Link>
                 </li>
                 <div className="border" />
                 <li>
-                  <Link className="collapsible-header white-text">Categories
-                    <i className="material-icons white-text">
-                    arrow_drop_down
-                    </i>
+                  <Link
+                    className="
+                    collapsible-header
+                    category-row
+                    white-text
+                    no-padding"
+                  >
+                    <h6>
+                      <i
+                        className="material-icons white-text"
+                      >class
+                      </i>Categories
+                    </h6>
                   </Link>
                   <div className="collapsible-body">
                     <ul>

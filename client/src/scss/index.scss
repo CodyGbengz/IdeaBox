@@ -17,6 +17,7 @@ body {
 .home-buttons {
   margin: 4px;
   width: 100%;
+  color: #000;
 }
 
 .home, .signin, .signup{
@@ -37,7 +38,17 @@ body {
   background-color: rgba(0, 0, 0, .75);
   height: 100%;
 }
-
+.overlay-authentication{
+  padding-top: 5%;
+  background-color: rgba(0, 0, 0, .75);
+  height: 100%;
+}
+.auth-header{
+  a{
+    color: #fff !important;
+  }
+  color: #fff;
+}
 .home-banner{
   margin-top: 200px
 }
@@ -47,10 +58,20 @@ body {
 }
 
 .update-profile{
-  margin-top: 50px;
-  padding: 5px;
+  margin-top: 30%;
+  h5{
+    text-align: center;
+  }
 }
 
+.card-tag{
+  .card{
+    border-radius: 20px;
+  }
+  a{
+    color: #000;
+  }
+}
 .container-mde {
   border: 1px solid rgba(0, 0, 0, .125);
   padding: 8px;
@@ -73,6 +94,13 @@ body {
   border: 2px #49a84c !important;
 }
 
+.input-field-auth{
+  color: #fff;
+}
+.category-row{
+  margin-top: 5%;
+}
+
 .login-btn{
   width: 100%;
   background-color: #49a84c !important;
@@ -81,8 +109,6 @@ body {
 .login-btn:hover{
   background-color: #000 !important;
   border: 2px solid #49a84c !important;
-}a { 
-  color: green !important
 }
 
 .rating-container{

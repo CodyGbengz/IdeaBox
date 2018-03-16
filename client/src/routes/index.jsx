@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from '../components/App';
 import Home from '../components/Home';
-import SignUp from '../components/Signup/SignUp';
+import SignUp from '../components/Signup';
 import Signin from '../components/Signin';
 import Dashboard from '../components/Dashboard';
 import UserIdeas from '../components/UserIdeas';

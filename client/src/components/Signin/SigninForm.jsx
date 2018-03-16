@@ -13,7 +13,7 @@ const SignupForm = ({
   <form onSubmit={handleSubmit}>
     <div className="row ">
       <div className="col s12 m12">
-        <div className="input-field col s12 m12">
+        <div className="input-field input-field-auth col s12 m12">
           <input
             id="username"
             value={username}
@@ -29,7 +29,7 @@ const SignupForm = ({
         </div>
       </div>
 
-      <div className="input-field col s12 m12">
+      <div className="input-field input-field-auth col s12 m12">
         <input
           id="password"
           name="password"
@@ -55,17 +55,16 @@ const SignupForm = ({
           disabled={disable}
         >Login
         </button>
-        <div className="input-field col m12 s12 l12">
-          <Link
-            to="/signup"
-            className="waves-effect
+        <Link
+          to="/signup"
+          className="waves-effect
               home-buttons
               waves-light
               btn
-              green"
-          >Signup
-          </Link>
-        </div>
+              green
+              white-text"
+        >Signup
+        </Link>
       </div>
     </div>
   </form>

@@ -27,7 +27,7 @@ const SignupForm = ({
     : <span />
     }
       </div>
-      <div className="input-field col s12">
+      <div className="input-field input-field-auth col s12">
         <input
           id="email"
           name="email"
@@ -41,7 +41,7 @@ const SignupForm = ({
     : <span />
     }
       </div>
-      <div className="input-field col s12 ">
+      <div className="input-field input-field-auth col s12 ">
         <input
           id="password"
           name="password"
@@ -55,7 +55,7 @@ const SignupForm = ({
     : <span />
     }
       </div>
-      <div className="input-field col s12 l12">
+      <div className="input-field input-field-auth col s12 l12">
         <button
           className="
           btn
@@ -67,17 +67,16 @@ const SignupForm = ({
           disabled={disable}
         >Sign Up
         </button>
-        <div className="input-field col s12 l12">
-          <Link
-            to="/signin"
-            className="waves-effect
+        <Link
+          to="/signin"
+          className="waves-effect
               home-buttons
               waves-light
               btn
-              green"
-          >Signin
-          </Link>
-        </div>
+              green
+              white-text"
+        >Signin
+        </Link>
       </div>
     </div>
   </form>

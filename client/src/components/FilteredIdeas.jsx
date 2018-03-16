@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Idea from './common/Idea';
 import SideNav from './common/SideNav';
 
-class FilteredIdeas extends Component {
+export class FilteredIdeas extends Component {
   constructor(props) {
     super(props);
     this.state = {

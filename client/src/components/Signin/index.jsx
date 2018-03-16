@@ -6,10 +6,7 @@ import SigninForm from './signinForm';
 import { signinRequest } from '../../actions/userActions';
 import { signInValidator } from '../../utils/validations';
 
-/**
- *
-*/
-class Signin extends Component {
+export class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {

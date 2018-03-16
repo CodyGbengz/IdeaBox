@@ -6,11 +6,7 @@ import { filterIdeas } from '../../actions/filterActions';
 import { searchIdeas } from '../../actions/searchActions';
 import Alert from '../../utils/Alert';
 
-/**
- * @className SideNav
- * @extends {Component}
- */
-class SideNav extends Component {
+export class SideNav extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -3,8 +3,7 @@ import {
   FETCH_IDEA_RATINGS_SUCCESS,
   POST_IDEA_RATINGS_FAILURE,
   POST_IDEA_RATINGS_SUCCESS
-}
-  from '../actions/actionTypes';
+} from '../actions/actionTypes';
 
 const ratingsReducer = (initialState = [], action = {}) => {
   const { type, ratings, rating } = action;

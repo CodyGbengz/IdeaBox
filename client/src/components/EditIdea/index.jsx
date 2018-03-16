@@ -10,7 +10,7 @@ import { editIdeaValidator } from '../../utils/validations';
 /**
  *
 */
-class EditIdea extends Component {
+export class EditIdea extends Component {
   constructor(props) {
     super(props);
     const current = this.props.ideas.filter(idea =>

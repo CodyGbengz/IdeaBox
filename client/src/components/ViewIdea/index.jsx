@@ -10,7 +10,7 @@ import { fetchIdeaComments, postComment } from '../../actions/commentActions';
 import { fetchIdeaRatings, postRating } from '../../actions/ratingActions';
 import { fetchSingleIdea } from '../../actions/ideaActions';
 
-class ViewIdea extends Component {
+export class ViewIdea extends Component {
   constructor(props) {
     super(props);
     this.state = {

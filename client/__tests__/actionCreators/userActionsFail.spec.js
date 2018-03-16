@@ -1,5 +1,4 @@
 import expect from 'expect';
-import moxios from 'moxios';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
 import jwtDecode from 'jwt-decode';
@@ -60,54 +59,3 @@ describe('>>>A C T I O N --- userActions', () => {
       .catch();
   });
 });
-
-
-//   moxios.stubRequest('/api/v1/users/signup', {
-//     status: 400,
-//     response: {
-//       response: {
-//         data: {
-//           token: 'gu8sy8gs8s'
-//         }
-//       }
-//     }
-//   });
-//   await store.dispatch(signupRequest(mockItems.user))
-//     .then(() => {
-//       const actions = store.getActions();
-//       expect(actions).toEqual([]);
-//       expect(actions.type).toEqual(undefined);
-//       done();
-//     });
-// });
-
-// it('should create a SIGN_UP action type', async (done) => {
-//   moxios.stubRequest('/api/v1/users/signup', {
-//     status: 201,
-//     response: {
-//       status: 'success',
-//       token: 'gu8sy8gs8s'
-//     }
-//   });
-//   await store.dispatch(signupRequest(mockItems.user))
-//     .then(() => {
-//       const actions = store.getActions();
-//       expect(actions[0].type).toEqual(SET_CURRENT_USER);
-//       done();
-//     });
-// });
-// it('should create a SIGN_IN action type', async (done) => {
-//   moxios.stubRequest('/api/v1/users/signin', {
-//     status: 201,
-//     response: {
-//       status: 'success',
-//       token: 'gu8sy8gs8s'
-//     }
-//   });
-//   await store.dispatch(signinRequest(mockItems.user))
-//     .then(() => {
-//       const actions = store.getActions();
-//       expect(actions[0].type).toEqual(SET_CURRENT_USER);
-//       done();
-//     });
-// });

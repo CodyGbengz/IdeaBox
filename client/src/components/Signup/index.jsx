@@ -9,7 +9,7 @@ import { signUpValidator } from '../../utils/validations';
 /**
  *
 */
-class SignUp extends Component {
+export class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {

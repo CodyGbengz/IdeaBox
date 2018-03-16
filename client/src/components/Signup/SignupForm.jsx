@@ -70,6 +70,7 @@ const SignupForm = ({
       }
       <div className="input-field input-field-auth col s12 l12">
         <button
+          id="signup"
           className="
           btn
           home-buttons
@@ -82,6 +83,7 @@ const SignupForm = ({
         </button>
         <h6><span>Or</span></h6>
         <Link
+          id="signin"
           to="/signin"
           className="waves-effect
               home-buttons

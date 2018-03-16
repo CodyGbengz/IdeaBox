@@ -17,6 +17,7 @@ const Home = () => (
           <div className="row">
             <div className="col s6 m3 offset-m3">
               <Link
+                id="signup-btn"
                 to="/signup"
                 className="waves-effect
                 get-started-btn

@@ -12,7 +12,8 @@
     "test:client": "jest --coverage",
     "coverage": "nyc npm test --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "client:watch": "jest ./client/__tests__/ --watch --coverage",
-    "heroku-postbuild": "NODE_ENV=production && npm run build"
+    "heroku-postbuild": "NODE_ENV=production && npm run build",
+    "e2e:test": "NODE_ENV=test nightwatch ./e2e/test/*.test.js"
   },
   "engines": {
     "node": "8.9.4"
@@ -118,6 +119,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.2",
     "moxios": "^0.4.0",
+    "nightwatch": "^0.9.20",
     "nodemon": "^1.15.1",
     "nyc": "^11.4.1",
     "react-test-renderer": "^15.6.2",

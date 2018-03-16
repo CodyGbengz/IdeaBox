@@ -3,6 +3,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
 import jwt from 'jsonwebtoken';
+
+
 import {
   FETCH_PUBLIC_IDEAS_FAILURE,
   FETCH_PUBLIC_IDEAS_SUCCESS,
@@ -33,11 +35,17 @@ import {
   fetchSingleIdeaSuccess,
   deleteIdea,
   deleteIdeaFailure,
-  deleteIdeaSuccess
+  deleteIdeaSuccess,
+  editIdeaSuccess,
+  editIdeaFailure,
+  editIdeas
 } from '../../src/actions/ideaActions';
 
 import mockItems from '../__mocks__/mockItems';
 import mockLocalStorage from '../__mocks__/mockLocalStorage';
+
+jest.mock('react-router');
+
 
 window.localStorage = mockLocalStorage;
 const token = jwt.sign({ id: 1, user: 'Gbenga' }, 'encoded');
@@ -52,6 +60,54 @@ const response = {
   ideas
 };
 
+
+describe('createidea ', () => {
+  it('should create createIdeaSuccess action response', () => {
+    const expectedAction = {
+      type: CREATE_IDEA_SUCCESS,
+      newIdea: idea
+    };
+    expect(createIdeaSuccess(idea)).toEqual(expectedAction);
+  });
+
+  it('should create an idea', () => {
+    const expectedAction = {
+      type: CREATE_IDEA_FAILURE,
+      message: 'an error occured while processing your request'
+    };
+    expect(createIdeaFailure('an error occured while processing your request'))
+      .toEqual(expectedAction);
+  });
+
+  it(
+    'should dispatch a sucessful action when an idea is created succesfully',
+    () => {
+      response.newidea = response.ideas;
+
+      fetchMock.postOnce(
+        '/api/v1/idea',
+        JSON.stringify(response)
+      );
+
+      const initialState = {};
+      const store = mockStore(initialState);
+      const actions = store.getActions();
+      const expectedActions = [
+        {
+          type: CREATE_IDEA_SUCCESS,
+          newIdea: response.ideas
+        },
+      ];
+      return store.dispatch(createIdeas(response.ideas))
+        .then(() => {
+          expect(actions).toEqual(expectedActions);
+          store.clearActions();
+          fetchMock.reset();
+        })
+        .catch();
+    }
+  );
+});
 describe('Fetch idea Action', () => {
   it('should create fetchIdeasSuccess action response', () => {
     const expectedAction = {
@@ -70,7 +126,7 @@ describe('Fetch idea Action', () => {
   });
 
   it('should return an array of ideas if the request is successful', () => {
-    fetchMock.get(
+    fetchMock.getOnce(
       '/api/v1/ideas',
       JSON.stringify(response)
     );
@@ -94,47 +150,6 @@ describe('Fetch idea Action', () => {
   });
 });
 
-describe('createidea ', () => {
-  it('should create createIdeaSuccess action response', () => {
-    const expectedAction = {
-      type: CREATE_IDEA_SUCCESS,
-      newIdea: idea
-    };
-    expect(createIdeaSuccess(idea)).toEqual(expectedAction);
-  });
-
-  it('should create an', () => {
-    const expectedAction = {
-      type: CREATE_IDEA_FAILURE,
-      message: 'an error occured while processing your request'
-    };
-    expect(createIdeaFailure('an error occured while processing your request')).toEqual(expectedAction);
-  });
-
-  // it('should return an array of ideas if the request is successful', () => {
-  //   fetchMock.get(
-  //     '/api/v1/ideas',
-  //     JSON.stringify(response)
-  //   );
-
-  //   const initialState = {};
-  //   const store = mockStore(initialState);
-  //   const actions = store.getActions();
-  //   const expectedActions = [
-  //     {
-  //       type: FETCH_PUBLIC_IDEAS_SUCCESS,
-  //       ideas: response.ideas
-  //     },
-  //   ];
-  //   return store.dispatch(fetchAllPublicIdeas())
-  //     .then(() => {
-  //       expect(actions).toEqual(expectedActions);
-  //       store.clearActions();
-  //       fetchMock.reset();
-  //     })
-  //     .catch();
-  // });
-});
 
 describe('Fetch user ideas Action', () => {
   it('should create fetchUserIdeasSuccess action response', () => {
@@ -238,7 +253,9 @@ describe('Delete idea Action', () => {
     expect(deleteIdeaFailure()).toEqual(expectedAction);
   });
 
-  it('should return an array of ideas if the request is successful', () => {
+  it('should sucessfully deleted an idea', () => {
+    response.status = 200;
+    response.message = 'idea deleted successfully';
     fetchMock.deleteOnce(
       `/api/v1/idea/${id}`,
       JSON.stringify(response)
@@ -260,4 +277,53 @@ describe('Delete idea Action', () => {
       })
       .catch();
   });
+});
+
+describe('Edit idea successful test ', () => {
+  it('should call editIdeaSuccess action response', () => {
+    const expectedAction = {
+      type: EDIT_IDEA_SUCCESS,
+      newIdea: idea
+    };
+    expect(editIdeaSuccess(idea)).toEqual(expectedAction);
+  });
+
+  it('should dispactch edit idea failed action', () => {
+    const expectedAction = {
+      type: EDIT_IDEA_FAILURE,
+      message: 'an error occured while processing your request'
+    };
+    expect(editIdeaFailure('an error occured while processing your request'))
+      .toEqual(expectedAction);
+  });
+
+  it(
+    'should dispatch a sucessful action when an idea is edited succesfully',
+    () => {
+      response.modifiedIdea = response.ideas;
+      const id = 'dljdljfdkkldflkdjfio9049u4';
+
+      fetchMock.putOnce(
+        `/api/v1/idea/${id}`,
+        { status: 200, body: response }
+      );
+
+      const initialState = {};
+      const store = mockStore(initialState);
+      const actions = store.getActions();
+      const expectedActions = [
+        {
+          type: EDIT_IDEA_SUCCESS,
+          newIdea: response.ideas
+        },
+      ];
+      return store.dispatch(editIdeas(response.ideas, id))
+        .then(() => {
+          expect(actions).toEqual(expectedActions);
+          store.clearActions();
+          fetchMock.reset();
+        })
+        .catch();
+    }
+  );
 });

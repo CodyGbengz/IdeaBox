@@ -41,8 +41,8 @@ export const postRating = (id, stars) =>
     const jsonResponse = await response.json().then(jsonRes => jsonRes);
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(postIdeaRatingsFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(postIdeaRatingsFailure(errorMessage));
     }
     dispatch(postIdeaRatingsSuccess(jsonResponse.rating));
     Alert(jsonResponse.message, 3000, 'green');
@@ -61,8 +61,8 @@ export const fetchIdeaRatings = id =>
     const jsonResponse = await response.json().then(jsonRes => jsonRes);
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(fetchIdeaRatingsFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(fetchIdeaRatingsFailure(errorMessage));
     }
     dispatch(fetchIdeaRatingsSuccess(jsonResponse.ratings));
   };

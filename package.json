@@ -11,7 +11,8 @@
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha -c --compilers js:babel-register server/tests/** --timeout 50000 --exit",
     "test:client": "jest --coverage",
     "coverage": "nyc npm test --report lcovonly && cat ./coverage/lcov.info | coveralls",
-    "client:watch": "jest ./client/__tests__/ --watch --coverage"
+    "client:watch": "jest ./client/__tests__/ --watch --coverage",
+    "heroku-postbuild": "NODE_ENV=production && npm run build"
   },
   "engines": {
     "node": "8.9.4"

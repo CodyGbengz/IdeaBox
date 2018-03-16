@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import SigninForm from './signinForm';
+import SigninForm from './SigninForm';
 import { signinRequest } from '../../actions/userActions';
 import { signInValidator } from '../../utils/validations';
 

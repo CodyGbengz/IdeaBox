@@ -30,9 +30,10 @@ export const filterIdeas = category =>
 
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(filterIdeasFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(filterIdeasFailure(errorMessage));
     }
     dispatch(filterIdeasSuccess(jsonResponse.ideas));
     browserHistory.push('/filtered');
   };
+

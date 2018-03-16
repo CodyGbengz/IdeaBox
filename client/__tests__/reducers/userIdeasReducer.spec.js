@@ -10,7 +10,7 @@ import {
 import reducer from '../../src/reducers/userIdeasReducer';
 import mockItems from '../../__tests__/__mocks__/mockItems';
 
-const { ideas } = mockItems;
+const { ideas, updatedIdea } = mockItems;
 describe('user ideas reducer', () => {
   it('should return the initial state', () => {
     expect(reducer([], [])).toEqual([]);
@@ -34,6 +34,13 @@ describe('user ideas reducer', () => {
     expect(reducer([], {
       type: FETCH_USER_IDEAS_FAILURE,
       message: 'your list of ideas is empty'
+    })).toEqual([]);
+  });
+
+  it('should return editUserIdeas failure state', () => {
+    expect(reducer([], {
+      type: EDIT_IDEA_SUCCESS,
+      updatedIdea
     })).toEqual([]);
   });
 

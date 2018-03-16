@@ -3,7 +3,7 @@ import expect from 'expect';
 import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import SignUpConnected, { SignUp } from '../../src/components/Signup/SignUp';
+import SignUpConnected, { SignUp } from '../../src/components/Signup';
 import { e, event } from '../__mocks__/event';
 
 const middlewares = [thunk];

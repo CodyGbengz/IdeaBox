@@ -30,6 +30,16 @@ export default {
     category: 'science',
     status: 'public'
   },
+
+  updatedIdea: {
+    _id: 'dljdljfdkkldflkdjfio9049u4',
+    title: 'updated',
+    description: 'description',
+    dueby: '10/10/2010',
+    category: 'science',
+    status: 'public'
+  },
+
   ideas: [
     {
       _id: 'dljdljfdkkldflkdjfio9049u4',

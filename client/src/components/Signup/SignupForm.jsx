@@ -13,7 +13,7 @@ const SignupForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <div className="row ">
-      <div className="input-field col s12">
+      <div className="input-field-auth col s12">
         <input
           id="username"
           value={username}

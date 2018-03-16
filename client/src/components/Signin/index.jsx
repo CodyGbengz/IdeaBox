@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import SigninForm from './signinForm';
 import { signinRequest } from '../../actions/userActions';
@@ -53,8 +54,6 @@ class Signin extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({
-      username: '',
-      password: '',
       disable: true
     });
     this.props.signinRequest(this.state);
@@ -62,31 +61,44 @@ class Signin extends Component {
 
   render() {
     return (
-      <div className="signin">
-        <div className="">
-          <div className="row">
-            <div className="
-            home-banner
-            col s12 m4 l4 offset-l4
-            center-align
-            white-text"
-            >
-              <h3>IdeaBox</h3>
-              <p>share your innovative ideas here</p>
-              <div className="col s12 l8 offset-l2">
-                <SigninForm
-                  username={this.state.username}
-                  password={this.state.password}
-                  handleSubmit={this.handleSubmit}
-                  handleChange={this.handleChange}
-                  disable={this.state.disable}
-                  error={this.state.error}
-                />
+      <div>
+        <div className="container-fluid home">
+          <div className="heading-wrapper">
+            <div className="overlay-authentication">
+              <div className="container">
+                <div className="row auth-header">
+                  <div className="col m4">
+                    <Link to="/">
+                      <h4><i className="fa fa-home" /> IdeaBox</h4>
+                    </Link>
+                  </div>
+                </div>
+                <div className="row titled-text white-text center-align">
+                  <div className="col m4 offset-m4">
+                    <h5>Signin</h5>
+                    <p>
+            Your center for innovative thinking, idea generation and management
+                    </p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col s12 m4 offset-m4">
+                    <SigninForm
+                      username={this.state.username}
+                      password={this.state.password}
+                      handleSubmit={this.handleSubmit}
+                      handleChange={this.handleChange}
+                      disable={this.state.disable}
+                      error={this.state.error}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     );
   }
 }

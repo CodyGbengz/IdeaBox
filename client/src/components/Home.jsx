@@ -3,41 +3,46 @@ import { Link } from 'react-router';
 
 const Home = () => (
   <div>
-    <div className="home">
-      <div className="row">
-        <div
-          className="
-          home-banner
-          col s12 m4 l4 offset-l4
-          center-align
-          white-text"
-        >
-          <h3>IdeaBox</h3>
-          <p>share your innovative ideas here</p>
-          <div className="col s12 m12 l12">
-            <Link
-              to="/signup"
-              className="waves-effect
-              home-buttons
-              waves-light
-              btn
-              green"
-            >
-                  Get Started
-            </Link>
+    <div className="container-fluid home">
+      <div className="heading-wrapper">
+        <div className="overlay">
+          <div className="row titled-text white-text center-align">
+            <div className="col m4 offset-m4">
+              <h3>IdeaBox</h3>
+              <p>
+            Your center for innovative thinking, idea generation and management
+              </p>
+            </div>
           </div>
-          <div className="col s12 m12 l12">
-            <Link
-              to="/signin"
-              className="waves-effect
+          <div className="row">
+            <div className="col s6 m3 offset-m3">
+              <Link
+                to="/signup"
+                className="waves-effect
+                get-started-btn
+              home-buttons
+              waves-light
+              btn
+              btn-large
+              green"
+              >Get Started
+              </Link>
+            </div>
+            <div className="col s6 m3">
+              <Link
+                to="/signin"
+                className="waves-effect
+                login-btn
               waves-light
               home-buttons
               btn
+              btn-large
               modal-trigger
               green"
-            >
+              >
                   Login
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

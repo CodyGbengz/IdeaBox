@@ -1,26 +1,54 @@
+$header-font: 'Aclonica', sans-serif;
+$body-font: 'Open Sans', sans-serif;
 
 h1,h2,h3,h4,h5,h6,.brand-logo{
-	font-family: 'Acme', sans-serif;
+	font-family: $header-font;
 }
 
 body {
 	display: flex;
-	min-height: 100vh;
+	height: 100vh;
 	flex-direction: column;
-	font-family: 'Quattrocento Sans', sans-serif;
+  font-family: $body-font;
+  font-weight: 300;
   background-size: 100%;
 }
 
 .home-buttons {
   margin: 4px;
-  width: 215px
+  width: 100%;
+  color: #000;
 }
 
 .home, .signin, .signup{
   background-color: black;
-  min-height: 1000px;
+  height: 100vh;
 };
 
+
+.heading-wrapper{
+  background: url('../assets/img/idea-bg.jpeg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+}
+.overlay{
+  padding-top: 20%;
+  background-color: rgba(0, 0, 0, .75);
+  height: 100%;
+}
+.overlay-authentication{
+  padding-top: 5%;
+  background-color: rgba(0, 0, 0, .75);
+  height: 100%;
+}
+.auth-header{
+  a{
+    color: #fff !important;
+  }
+  color: #fff;
+}
 .home-banner{
   margin-top: 200px
 }
@@ -30,10 +58,20 @@ body {
 }
 
 .update-profile{
-  margin-top: 50px;
-  padding: 5px;
+  margin-top: 30%;
+  h5{
+    text-align: center;
+  }
 }
 
+.card-tag{
+  .card{
+    border-radius: 20px;
+  }
+  a{
+    color: #000;
+  }
+}
 .container-mde {
   border: 1px solid rgba(0, 0, 0, .125);
   padding: 8px;
@@ -43,8 +81,34 @@ body {
 .create-page {
   margin-top : 55px;
 }
-a { 
-  color: green !important
+
+.get-started-btn{
+  width: 100%;
+  background-color: #fff !important;
+  color: #49a84c !important;
+  border: 2px solid #49a84c !important;
+}
+.get-started-btn:hover{
+  background-color: #49a84c !important;
+  color: #fff !important;
+  border: 2px #49a84c !important;
+}
+
+.input-field-auth{
+  color: #fff;
+}
+.category-row{
+  margin-top: 5%;
+}
+
+.login-btn{
+  width: 100%;
+  background-color: #49a84c !important;
+  color: #fff !important;
+}
+.login-btn:hover{
+  background-color: #000 !important;
+  border: 2px solid #49a84c !important;
 }
 
 .rating-container{

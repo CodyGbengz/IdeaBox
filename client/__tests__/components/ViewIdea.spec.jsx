@@ -72,7 +72,12 @@ describe('<ViewIdea />', () => {
       `should update component state 
       and call create idea function when handleSubmit is called`,
       () => {
-        wrapper = shallow(<ViewIdea store={store} {...state} {...props} />);
+        wrapper = shallow(<ViewIdea
+          {...state}
+          {...props}
+          params={props.params}
+          postRating={jest.fn()}
+        />);
         wrapper.instance().postRating(event);
         expect(wrapper.instance().props.postRating).toHaveBeenCalled();
       }

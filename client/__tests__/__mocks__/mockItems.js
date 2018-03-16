@@ -6,10 +6,26 @@ export default {
     email: 'gbenga@gmail.com',
   },
 
+  ratings: [
+    {
+      _id: '',
+      stars: '5'
+    }
+  ],
+
   updateUser: {
     id: 'dkljadhfojfnodfjddkljn',
     username: 'Gbengz',
     email: 'gbenga@gmail.com'
+  },
+
+  comment: {
+    _id: 'kdhdj3u900940049uj9fh9hbdd',
+    content: 'comment content',
+    author: {
+      username: 'username'
+    },
+    createdAt: '10/10/2020'
   },
 
   comments: [
@@ -22,6 +38,7 @@ export default {
       createdAt: '10/10/2020'
     }
   ],
+
   idea: {
     _id: 'dljdljfdkkldflkdjfio9049u4',
     title: 'title',

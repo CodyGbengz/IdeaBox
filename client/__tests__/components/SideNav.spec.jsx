@@ -43,5 +43,25 @@ describe('<SideNav />', () => {
       }
     );
 
+    it(
+      'should update component state when handleSearch is called',
+      () => {
+        wrapper = shallow(<SideNav store={store} {...state} {...props} />);
+        wrapper.instance().handleChange(e);
+        e.target.value = 'search';
+        e.target.name = 'searchTerm';
+        wrapper.instance().handleSearch(event);
+        expect(wrapper.instance().state.searchTerm).toEqual('search');
+      }
+    );
+
+    it(
+      'should update component state when handleFilter is called',
+      () => {
+        wrapper = shallow(<SideNav store={store} {...state} {...props} />);
+        wrapper.instance().handleFilter(e);
+        expect(wrapper.instance().props.filterIdeas).toHaveBeenCalled();
+      }
+    );
   });
 });

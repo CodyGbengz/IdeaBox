@@ -16,7 +16,7 @@ import {
   fetchIdeaCommentsSuccess,
   postComment,
   postCommentSuccess,
-  postConmentfailure
+  postConmmentFailure
 } from '../../src/actions/commentActions';
 
 import mockItems from '../__mocks__/mockItems';
@@ -28,14 +28,15 @@ const token = jwt.sign({ id: 1, user: 'Gbenga' }, 'encoded');
 window.localStorage.setItem('jwtToken', token);
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const { comments } = mockItems;
-const response = {
-  status: 200,
-  message: 'Comments fetched successfully',
-  comments
-};
+const { comments, comment } = mockItems;
 
 describe('fetch comments Action', () => {
+  const response = {
+    status: 200,
+    message: 'Comments fetched successfully',
+    comments
+  };
+
   it('should create fetch comments action response ', () => {
     const expectedAction = {
       type: FETCH_IDEA_COMMENTS_SUCCESS,
@@ -47,29 +48,83 @@ describe('fetch comments Action', () => {
   it('should create an action to receive fetchPublicIdeas error', () => {
     const expectedAction = {
       type: FETCH_IDEA_COMMENTS_FAILURE,
-      message: 'kd'
+      message: 'no comments posted for this idea yet'
     };
-    expect(fetchIdeaCommentsFailure('kd')).toEqual(expectedAction);
+    expect(fetchIdeaCommentsFailure('no comments posted for this idea yet'))
+      .toEqual(expectedAction);
   });
 
-  // it('should return an array of ideas if the request is successful', () => {
-  //   fetchMock.get('/api/v1/ideas',
-  //     JSON.stringify(response));
+  it('should return an array of ideas if the request is successful', () => {
+    const id = 'ajdfnioponalkflnflk903';
+    fetchMock.get(
+      `/api/v1/idea/${id}/comments`,
+      JSON.stringify(response)
+    );
 
-  //   const initialState = {};
-  //   const store = mockStore(initialState);
-  //   const actions = store.getActions();
-  //   const expectedActions = [
-  //     {
-  //       type: FETCH__SUCCESS,
-  //       ideas: response.ideas
-  //     },
-  //   ];
-  //   return store.dispatch(fetchAllPublicIdeas())
-  //     .then(() => {
-  //       expect(actions).toEqual(expectedActions);
-  //       store.clearActions();
-  //       fetchMock.reset();
-  //     })
-  //     .catch();
+    const initialState = [];
+    const store = mockStore(initialState);
+    const actions = store.getActions();
+    const expectedActions = [
+      {
+        type: FETCH_IDEA_COMMENTS_SUCCESS,
+        comments: response.comments
+      },
+    ];
+    return store.dispatch(fetchIdeaComments(id))
+      .then(() => {
+        expect(actions).toEqual(expectedActions);
+        store.clearActions();
+        fetchMock.reset();
+      })
+      .catch();
+  });
+});
+
+describe('post comments Action', () => {
+  const response = {
+    status: 201,
+    message: 'Comments fetched successfully',
+    comment
+  };
+
+  it('should create post comment action response ', () => {
+    const expectedAction = {
+      type: POST_COMMENT_SUCCESS,
+      comment
+    };
+    expect(postCommentSuccess(comment)).toEqual(expectedAction);
+  });
+
+  it('should create an action to receive fetchPublicIdeas error', () => {
+    const expectedAction = {
+      type: POST_COMMENT_FAILURE,
+      message: 'no comments posted for this idea yet'
+    };
+    expect(postConmmentFailure('no comments posted for this idea yet'))
+      .toEqual(expectedAction);
+  });
+
+  it('should return an array of ideas if the request is successful', () => {
+    const id = 'ajdfnioponalkflnflk903';
+    fetchMock.post(
+      `/api/v1/idea/${id}/comment`,
+      { status: 201, body: response }
+    );
+    const initialState = [];
+    const store = mockStore(initialState);
+    const actions = store.getActions();
+    const expectedActions = [
+      {
+        type: POST_COMMENT_SUCCESS,
+        comment
+      },
+    ];
+    return store.dispatch(postComment(id, comment))
+      .then(() => {
+        expect(actions.type).toEqual(expectedActions.type);
+        store.clearActions();
+        fetchMock.reset();
+      })
+      .catch();
+  });
 });

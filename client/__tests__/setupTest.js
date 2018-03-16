@@ -1,7 +1,5 @@
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
-import $ from 'jquery';
-
 
 global.$ = () => ({
   tabs: () => null,
@@ -18,4 +16,5 @@ global.$ = () => ({
   collapsible: () => null
 });
 
+global.Materialize = { toast: jest.fn() };
 configure({ adapter: new Adapter() });

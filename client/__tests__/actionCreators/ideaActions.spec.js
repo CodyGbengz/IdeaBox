@@ -11,10 +11,17 @@ import {
   FETCH_SINGLE_IDEA_FAILURE,
   FETCH_SINGLE_IDEA_SUCCESS,
   DELETE_SINGLE_IDEA_FAILURE,
-  DELETE_SINGLE_IDEA_SUCCESS
+  DELETE_SINGLE_IDEA_SUCCESS,
+  CREATE_IDEA_FAILURE,
+  CREATE_IDEA_SUCCESS,
+  EDIT_IDEA_FAILURE,
+  EDIT_IDEA_SUCCESS
 } from '../../src/actions/actionTypes';
 
 import {
+  createIdeaSuccess,
+  createIdeaFailure,
+  createIdeas,
   fetchAllPublicIdeas,
   fetchAllPublicIdeasFailure,
   fetchAllPublicIdeasSuccess,
@@ -33,7 +40,7 @@ import mockItems from '../__mocks__/mockItems';
 import mockLocalStorage from '../__mocks__/mockLocalStorage';
 
 window.localStorage = mockLocalStorage;
-const token = jwt.sign({ id: 1, user: 'Gbenga'}, 'encoded');
+const token = jwt.sign({ id: 1, user: 'Gbenga' }, 'encoded');
 
 window.localStorage.setItem('jwtToken', token);
 const middlewares = [thunk];
@@ -63,8 +70,10 @@ describe('Fetch idea Action', () => {
   });
 
   it('should return an array of ideas if the request is successful', () => {
-    fetchMock.get('/api/v1/ideas',
-      JSON.stringify(response));
+    fetchMock.get(
+      '/api/v1/ideas',
+      JSON.stringify(response)
+    );
 
     const initialState = {};
     const store = mockStore(initialState);
@@ -85,6 +94,48 @@ describe('Fetch idea Action', () => {
   });
 });
 
+describe('createidea ', () => {
+  it('should create createIdeaSuccess action response', () => {
+    const expectedAction = {
+      type: CREATE_IDEA_SUCCESS,
+      newIdea: idea
+    };
+    expect(createIdeaSuccess(idea)).toEqual(expectedAction);
+  });
+
+  it('should create an', () => {
+    const expectedAction = {
+      type: CREATE_IDEA_FAILURE,
+      message: 'an error occured while processing your request'
+    };
+    expect(createIdeaFailure('an error occured while processing your request')).toEqual(expectedAction);
+  });
+
+  // it('should return an array of ideas if the request is successful', () => {
+  //   fetchMock.get(
+  //     '/api/v1/ideas',
+  //     JSON.stringify(response)
+  //   );
+
+  //   const initialState = {};
+  //   const store = mockStore(initialState);
+  //   const actions = store.getActions();
+  //   const expectedActions = [
+  //     {
+  //       type: FETCH_PUBLIC_IDEAS_SUCCESS,
+  //       ideas: response.ideas
+  //     },
+  //   ];
+  //   return store.dispatch(fetchAllPublicIdeas())
+  //     .then(() => {
+  //       expect(actions).toEqual(expectedActions);
+  //       store.clearActions();
+  //       fetchMock.reset();
+  //     })
+  //     .catch();
+  // });
+});
+
 describe('Fetch user ideas Action', () => {
   it('should create fetchUserIdeasSuccess action response', () => {
     const expectedAction = {
@@ -103,8 +154,10 @@ describe('Fetch user ideas Action', () => {
   });
 
   it('should return an array of ideas if the request is successful', () => {
-    fetchMock.get('/api/v1/user/ideas',
-      JSON.stringify(response));
+    fetchMock.get(
+      '/api/v1/user/ideas',
+      JSON.stringify(response)
+    );
 
     const initialState = {};
     const store = mockStore(initialState);
@@ -145,8 +198,10 @@ describe('Fetch single idea Action', () => {
   });
 
   it('should return an array of ideas if the request is successful', () => {
-    fetchMock.get(`/api/v1/idea/${id}`,
-      JSON.stringify(response));
+    fetchMock.get(
+      `/api/v1/idea/${id}`,
+      JSON.stringify(response)
+    );
 
     const initialState = {};
     const store = mockStore(initialState);
@@ -176,7 +231,7 @@ describe('Delete idea Action', () => {
     expect(deleteIdeaSuccess()).toEqual(expectedAction);
   });
 
-  it('should create an action to dispatch fetchSingleIdea error', () => {
+  it('should create fetchSingleIdea error', () => {
     const expectedAction = {
       type: DELETE_SINGLE_IDEA_FAILURE
     };
@@ -184,8 +239,10 @@ describe('Delete idea Action', () => {
   });
 
   it('should return an array of ideas if the request is successful', () => {
-    fetchMock.deleteOnce(`/api/v1/idea/${id}`,
-      JSON.stringify(response));
+    fetchMock.deleteOnce(
+      `/api/v1/idea/${id}`,
+      JSON.stringify(response)
+    );
 
     const initialState = {};
     const store = mockStore(initialState);

@@ -29,6 +29,10 @@ const state = {
 };
 
 const props = {
+  ideas: [{}],
+  params: {
+    id: 'kdjaffkfkkd'
+  },
   editIdeas: jest.fn()
 };
 
@@ -72,6 +76,5 @@ describe('<EditIdea />', () => {
     //     expect(wrapper.instance().state.title).toEqual('idea title');
     //   }
     // );
-
   });
 });

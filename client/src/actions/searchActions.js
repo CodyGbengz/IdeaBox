@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+
 import {
   SEARCH_IDEAS_FAILURE,
   SEARCH_IDEAS_SUCCESS
@@ -18,21 +18,24 @@ export const searchIdeasFailure = message => ({
 
 export const searchIdeas = searchTerm =>
   async (dispatch) => {
-    const response = await fetch(`/api/v1/ideas?search=${searchTerm}`, {
-      method: 'GET',
-      headers: {
-        ...setAuthToken(),
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      }
-    });
-    const jsonResponse = await response.json().then(jsonRes => jsonRes);
+    try {
+      const response = await fetch(`/api/v1/ideas?search=${searchTerm}`, {
+        method: 'GET',
+        headers: {
+          ...setAuthToken(),
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        }
+      });
+      const jsonResponse = await response.json().then(jsonRes => jsonRes);
 
-    if (response.status >= 400) {
-      const errorMessage = jsonResponse.message;
-      dispatch(searchIdeasFailure(errorMessage));
-      Alert(errorMessage, 3000, 'red');
+      if (response.status >= 400) {
+        const errorMessage = jsonResponse.message;
+        dispatch(searchIdeasFailure(errorMessage));
+        Alert(errorMessage, 3000, 'red');
+      }
+      return dispatch(searchIdeasSuccess(jsonResponse.ideas));
+    } catch (err) {
+      return Promise.reject(err);
     }
-    dispatch(searchIdeasSuccess(jsonResponse.ideas));
-    browserHistory.push('/searchresults');
   };

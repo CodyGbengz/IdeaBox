@@ -301,7 +301,7 @@ export default {
         $set: req.body,
         modified: true
       },
-      { new: true }
+      { new: true },
     )
       .then((modifiedIdea) => {
         if (modifiedIdea) {
@@ -323,10 +323,18 @@ export default {
           message: 'Idea not found'
         });
       })
-      .catch(error => res.status(500).json({
-        status: 'Fail',
-        message: error.message
-      }));
+      .catch((error) => {
+        if (error.code === 11000) {
+          return res.status(409).json({
+            status: 'Fail',
+            message: 'An idea with this title already exist'
+          });
+        }
+        return res.status(500).json({
+          status: 'Fail',
+          message: error.message
+        });
+      });
   }
 };
 

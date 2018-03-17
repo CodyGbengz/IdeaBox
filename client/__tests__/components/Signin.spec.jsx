@@ -19,8 +19,11 @@ const state = {
   }
 };
 
+const signinRequestResolve = () => {
+  return Promise.resolve();
+};
 const props = {
-  signinRequest: jest.fn()
+  signinRequest: jest.fn(signinRequestResolve)
 };
 
 describe('<Signin />', () => {
@@ -41,7 +44,7 @@ describe('<Signin />', () => {
       and call signup request function when handleSubmit is called`,
       () => {
         wrapper = shallow(<Signin
-          signinRequest={jest.fn()}
+          signinRequest={jest.fn(signinRequestResolve)}
         />);
         wrapper.instance().handleSubmit(event);
         expect(wrapper.instance().props.signinRequest).toHaveBeenCalled();

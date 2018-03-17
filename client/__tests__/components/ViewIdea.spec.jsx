@@ -62,8 +62,9 @@ describe('<ViewIdea />', () => {
       and call create idea function when handleSubmit is called`,
       () => {
         wrapper = shallow(<ViewIdea store={store} {...state} {...props} />);
+        const spy = jest.spyOn(wrapper.instance(), 'postComment');
         wrapper.instance().postComment(event);
-        expect(wrapper.instance().props.postComment).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
         expect(wrapper.instance().state.content).toEqual('');
       }
     );
@@ -78,8 +79,9 @@ describe('<ViewIdea />', () => {
           params={props.params}
           postRating={jest.fn()}
         />);
+        const spy = jest.spyOn(wrapper.instance(), 'postRating');
         wrapper.instance().postRating(event);
-        expect(wrapper.instance().props.postRating).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
       }
     );
   });

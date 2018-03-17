@@ -35,19 +35,21 @@ const Idea = ({
             </Link>
           }
             <div className="card-profile-name">
-              <h6 className="card-title">{title}</h6>
+              { title.length > 15 ?
+                <h6 className="card-title">{title.substr(0, 15)}...</h6>
+              : <h6 className="card-title">{title}</h6>
+            }
 
             </div>
           </div>
           <span className="dateCreated">
-            Execution Date: {moment(dueby).format('DD/MM/YY')}
+            Execution Date: {moment(dueby).format('YY/MM/DD')}
           </span>
-          <p>
-            {description.substr(0, 30)}
-            <span className="edited-card-text">
-              {modified === true ? '[..edited]' : ' '}
-            </span>
-          </p>
+          { description.length > 30 ?
+            <p>{description.substr(0, 30)}...</p>
+            : <p>{description}</p>
+            }
+
         </div>
         <div className="card-action">
           { !editIdea &&
@@ -69,6 +71,9 @@ const Idea = ({
             </Link>
           </span>
       }
+          <span className="edited-card-text grey-text">
+            {modified === true ? '[edited]' : ' '}
+          </span>
           <span
             className="new badge green ideaCategory"
             data-badge-caption={category}

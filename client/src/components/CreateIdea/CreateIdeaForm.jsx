@@ -58,6 +58,7 @@ const CreateIdeaForm = ({
           <option value="" disabled>select a category
           </option>
           <option value="arts">arts</option>
+          <option value="agriculture">agriculture</option>
           <option value="science">science</option>
           <option value="tech">tech</option>
           <option value="engineering">engineering</option>

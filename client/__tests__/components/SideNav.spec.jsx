@@ -9,13 +9,17 @@ import { e, event } from '../__mocks__/event';
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
+const asyncFunction = () => {
+  return Promise.resolve();
+};
+
 const state = {
   searchTerm: ''
 };
 
 const props = {
-  filterIdeas: jest.fn(),
-  searchIdeas: jest.fn()
+  filterIdeas: jest.fn(asyncFunction),
+  searchIdeas: jest.fn(asyncFunction)
 };
 
 describe('<SideNav />', () => {

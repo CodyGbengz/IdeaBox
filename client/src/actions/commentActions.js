@@ -42,7 +42,6 @@ export const fetchIdeaComments = id =>
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
       dispatch(fetchIdeaCommentsFailure(errorMessage));
-      Alert(errorMessage, 3000, 'red');
     }
     dispatch(fetchIdeaCommentsSuccess(jsonResponse.comments));
   };
@@ -61,8 +60,8 @@ export const postComment = (id, content) =>
     const jsonResponse = await response.json().then(jsonRes => jsonRes);
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(postConmmentFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(postConmmentFailure(errorMessage));
     }
     dispatch(postCommentSuccess(jsonResponse.newcomment));
   };

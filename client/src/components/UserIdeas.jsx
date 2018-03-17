@@ -28,10 +28,10 @@ export class UserIdeas extends Component {
     return (
       <div >
         <div className="row">
-          <div className="col m3 s12 l3">
+          <div className="col l4 xl3">
             <SideNav className="black white-text" />
           </div>
-          <div className="col m7 s12 l7 ideaDashboard">
+          <div className="col l8 xl9  ideaDashboard">
             <h5>My Ideas</h5>
             <div id="card-container" className="row">
               { (!ideas || ideas.length < 1) &&

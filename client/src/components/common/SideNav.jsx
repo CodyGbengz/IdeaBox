@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { logoutAction } from '../../actions/userActions';
 import { filterIdeas } from '../../actions/filterActions';
 import { searchIdeas } from '../../actions/searchActions';
 import Alert from '../../utils/Alert';
@@ -15,11 +16,12 @@ export class SideNav extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
   }
 
   componentDidMount() {
     $('.collapsible').collapsible();
-    // this.props.history.push('/searchresults');
+    $('.button-collapse').sideNav();
   }
 
   handleFilter(event) {
@@ -28,6 +30,10 @@ export class SideNav extends Component {
 
   handleChange(event) {
     this.setState({ searchTerm: event.target.value });
+  }
+
+  handleLogOut() {
+    this.props.logoutAction();
   }
 
   handleSearch(event) {
@@ -53,16 +59,25 @@ export class SideNav extends Component {
             <li><h3 className="head">IdeaBox</h3></li>
             <li>
               <div className="nav-wrapper">
-                <form onSubmit={this.handleSearch}>
-                  <input
-                    onChange={this.handleChange}
-                    type="text"
-                    name="searchTerm"
-                    value={this.state.searchTerm}
-                    placeholder="Enter search keyword"
-                    id="search"
-                  />
-                </form>
+                <div className="row search-row">
+                  <div className="col l10 xl10">
+                    <input
+                      onChange={this.handleChange}
+                      type="text"
+                      name="searchTerm"
+                      value={this.state.searchTerm}
+                      placeholder="Enter search keyword"
+                      id="search"
+                    />
+                  </div>
+                  <div
+                    className="col l2 xl2 search-icon"
+                    onClick={this.handleSearch}
+                    role="presentation"
+                  >
+                    <i className="material-icons">search</i>
+                  </div>
+                </div>
               </div>
             </li>
             <li className="no-padding white-text">
@@ -72,13 +87,20 @@ export class SideNav extends Component {
                     <i className="material-icons center">
                   person_outline
                     </i>
-                    Username
+                    My Account
                   </h6>
 
                   <div className="collapsible-body">
                     <ul>
                       <li><Link to="/profile">Edit Profile</Link></li>
-                      <li><Link href="#!">Signout</Link></li>
+                      <li>
+                        <Link
+                          type="btn"
+                          role="button"
+                          onClick={this.handleLogOut}
+                        >Signout
+                        </Link>
+                      </li>
                     </ul>
                   </div>
                 </li>
@@ -143,10 +165,10 @@ export class SideNav extends Component {
                           className="collapsible-header"
                           type="btn"
                           role="button"
-                          id="Technology"
+                          id="tech"
                           onClick={this.handleFilter}
                         >
-                        Technology
+                        Tech
                         </a>
                       </li>
                       <li>
@@ -154,7 +176,7 @@ export class SideNav extends Component {
                           className="collapsible-header"
                           type="btn"
                           role="button"
-                          id="Engineering"
+                          id="engineering"
                           onClick={this.handleFilter}
                         >
                         Engineering
@@ -165,7 +187,7 @@ export class SideNav extends Component {
                           className="collapsible-header"
                           type="btn"
                           role="button"
-                          id="Economics"
+                          id="economics"
                           onClick={this.handleFilter}
                         >
                         Economics
@@ -175,7 +197,7 @@ export class SideNav extends Component {
                         <a
                           className="collapsible-header"
                           type="btn"
-                          id="Science"
+                          id="science"
                           role="button"
                           onClick={this.handleFilter}
                         >
@@ -186,7 +208,7 @@ export class SideNav extends Component {
                         <a
                           className="collapsible-header"
                           type="btn"
-                          id="Others"
+                          id="others"
                           role="button"
                           onClick={this.handleFilter}
                         >
@@ -200,7 +222,6 @@ export class SideNav extends Component {
             </li>
           </ul>
           <Link
-            href="#"
             data-activates="slide-out"
             className="button-collapse show-on-large"
           >
@@ -214,10 +235,12 @@ export class SideNav extends Component {
 
 SideNav.propTypes = {
   filterIdeas: PropTypes.func.isRequired,
-  searchIdeas: PropTypes.func.isRequired
+  searchIdeas: PropTypes.func.isRequired,
+  logoutAction: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-});
-export default connect(mapStateToProps, { filterIdeas, searchIdeas })(SideNav);
+export default connect(null, {
+  logoutAction,
+  filterIdeas,
+  searchIdeas
+})(SideNav);

@@ -10,7 +10,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 const state = {
-  ideas: [],
+  ideas: [{ _id: '' }],
   id: '',
   title: '',
   description: '',
@@ -25,11 +25,16 @@ const state = {
     status: '',
     category: '',
     dueby: ''
-  }
+  },
 };
 
 const props = {
-  ideas: [{}],
+  ideas: [{
+    _id: 'kdjaffkfkkd',
+    title: '',
+    description: '',
+    category: '',
+  }],
   params: {
     id: 'kdjaffkfkkd'
   },
@@ -58,23 +63,12 @@ describe('<EditIdea />', () => {
           store={store}
           {...state}
           editIdeas={jest.fn()}
+          {...props}
         />);
         wrapper.instance().handleSubmit(event);
         expect(wrapper.instance().props.editIdeas).toHaveBeenCalled();
         expect(wrapper.instance().state.disable).toEqual(true);
       }
     );
-
-    // it(
-    //   'should update component state when handlechange is called',
-    //   () => {
-    //     wrapper = shallow(<EditIdea />);
-    //     wrapper.instance().handleChange(e);
-    //     e.target.value = 'idea title';
-    //     e.target.name = 'title';
-    //     wrapper.instance().handleChange(e);
-    //     expect(wrapper.instance().state.title).toEqual('idea title');
-    //   }
-    // );
   });
 });

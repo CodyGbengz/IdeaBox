@@ -106,16 +106,17 @@ export class ViewIdea extends Component {
   }
 
   render() {
+    const currentPage = window.location.href;
     const {
       idea, comments, ratings, averageRating
     } = this.state;
     return (
       <div >
         <div className="row">
-          <div className="col m3 s12 l3">
+          <div className="col l4 xl3">
             <SideNav className="black white-text" />
           </div>
-          <div className="col m7 s12 l8 ideaDashboard">
+          <div className="col l8 xl9 ideaDashboard">
             <h5>Idea Details</h5>
             <div id="card-container" className="row">
               <div className="col s12 m12 l12" key={idea.id}>
@@ -128,18 +129,34 @@ export class ViewIdea extends Component {
                           </i>
                         </Link>
                       }
+                      <div className="socials">
+                        <Link
+                          className="twitter-share-button fab fa-twitter"
+                          target="_blank"
+                          href={`https://twitter.com/intent/tweet?text=${currentPage}`}
+                        />
+                        <Link
+                          className="fab fa-facebook-f"
+                          href={`https://www.facebook.com/sharer/sharer.php?url=${currentPage}`}
+                          target="_blank"
+                          data-size="large"
+                        />
+                        <div className="g-plus" data-action="share" />
+                      </div>
                       <div className="card-profile-name">
                         <span className="dateCreated">
                           {moment(idea.dueby).format('DD/MM/YY')}
                         </span>
                       </div>
                     </div>
-                    <span className="card-title">{idea.title}</span>
+                    <span className="card-title string-wrapper">
+                      {idea.title}
+                    </span>
                     <span
                       className="new badge black green-text"
                       data-badge-caption={idea.category}
                     />
-                    <p>
+                    <p className="string-wrapper">
                       {idea.description}
                       <span className="edited-card-text">
                         {idea.modified === true ? '[..edited]' : ' '}
@@ -149,10 +166,10 @@ export class ViewIdea extends Component {
                   <div className="card-tabs">
                     <ul className="tabs tabs-fixed-width">
                       <li className="tab">
-                        <a href="#test4">Comments</a>
+                        <a href="#test4" className="active">Comments</a>
                       </li>
                       <li className="tab">
-                        <a className="active" href="#test5">Ratings</a>
+                        <a href="#test5">Ratings</a>
                       </li>
                     </ul>
                   </div>
@@ -166,7 +183,7 @@ export class ViewIdea extends Component {
                       <div className="rating-container">
                         <h6>Average Rating</h6>
                         <div className="fa-stack rating-star-wrapper">
-                          <span className="fa fa-star fa-5x fa-stack-4x star" />
+                          <span className="fas fa-star star" />
                           <strong className="fa-stack-1x ratings">
                             {averageRating}
                           </strong>
@@ -186,22 +203,25 @@ export class ViewIdea extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="card-action">
-                    <input
-                      id="comment"
-                      type="text"
-                      name="content"
-                      value={this.state.content}
-                      onChange={this.handleChange}
-                    />
-                    <button
-                      type="button"
-                      className="btn center-align"
-                      onClick={this.postComment}
-                    >
+                  { Date.now() > idea.dueBy ?
+                    <span>You cannot post comments after execution date</span> :
+                    <div className="card-action">
+                      <input
+                        id="comment"
+                        type="text"
+                        name="content"
+                        value={this.state.content}
+                        onChange={this.handleChange}
+                      />
+                      <button
+                        type="button"
+                        className="btn center-align"
+                        onClick={this.postComment}
+                      >
                         Comment
-                    </button>
-                  </div>
+                      </button>
+                    </div>
+                  }
                 </div>
               </div>
             </div>

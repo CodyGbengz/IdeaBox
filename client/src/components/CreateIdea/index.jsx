@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CreateIdeaForm from './CreateIdeaForm';
-import SideNav from '../common/SideNav';
+import { SideNav } from '../common/SideNav';
 import { createIdeas } from '../../actions/ideaActions';
 import { createIdeaValidator } from '../../utils/validations';
 
@@ -78,10 +78,10 @@ export class CreateIdea extends Component {
     return (
       <div >
         <div className="create-page row">
-          <div className="col m3 s12 l3">
+          <div className="col l4 xl3">
             <SideNav className="black white-text" />
           </div>
-          <div className="col m7 s12 l7 ideaDashboard">
+          <div className="col l8 xl9 ideaDashboard">
             <h5>Post An Idea</h5>
             <div id="card-container" className="row">
               <CreateIdeaForm

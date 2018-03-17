@@ -178,3 +178,78 @@ body {
 a.active{
   color: green !important
 }
+
+.string-wrapper {
+  word-wrap: break-word;
+}
+
+.socials{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+    padding-left: 0;
+}
+
+.card-profile-header{
+  position: relative;
+}
+
+.input-field h6 {
+  color: white;
+  line-height: 0.005em;
+  border: 0.5px solid white;
+  text-align: center;
+  font-size: 15px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.input-field h6 span {
+  background-color: black;
+  padding: 0 10px;
+  border-radius: 50%;
+}
+
+.confirm-delete{
+  margin-top: 50px;
+  padding: 5px
+}
+
+.confirm-delete-btn{
+  margin: 5px
+}
+
+.card .card-content {
+  word-wrap: break-word;
+ }
+
+ .search-icon {
+  cursor: pointer;
+}
+
+.search-row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found {
+  text-align: center;
+  margin-top: 5%;
+}
+
+.search-icon {
+  cursor: pointer;
+}
+
+.search-row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found {
+  text-align: center;
+  margin-top: 5%;
+}

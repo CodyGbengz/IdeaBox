@@ -91,9 +91,11 @@ export const createIdeas = newIdea =>
     const jsonResponse = await response.json().then(jsonRes => jsonRes);
 
     if (response.status >= 400) {
-      const errorMessage = jsonResponse.message;
-      Alert(errorMessage, 3000, 'red');
-      return dispatch(createIdeaFailure(errorMessage));
+      const errorMessages = jsonResponse.message;
+       (typeof errorMessages === 'object') ? errorMessages.map((message) => { // eslint-disable-line
+        Alert(message, 3000, 'red');
+      }) : Alert(errorMessages, 3000, 'red');
+      return dispatch(createIdeaFailure(errorMessages));
     }
     dispatch(createIdeaSuccess(jsonResponse.newidea));
     const successMessage = jsonResponse.message;
@@ -209,3 +211,4 @@ export const fetchAllPublicIdeas = () =>
     }
     dispatch(fetchAllPublicIdeasSuccess(jsonResponse.ideas));
   };
+

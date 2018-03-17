@@ -61,7 +61,6 @@ export const fetchIdeaRatings = id =>
     const jsonResponse = await response.json().then(jsonRes => jsonRes);
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      Alert(errorMessage, 3000, 'red');
       return dispatch(fetchIdeaRatingsFailure(errorMessage));
     }
     dispatch(fetchIdeaRatingsSuccess(jsonResponse.ratings));

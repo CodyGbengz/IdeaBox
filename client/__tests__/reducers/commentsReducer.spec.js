@@ -38,9 +38,7 @@ describe('comments reducer', () => {
   it('should return post comment fail state', () => {
     expect(reducer([], {
       type: POST_COMMENT_FAILURE,
-      comment: {
-        content: 'content',
-      }
+      message: []
     })).toEqual([]);
   });
 

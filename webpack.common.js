@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: ['babel-polyfill', path.join(__dirname, './client/index.jsx')],
@@ -11,7 +10,6 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    // you can now require("file") instead of require("file.coffee")
     extensions: ['.js', '.json', '.jsx']
   },
   module: {
@@ -49,7 +47,8 @@ module.exports = {
       'window.$': 'jquery',
       'window.jQuery': 'jquery',
     }),
-
+    new webpack.EnvironmentPlugin([
+    ])
   ]
 };
 

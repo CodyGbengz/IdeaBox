@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import Loader from '../Loader';
 
 const SignupForm = ({
   handleChange,
@@ -8,25 +9,25 @@ const SignupForm = ({
   username,
   password,
   disable,
-  error
+  error,
+  loader
 }) => (
   <form onSubmit={handleSubmit}>
     <div className="row ">
-      <div className="col s12 m12">
-        <div className="input-field input-field-auth col s12 m12">
-          <input
-            id="username"
-            value={username}
-            onChange={handleChange}
-            name="username"
-            type="text"
-          />
-          <label htmlFor="username">Username</label>
-          { error.username ?
-            <span className="red-text">{error.username}</span>
-          : <span />
-          }
-        </div>
+      <div className="input-field input-field-auth col s12 m12">
+        <input
+          id="username"
+          value={username}
+          onChange={handleChange}
+          name="username"
+          type="text"
+          autoComplete="off"
+        />
+        <label htmlFor="username">Username</label>
+        { error.username ?
+          <span className="red-text">{error.username}</span>
+        : <span />
+        }
       </div>
 
       <div className="input-field input-field-auth col s12 m12">
@@ -36,6 +37,7 @@ const SignupForm = ({
           value={password}
           onChange={handleChange}
           type="password"
+          autoComplete="off"
         />
         <label htmlFor="password">Password</label>
         { error.password ?
@@ -43,6 +45,15 @@ const SignupForm = ({
     : <span />
     }
       </div>
+
+      {
+        loader
+        ?
+          <div className="center"><Loader /></div>
+          :
+        null
+      }
+
       <div className="input-field col s12 m12 l12">
         <button
           className="
@@ -55,6 +66,7 @@ const SignupForm = ({
           disabled={disable}
         >Login
         </button>
+        <h6><span>Or</span></h6>
         <Link
           to="/signup"
           className="waves-effect
@@ -76,6 +88,7 @@ SignupForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   disable: PropTypes.bool.isRequired,
+  loader: PropTypes.bool.isRequired,
   error: PropTypes.objectOf(PropTypes.any).isRequired
 };
 

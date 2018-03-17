@@ -19,7 +19,17 @@ const editProfileRules = {
 const createIdeaRules = {
   title: 'required|string',
   description: 'required|string',
-  category: 'required|string',
+  category: [
+    {
+      in:
+      ['science',
+        'others',
+        'engineering',
+        'economics',
+        'arts',
+        'tech',
+        'agriculture']
+    }],
   dueBy: 'required|date',
   status: [{ in: ['private', 'public'] }],
 };
@@ -27,7 +37,17 @@ const createIdeaRules = {
 const editIdeaRules = {
   title: 'string',
   description: 'string',
-  category: [{ in: ['science', 'arts', 'tech', 'agriculture'] }],
+  category: [
+    {
+      in:
+      ['science',
+        'others',
+        'engineering',
+        'economics',
+        'arts',
+        'tech',
+        'agriculture']
+    }],
   dueBy: 'date',
   status: [{ in: ['private', 'public'] }]
 };

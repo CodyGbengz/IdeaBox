@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Idea from './common/Idea';
 import SideNav from './common/SideNav';
-import { fetchAllPublicIdeas } from '../actions/ideaActions';
+import { fetchAllPublicIdeas } from '../actions/ideaActions'
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -28,11 +28,11 @@ export class Dashboard extends Component {
     return (
       <div >
         <div className="row">
-          <div className="col m3 s12 l3">
+          <div className="col l4 xl3">
             <SideNav className="black white-text" />
           </div>
-          <div className="col m7 s12 l7 ideaDashboard">
-            <h5>All Ideas</h5>
+          <div className="col l8 xl9 ideaDashboard">
+            <h5>Public Ideas</h5>
             <div id="card-container" className="row">
               {ideas &&
                 ideas.map(idea => (
@@ -43,7 +43,7 @@ export class Dashboard extends Component {
                     category={idea.category}
                     description={idea.description}
                     status={idea.status}
-                    dueby={idea.dueby}
+                    dueby={idea.dueBy}
                     author={idea.author}
                     modified={idea.modified}
                   />

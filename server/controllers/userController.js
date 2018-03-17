@@ -139,10 +139,18 @@ export default {
           }
         });
       })
-      .catch(error => res.status(500).send({
-        status: 'Fail',
-        error: error.message
-      }));
+      .catch((error) => {
+        if (error.code === 11000) {
+          return res.status(409).json({
+            status: 'Fail',
+            message: 'This username is taken'
+          });
+        }
+        return res.status(500).json({
+          status: 'Fail',
+          error: error.message
+        });
+      });
   },
   /**
    * @description fetchUserProfile gets a user's profile

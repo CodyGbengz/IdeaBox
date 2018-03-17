@@ -27,23 +27,25 @@ export class DeleteIdea extends Component {
           <div className="col m3 s12 l3">
             <SideNav className="black white-text" />
           </div>
-          <div className="col m7 s12 l7 ideaDashboard">
+          <div className="col m7 s12 l7 center-align confirm-delete">
             <h5>confirm delete</h5>
             <div id="card-container" className="row">
               <div className="col m12 s12 l12">
               Are you sure you want to delete this idea?
               </div>
-              <button
-                className="btn green"
-                onClick={this.handleDelete}
-              >Delete
-              </button>
-              <Link
-                to="/myideas"
-                className="btn red"
-              >
+              <div className="confirm-delete-btn">
+                <button
+                  className="btn green"
+                  onClick={this.handleDelete}
+                >Delete
+                </button>
+                <Link
+                  to="/myideas"
+                  className="btn red confirm-delete-btn"
+                >
               Cancel
-              </Link>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

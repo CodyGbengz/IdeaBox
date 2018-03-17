@@ -5,7 +5,8 @@ import {
   FETCH_USER_DETAILS_FAILURE,
   FETCH_USER_DETAILS_SUCCESS,
   UPDATE_USER_PROFILE_FAILURE,
-  UPDATE_USER_PROFILE_SUCCESS
+  UPDATE_USER_PROFILE_SUCCESS,
+  SIGN_OUT_USER_SUCCESS
 } from './actionTypes';
 import setAuthToken from '../utils/setAuthToken';
 import Alert from '../utils/Alert';
@@ -74,10 +75,10 @@ export const updateUserProfile = userData =>
 
     if (response.status >= 400) {
       const errorMessages = jsonResponse.message;
-      dispatch(updateUserProfileFailure(jsonResponse.message));
       (typeof errorMessages === 'object') ? errorMessages.map((message) => { // eslint-disable-line
         Alert(message, 3000, 'red');
       }) : Alert(errorMessages, 3000, 'red');
+      return dispatch(updateUserProfileFailure(jsonResponse.message));
     }
     dispatch(updateUserProfileSuccess(jsonResponse.updatedUser));
     Alert(jsonResponse.message, 3000, 'green');
@@ -131,3 +132,20 @@ export const signinRequest = userData =>
     localStorage.setItem('jwtToken', token);
     browserHistory.push('/dashboard');
   };
+
+  /**
+ * @description Request to logout user
+ *
+ * @return {object} dispatch object
+ *
+ */
+export const logoutAction = () => (dispatch) => {
+  localStorage.removeItem('jwtToken');
+  setAuthToken(false);
+  browserHistory.push('/');
+  dispatch({
+    type: SIGN_OUT_USER_SUCCESS,
+    user: { currentUser: {} },
+    authenticated: false
+  });
+};

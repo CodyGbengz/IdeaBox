@@ -92,8 +92,8 @@ export const createIdeas = newIdea =>
 
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(createIdeaFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(createIdeaFailure(errorMessage));
     }
     dispatch(createIdeaSuccess(jsonResponse.newidea));
     const successMessage = jsonResponse.message;
@@ -117,10 +117,10 @@ export const editIdeas = (newIdea, id) =>
 
     if (response.status >= 400) {
       const errorMessages = jsonResponse.message;
-      dispatch(editIdeaFailure(errorMessages));
       (typeof errorMessages === 'object') ? errorMessages.map((message) => { // eslint-disable-line
         Alert(message, 3000, 'red');
       }) : Alert(errorMessages, 3000, 'red');
+      return dispatch(editIdeaFailure(errorMessages));
     }
     const successMessage = jsonResponse.message;
     dispatch(editIdeaSuccess(jsonResponse.modifiedIdea));
@@ -142,9 +142,9 @@ export const deleteIdea = id =>
     const jsonResponse = await response.json().then(jsonRes => jsonRes);
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(deleteIdeaFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
       browserHistory.push('/myideas');
+      return dispatch(deleteIdeaFailure(errorMessage));
     }
     dispatch(deleteIdeaSuccess(jsonResponse.id));
     browserHistory.push('/myideas');
@@ -165,8 +165,8 @@ export const fetchSingleIdea = id =>
     const jsonResponse = await response.json().then(jsonRes => jsonRes);
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(fetchSingleIdeaFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(fetchSingleIdeaFailure(errorMessage));
     }
     dispatch(fetchSingleIdeaSuccess(jsonResponse.idea));
   };
@@ -185,8 +185,8 @@ export const fetchUserIdeas = () =>
 
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(fetchUserIdeasFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(fetchUserIdeasFailure(errorMessage));
     }
     dispatch(fetchUserIdeasSuccess(jsonResponse.ideas));
   };
@@ -204,8 +204,8 @@ export const fetchAllPublicIdeas = () =>
 
     if (response.status >= 400) {
       const errorMessage = jsonResponse.message;
-      dispatch(fetchAllPublicIdeasFailure(errorMessage));
       Alert(errorMessage, 3000, 'red');
+      return dispatch(fetchAllPublicIdeasFailure(errorMessage));
     }
     dispatch(fetchAllPublicIdeasSuccess(jsonResponse.ideas));
   };

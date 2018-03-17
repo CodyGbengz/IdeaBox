@@ -9,10 +9,9 @@ import { deleteIdea } from '../../actions/ideaActions';
 /**
  *
 */
-class DeleteIdea extends Component {
+export class DeleteIdea extends Component {
   constructor(props) {
     super(props);
-
     this.handleDelete = this.handleDelete.bind(this);
   }
 

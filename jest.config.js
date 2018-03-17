@@ -2,6 +2,7 @@ module.exports = {
   globals: {
     window: true,
     Materialize: true,
+    $: true,
   },
   verbose: true,
   collectCoverage: true,
@@ -31,6 +32,6 @@ module.exports = {
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$':
       '<rootDir>/client/__tests__/__mocks__/fileMock.js',
-    '\\.(css|scss)$': '<rootDir>/client/__tests__/__mocks__/styleMock.js'
+    '\\.(css|scss)$': '<rootDir>/client/__tests__/__mocks__/styleMocks.js'
   },
 };

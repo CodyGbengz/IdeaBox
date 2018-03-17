@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { filterIdeas } from '../../actions/filterActions';
 import { searchIdeas } from '../../actions/searchActions';
 import Alert from '../../utils/Alert';
 
-/**
- * @className SideNav
- * @extends {Component}
- */
-class SideNav extends Component {
+export class SideNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +19,7 @@ class SideNav extends Component {
 
   componentDidMount() {
     $('.collapsible').collapsible();
+    // this.props.history.push('/searchresults');
   }
 
   handleFilter(event) {
@@ -40,7 +37,11 @@ class SideNav extends Component {
       Alert('Enter atleast 3 characters', 3000, 'red');
     }
     if (searchTerm.length > 2) {
-      this.props.searchIdeas(searchTerm);
+      this.props.searchIdeas(searchTerm)
+        .then(() => {
+          browserHistory.push('/searchresults');
+        })
+        .catch(() => {});
     }
   }
 

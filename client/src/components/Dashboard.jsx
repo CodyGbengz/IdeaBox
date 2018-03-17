@@ -5,7 +5,7 @@ import Idea from './common/Idea';
 import SideNav from './common/SideNav';
 import { fetchAllPublicIdeas } from '../actions/ideaActions';
 
-class Dashboard extends Component {
+export class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -12,7 +12,7 @@ import SideNav from '../common/SideNav';
 /**
  *
 */
-class UserProfile extends Component {
+export class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {

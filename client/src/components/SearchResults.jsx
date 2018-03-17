@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Idea from './common/Idea';
 import SideNav from './common/SideNav';
 
-class SearchResults extends Component {
+export class SearchResults extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,7 +54,6 @@ class SearchResults extends Component {
 }
 
 SearchResults.propTypes = {
-  // fetchAllPublicIdeas: PropTypes.func.isRequired,
   ideas: PropTypes.objectOf(PropTypes.any).isRequired
 };
 

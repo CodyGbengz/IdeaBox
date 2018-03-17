@@ -10,7 +10,9 @@
     "build": "webpack --config webpack.prod.js",
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha -c --compilers js:babel-register server/tests/** --timeout 50000 --exit",
     "test:client": "jest --coverage",
-    "coverage": "nyc npm test --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "coverage": "nyc npm test --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "client:watch": "jest ./client/__tests__/ --watch --coverage",
+    "heroku-postbuild": "NODE_ENV=production && npm run build"
   },
   "engines": {
     "node": "8.9.4"
@@ -111,6 +113,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "expect": "^22.4.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.2",
     "moxios": "^0.4.0",
     "nodemon": "^1.15.1",

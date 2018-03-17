@@ -5,7 +5,7 @@ import Idea from './common/Idea';
 import SideNav from './common/SideNav';
 import { fetchUserIdeas } from '../actions/ideaActions';
 
-class UserIdeas extends Component {
+export class UserIdeas extends Component {
   constructor(props) {
     super(props);
     this.state = {

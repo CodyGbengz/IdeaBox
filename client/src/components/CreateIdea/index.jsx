@@ -10,7 +10,7 @@ import { createIdeaValidator } from '../../utils/validations';
 /**
  *
 */
-class CreateIdea extends Component {
+export class CreateIdea extends Component {
   constructor(props) {
     super(props);
     this.state = {

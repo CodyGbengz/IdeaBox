@@ -53,11 +53,9 @@ export class ViewIdea extends Component {
       });
     }
   }
-
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-
   postComment() {
     this.props.postComment(this.props.params.id, this.state);
     this.setState({ content: '' });
@@ -133,11 +131,17 @@ export class ViewIdea extends Component {
                         <Link
                           className="twitter-share-button fab fa-twitter"
                           target="_blank"
-                          href={`https://twitter.com/intent/tweet?text=${currentPage}`}
+                          href={
+                            `https://twitter.com/intent/tweet?text=
+                            ${currentPage}
+                            `}
                         />
                         <Link
                           className="fab fa-facebook-f"
-                          href={`https://www.facebook.com/sharer/sharer.php?url=${currentPage}`}
+                          href={
+                            `https://www.facebook.com/sharer/sharer.php?url=
+                            ${currentPage}`
+                          }
                           target="_blank"
                           data-size="large"
                         />

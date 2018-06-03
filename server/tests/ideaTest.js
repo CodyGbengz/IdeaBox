@@ -114,7 +114,7 @@ describe('Idea Controller', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.status.should.eql('Fail');
-          res.body.message[0].should.eql('The category field is required.');
+          res.body.message[0].should.eql('The dueBy field is required.');
           done();
         });
     });

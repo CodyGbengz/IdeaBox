@@ -24,4 +24,5 @@ exclude_paths:
   - "node_modules/"
   - "server/tests/**"
   - "docs/**"
+  - "client/__test__/"
   

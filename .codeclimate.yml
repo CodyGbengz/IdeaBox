@@ -1,4 +1,25 @@
-engines:
+checks:
+  argument-count:
+    enabled: false
+  complex-logic:
+    enabled: false
+  file-lines:
+    enabled: false
+  method-complexity:
+    enabled: false
+  method-count:
+    enabled: false
+  method-lines:
+    enabled: false
+  nested-control-flow:
+    enabled: false
+  return-statements:
+    enabled: false
+  similar-code:
+    enabled: false
+  identical-code:
+    enabled: false
+plugins:
   duplications:
     enabled: false
     config:
@@ -7,12 +28,22 @@ engines:
   eslint:
     enabled: true
     checks:
+      file-lines:
+        enabled: false
+      method-lines:
+        enabled: false
       comma-dangle:
         enabled: false
       linebreak-style:
         enabled: false
       import/extensions:
         enabled: false
+      file-lines:
+        enabled: false
+      similar-code:
+        enabled: false
+      identical-code:
+        enabled: false  
   fixme:
     enabled: true
 ratings:
@@ -20,9 +51,9 @@ ratings:
       - "server/**/*.js"
 languages:
   JavaScript: true
-exclude_paths:
+exclude_patterns:
   - "node_modules/"
-  - "server/tests/**"
+  - "server/tests/"
   - "docs/**"
   - "client/__test__/"
   

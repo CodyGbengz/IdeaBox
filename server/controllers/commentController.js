@@ -19,13 +19,8 @@ export default {
             message: 'This idea doesn"t exist'
           });
         }
-<<<<<<< HEAD
-        if (idea.status === 'private' &&
-        (String(idea.author.id) !== req.decoded.id)) {
-=======
         if (idea.status === 'private'
         && (String(idea.author.id) !== req.decoded.id)) {
->>>>>>> feat(post-comment): implement post idea comment feature
           return res.status(403).json({
             status: 'Fail',
             message: 'You are not permitted top comment on this idea'

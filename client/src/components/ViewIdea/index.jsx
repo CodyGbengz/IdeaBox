@@ -7,10 +7,7 @@ import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import SideNav from '../common/SideNav';
 import { fetchIdeaComments, postComment } from '../../actions/commentActions';
-<<<<<<< HEAD
 import { fetchIdeaRatings, postRating } from '../../actions/ratingActions';
-=======
->>>>>>> feat(post-comment): implement post idea comment feature
 import { fetchSingleIdea } from '../../actions/ideaActions';
 
 export class ViewIdea extends Component {
@@ -20,7 +17,6 @@ export class ViewIdea extends Component {
       idea: this.props.idea,
       comments: this.props.comments,
       content: '',
-<<<<<<< HEAD
       ratings: this.props.ratings,
       averageRating: 0,
       userRating: 0
@@ -28,11 +24,6 @@ export class ViewIdea extends Component {
     this.postComment = this.postComment.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.postRating = this.postRating.bind(this);
-=======
-    };
-    this.postComment = this.postComment.bind(this);
-    this.handleChange = this.handleChange.bind(this);
->>>>>>> feat(post-comment): implement post idea comment feature
   }
 
   componentDidMount() {
@@ -65,15 +56,6 @@ export class ViewIdea extends Component {
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-  postComment() {
-    this.props.postComment(this.props.params.id, this.state);
-    this.setState({ content: '' });
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
   postComment() {
     this.props.postComment(this.props.params.id, this.state);
     this.setState({ content: '' });

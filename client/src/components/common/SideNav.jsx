@@ -108,7 +108,7 @@ export class SideNav extends Component {
                   <Link
                     to="/myideas"
                     className="no-padding white-text"
-                  >My Ideas
+                  ><b>My Ideas</b>
                     <i className="material-icons white-text">folder</i>
                   </Link>
                 </li>
@@ -116,7 +116,7 @@ export class SideNav extends Component {
                   <Link
                     to="/dashboard"
                     className="no-padding white-text"
-                  >Public Ideas
+                  ><b>Public Ideas</b>
                     <i
                       className="material-icons  white-text"
                     >folder_shared
@@ -127,7 +127,7 @@ export class SideNav extends Component {
                   <Link
                     to="/create-idea"
                     className="no-padding white-text"
-                  >Share an Idea
+                  ><b>Post an Idea</b>
                     <i className="material-icons  white-text">add_box</i>
                   </Link>
                 </li>
@@ -225,7 +225,7 @@ export class SideNav extends Component {
             data-activates="slide-out"
             className="button-collapse show-on-large"
           >
-            <i className="material-icons">menu</i>
+            <i className="material-icons green-text">menu</i>
           </Link>
         </div>
       </div>

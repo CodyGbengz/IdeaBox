@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { compiler } from 'markdown-to-jsx';
 import { connect } from 'react-redux';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
@@ -108,13 +109,15 @@ export class ViewIdea extends Component {
     const {
       idea, comments, ratings, averageRating
     } = this.state;
+    let description = idea.description || '';
+
     return (
       <div >
         <div className="row">
           <div className="col l4 xl3">
             <SideNav className="black white-text" />
           </div>
-          <div className="col l8 xl9 ideaDashboard">
+          <div className="col l8 xl9 ideaDashb!oard">
             <h5>Idea Details</h5>
             <div id="card-container" className="row">
               <div className="col s12 m12 l12" key={idea.id}>
@@ -161,7 +164,7 @@ export class ViewIdea extends Component {
                       data-badge-caption={idea.category}
                     />
                     <p className="string-wrapper">
-                      {idea.description}
+                      {compiler(description)}
                       <span className="edited-card-text">
                         {idea.modified === true ? '[..edited]' : ' '}
                       </span>
@@ -189,7 +192,7 @@ export class ViewIdea extends Component {
                         <div className="fa-stack rating-star-wrapper">
                           <span className="fas fa-star star" />
                           <strong className="fa-stack-1x ratings">
-                            {averageRating}
+                            {Math.round(averageRating)}
                           </strong>
                         </div>
                         <h6>{

@@ -35,7 +35,7 @@ export class UserIdeas extends Component {
             <h5>My Ideas</h5>
             <div id="card-container" className="row">
               { (!ideas || ideas.length < 1) &&
-              <span> You have no ideas man </span>
+              <span> You have not created any ideas yet.</span>
             }
               {ideas &&
                 ideas.map(idea => (

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import moment from 'moment';
+import { compiler } from 'markdown-to-jsx';
 
 const Idea = ({
   category,
@@ -46,8 +47,8 @@ const Idea = ({
             Execution Date: {moment(dueby).format('YY/MM/DD')}
           </span>
           { description.length > 30 ?
-            <p>{description.substr(0, 30)}...</p>
-            : <p>{description}</p>
+            <p>{compiler((description.substr(0, 20)))}...</p>
+            : <p>{compiler(description)}</p>
             }
 
         </div>

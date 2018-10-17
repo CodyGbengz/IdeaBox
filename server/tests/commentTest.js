@@ -14,8 +14,7 @@ describe('Comment Controller', () => {
   before((done) => {
     Idea.remove({}).then(() => {});
     User.remove({}).then(() => {});
-    Comment.remove({}).then(() => {});
-    done();
+    Comment.remove({}).then(() => done());
   });
   before((done) => {
     chai.request(server)

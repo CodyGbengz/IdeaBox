@@ -10,13 +10,14 @@ import webpackConfig from '../webpack.config';
 import routes from './routes';
 
 /**
- * MongoDb connection
-*/
+ * MongoDb connection for test, development and production databases
+ */
 const database = require('./config/database');
 
 if (process.env.NODE_ENV === 'test') {
   mongoose.connect(database.url_test);
 }
+
 if (process.env.NODE_ENV === 'production') {
   mongoose.connect(database.url_production);
 }
@@ -48,7 +49,9 @@ app.use(
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 /**
  * API routes

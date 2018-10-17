@@ -44,6 +44,7 @@ describe('Comment Controller', () => {
       })
       .end((err, res) => {
         if (res) {
+          console.log(res.body);
           ideaId = res.body.newidea._id;
         }
         done();

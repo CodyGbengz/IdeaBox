@@ -7,38 +7,37 @@ const Home = () => (
       <div className="heading-wrapper">
         <div className="overlay">
           <div className="row titled-text white-text center-align">
-            <div className="col m4 offset-m4">
-              <h3>IdeaBox</h3>
-              <p>
-            Your center for innovative thinking, idea generation and management
-              </p>
+            <div className="col s12 m4 offset-m4">
+              <h4>IdeaBox</h4>
+              <p>Make your inspired thought more than just that.
+                Post and get feedback on your ideas</p>
             </div>
           </div>
           <div className="row">
-            <div className="col s6 m3 offset-m3">
+            <div className="col s12 m4 offset-m4">
               <Link
                 to="/signup"
                 className="waves-effect
                 get-started-btn
-              home-buttons
-              waves-light
-              btn
-              btn-large
-              green"
-              >Get Started
+                home-buttons
+                waves-light
+                btn
+                green">
+                Get Started
               </Link>
             </div>
-            <div className="col s6 m3">
+          </div>
+          <div className="row">
+            <div className="col s12 m4 offset-m4">
               <Link
                 to="/signin"
                 className="waves-effect
                 login-btn
-              waves-light
-              home-buttons
-              btn
-              btn-large
-              modal-trigger
-              green"
+                waves-light
+                home-buttons
+                btn
+                modal-trigger
+                green"
               >
                   Login
               </Link>

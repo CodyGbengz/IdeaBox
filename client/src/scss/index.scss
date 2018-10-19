@@ -34,7 +34,7 @@ body {
   height: 100vh;
 }
 .overlay{
-  padding-top: 20%;
+  padding-top: 20vh;
   background-color: rgba(0, 0, 0, .75);
   height: 100%;
 }
@@ -84,7 +84,7 @@ body {
 
 .get-started-btn{
   width: 100%;
-  background-color: #fff !important;
+  background-color: transparent !important;
   color: #49a84c !important;
   border: 2px solid #49a84c !important;
 }
@@ -107,7 +107,7 @@ body {
   color: #fff !important;
 }
 .login-btn:hover{
-  background-color: #000 !important;
+  background-color: darkgreen !important;
   border: 2px solid #49a84c !important;
 }
 

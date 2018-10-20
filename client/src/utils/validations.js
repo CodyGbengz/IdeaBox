@@ -2,8 +2,8 @@ import Validator from 'validatorjs';
 
 const signupRules = {
   email: 'required|email',
-  password: 'required|min:6',
-  username: 'required|min:6',
+  password: 'required|min:5',
+  username: 'required|min:5|string',
 };
 
 const signinRules = {
@@ -26,7 +26,14 @@ const createIdeaRules = {
 };
 
 const validator = rules => (data) => {
-  const validate = new Validator(data, rules);
+  const validate = new Validator(data, rules, {
+    'min.username': {
+      string: 'This :attribute is too short.'
+    },
+    'min.password': {
+      string: 'This :attribute is too short'
+    }
+  });
   const errors = {};
   const isValid = false;
 

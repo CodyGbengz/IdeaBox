@@ -8,7 +8,7 @@ const signupRules = {
 
 const loginRules = {
   username: 'required|string',
-  password: 'required|string|min:5'
+  password: 'required'
 };
 
 const editProfileRules = {

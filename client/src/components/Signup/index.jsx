@@ -69,7 +69,10 @@ export class SignUp extends Component {
                 <div className="row auth-header">
                   <div className="col m4">
                     <Link to="/">
-                      <h4><i className="fa fa-home" /> IdeaBox</h4>
+                      <h5>
+                        <i className="fa fa-home" />
+                        IdeaBox
+                      </h5>
                     </Link>
                   </div>
                 </div>
